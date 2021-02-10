@@ -22,4 +22,10 @@ dae::GameObject::~GameObject()
 	}
 }
 
-void dae::GameObject::Update(){}
+void dae::GameObject::Update()
+{
+	for (Component* pComponent : m_Components)
+	{
+		pComponent->Update();
+	}
+}

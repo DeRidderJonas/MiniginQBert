@@ -11,9 +11,10 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
-#include "TextureComponent.h"
-#include "TestComponent.h"
 #include "TransformComponent.h"
+#include "TextureComponent.h"
+#include "TextComponent.h"
+#include "FPSComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -60,16 +61,27 @@ void dae::Minigin::LoadGame() const
 	auto transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(216, 180);
 
-	auto testComponent = new TestComponent(go);
-	go->AddComponent(testComponent);
 	go->AddComponent(textureComponent);
 	scene.Add(go);
 
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//go = std::make_shared<GameObject>();
-	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	//to->SetPosition(80, 20);
-	//scene.Add(to);
+	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	go = new GameObject();
+	auto textComponent = new TextComponent(go, "Programming 4 Assignment", font);
+	go->AddComponent(textComponent);
+	transform = go->GetComponentOfType<TransformComponent>();
+	transform->SetPosition(80, 20);
+	scene.Add(go);
+
+
+	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	go = new GameObject();
+	textComponent = new TextComponent(go, "FPS", font);
+	go->AddComponent(textComponent);
+	auto fpsComponent = new FPSComponent(go, textComponent);
+	go->AddComponent(fpsComponent);
+	transform = go->GetComponentOfType<TransformComponent>();
+	transform->SetPosition(5, 5);
+	scene.Add(go);
 }
 
 void dae::Minigin::Cleanup()
@@ -96,16 +108,17 @@ void dae::Minigin::Run()
 
 		bool doContinue = true;
 		float lag{ 0.f };
+		Time::GetInstance().Start();
 		while (doContinue)
 		{
 			Time::GetInstance().Update();
 			float deltaTime = Time::GetInstance().GetDeltaTime();
 			lag += deltaTime;
 			doContinue = input.ProcessInput();
-			while (lag >= MsPerFrame)
+			while (lag >= (MsPerFrame / 1'000.f)) //Divide by a thousand because it's in MilliSeconds
 			{
 				sceneManager.Update();
-				lag -= MsPerFrame;
+				lag -= (MsPerFrame / 1'000.f);
 			}
 			renderer.Render();
 		}
