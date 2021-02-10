@@ -2,22 +2,24 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "TransformComponent.h"
 
-void dae::GameObject::AddComponent(const std::shared_ptr<Component>& pComponent)
+void dae::GameObject::AddComponent(Component* pComponent)
 {
 	m_Components.push_back(pComponent);
 }
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::GameObject()
+{
+	m_Components.push_back(new TransformComponent(this));
+}
+
+dae::GameObject::~GameObject()
+{
+	for (Component* pComponent : m_Components)
+	{
+		delete pComponent;
+	}
+}
 
 void dae::GameObject::Update(){}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
-
-const dae::Transform& dae::GameObject::GetTransform() const
-{
-	return m_Transform;
-}

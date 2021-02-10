@@ -7,12 +7,13 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "TextObject.h"
+//#include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
 #include "TextureComponent.h"
 #include "TestComponent.h"
+#include "TransformComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -47,18 +48,19 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	auto textureComponent = std::make_shared<TextureComponent>(go, "logo.png");
+	auto go = new GameObject();
+	auto textureComponent = new TextureComponent(go, "logo.png");
 	go->AddComponent(textureComponent);
 	go->GetComponentOfType<TextureComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
-	go = std::make_shared<GameObject>();
+	go = new GameObject();
 	//go->GetComponentOfType<TextureComponent>()->SetTexture("logo.png");
-	textureComponent = std::make_shared<TextureComponent>(go, "logo.png");
-	go->SetPosition(216, 180);
+	textureComponent = new TextureComponent(go, "logo.png");
+	auto transform = go->GetComponentOfType<TransformComponent>();
+	transform->SetPosition(216, 180);
 
-	auto testComponent = std::make_shared<TestComponent>(go);
+	auto testComponent = new TestComponent(go);
 	go->AddComponent(testComponent);
 	go->AddComponent(textureComponent);
 	scene.Add(go);

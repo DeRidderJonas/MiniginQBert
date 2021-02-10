@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneObject.h"
-#include "Transform.h"
+//#include "Transform.h"
 
 namespace dae
 {
@@ -13,7 +13,7 @@ namespace dae
 		void Render() const override;
 
 		void SetText(const std::string& text);
-		void SetPosition(float x, float y);
+		//void SetPosition(float x, float y);
 
 		explicit TextObject(const std::string& text, const std::shared_ptr<Font>& font);
 		virtual ~TextObject() = default;
@@ -24,7 +24,7 @@ namespace dae
 	private:
 		bool m_NeedsUpdate;
 		std::string m_Text;
-		Transform m_Transform;
+		//Transform m_Transform;
 		std::shared_ptr<Font> m_Font;
 		std::shared_ptr<Texture2D> m_Texture;
 	};

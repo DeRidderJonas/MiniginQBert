@@ -2,8 +2,9 @@
 #include "TextureComponent.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "TransformComponent.h"
 
-dae::TextureComponent::TextureComponent(const std::shared_ptr<GameObject>& pOwner, const std::string& fileName)
+dae::TextureComponent::TextureComponent(const GameObject* pOwner, const std::string& fileName)
 	: RenderComponent(pOwner)
 	, m_pTexture{ ResourceManager::GetInstance().LoadTexture(fileName) }
 {
@@ -11,9 +12,8 @@ dae::TextureComponent::TextureComponent(const std::shared_ptr<GameObject>& pOwne
 
 void dae::TextureComponent::Render() const
 {
-	std::shared_ptr<GameObject> pOwner{ m_pOwner.lock() };
-	const auto& transform = pOwner->GetTransform();
-	const auto& pos = transform.GetPosition();
+	const auto& transform = m_pOwner->GetComponentOfType<TransformComponent>();
+	const auto& pos = transform->GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
 

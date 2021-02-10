@@ -6,7 +6,7 @@ namespace dae
 		public Component
 	{
 	public:
-		TestComponent(const std::shared_ptr<GameObject>& pOwner) : Component(pOwner) {};
+		TestComponent(const GameObject* pOwner) : Component(pOwner) {};
 	};
 }
 

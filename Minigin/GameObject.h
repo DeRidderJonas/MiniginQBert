@@ -1,5 +1,4 @@
 #pragma once
-#include "Transform.h"
 #include <memory>
 
 namespace dae
@@ -10,32 +9,28 @@ namespace dae
 	public:
 		void Update();
 
-		void SetPosition(float x, float y);
-
-		const Transform& GetTransform() const;
 		template<typename ComponentType>
-		std::shared_ptr<ComponentType> GetComponentOfType()
+		ComponentType* GetComponentOfType() const
 		{
-			auto componentIt = std::find_if(m_Components.begin(), m_Components.end(), [](const std::shared_ptr<Component>& component) {
-				auto convertedPtr = std::dynamic_pointer_cast<ComponentType>(component);
+			auto componentIt = std::find_if(m_Components.begin(), m_Components.end(), [](const Component* component) {
+				auto convertedPtr = dynamic_cast<const ComponentType*>(component);
 				return convertedPtr != nullptr;
 				//return typeid(*component) == typeid(ComponentType);
 				//return std::is_base_of<ComponentType, typeid(component)>::value;
 			});
 			if (componentIt == m_Components.end()) return nullptr;
 			
-			return std::static_pointer_cast<ComponentType>(*componentIt);
+			return static_cast<ComponentType*>(*componentIt);
 		}
-		void AddComponent(const std::shared_ptr<Component>& pComponent);
+		void AddComponent(Component* pComponent);
 
-		GameObject() = default;
+		GameObject();
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 	private:
-		Transform m_Transform;
-		std::vector<std::shared_ptr<Component>> m_Components;
+		std::vector<Component*> m_Components;
 	};
 }

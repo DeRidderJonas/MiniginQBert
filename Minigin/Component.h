@@ -6,7 +6,7 @@ namespace dae
 	class Component
 	{
 	public:
-		Component(const std::shared_ptr<GameObject>& pOwner) : m_pOwner{ pOwner } {};
+		Component(const GameObject* pOwner) : m_pOwner{ pOwner } {};
 		virtual ~Component() = default;
 
 		Component(const Component&) = delete;
@@ -14,7 +14,7 @@ namespace dae
 		Component(Component&&) = delete;
 		Component& operator=(Component&&) = delete;
 	protected:
-		std::weak_ptr<GameObject> m_pOwner;
+		const GameObject* m_pOwner;
 	};
 
 }

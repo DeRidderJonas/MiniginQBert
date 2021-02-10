@@ -63,9 +63,6 @@
     <ClInclude Include="Time.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -75,8 +72,11 @@
     <ClInclude Include="Component.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="TestComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +119,6 @@
     <ClCompile Include="Time.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -131,8 +128,11 @@
     <ClCompile Include="Component.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="TestComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
