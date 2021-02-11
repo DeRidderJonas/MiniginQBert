@@ -10,6 +10,7 @@ namespace dae
 	public:
 		void Add(GameObject* object);
 
+		void FixedUpdate();
 		void Update();
 		void Render() const;
 

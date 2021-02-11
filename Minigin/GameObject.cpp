@@ -22,6 +22,14 @@ dae::GameObject::~GameObject()
 	}
 }
 
+void dae::GameObject::FixedUpdate()
+{
+	for (Component* pComponent : m_Components)
+	{
+		pComponent->FixedUpdate();
+	}
+}
+
 void dae::GameObject::Update()
 {
 	for (Component* pComponent : m_Components)

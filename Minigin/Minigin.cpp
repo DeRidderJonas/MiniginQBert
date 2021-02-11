@@ -6,8 +6,12 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+
+#pragma warning(push)
+#pragma warning(disable:26812)
 #include <SDL.h>
-//#include "TextObject.h"
+#pragma warning(pop)
+
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
@@ -104,22 +108,32 @@ void dae::Minigin::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
+		auto& time = Time::GetInstance();
 
 		bool doContinue = true;
 		float lag{ 0.f };
-		Time::GetInstance().Start();
+		float fixedUpdateDeltaTime{ MsPerFrame / 1'000.f }; //Divide by a thousand because it's in MilliSeconds
+		
+		time.Start();
 		while (doContinue)
 		{
-			Time::GetInstance().Update();
-			float deltaTime = Time::GetInstance().GetDeltaTime();
+			time.Update();
+			float deltaTime = time.GetDeltaTime();
 			lag += deltaTime;
+
 			doContinue = input.ProcessInput();
-			//while (lag >= (MsPerFrame / 1'000.f)) //Divide by a thousand because it's in MilliSeconds
-			//{
-				sceneManager.Update();
-			//	lag -= (MsPerFrame / 1'000.f);
-			//}
+
+			while (lag >= fixedUpdateDeltaTime)
+			{
+				sceneManager.FixedUpdate(); //Uses Time.FixedUpdateDeltaTime
+				lag -= fixedUpdateDeltaTime;
+			}
+			sceneManager.Update(); //Uses Time.DeltaTime
+			
 			renderer.Render();
+
+			auto sleepTime = duration_cast<duration<float>>(time.GetNow() + milliseconds(MsPerFrame) - high_resolution_clock::now());
+			if (sleepTime.count() > 0.f) this_thread::sleep_for(sleepTime);
 		}
 	}
 
