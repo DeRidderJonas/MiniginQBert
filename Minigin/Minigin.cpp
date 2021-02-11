@@ -53,24 +53,23 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = new GameObject();
-	auto textureComponent = new RenderComponent(go, "logo.png");
-	go->AddComponent(textureComponent);
+	auto renderComponent = new RenderComponent(go, "logo.png");
+	go->AddComponent(renderComponent);
 	go->GetComponentOfType<RenderComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
 	go = new GameObject();
-	//go->GetComponentOfType<TextureComponent>()->SetTexture("logo.png");
-	textureComponent = new RenderComponent(go, "logo.png");
+	renderComponent = new RenderComponent(go, "logo.png");
 	auto transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(216, 180);
 
-	go->AddComponent(textureComponent);
+	go->AddComponent(renderComponent);
 	scene.Add(go);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	go = new GameObject();
-	auto textComponent = new RenderComponent(go, "Programming 4 Assignment", font);
-	go->AddComponent(textComponent);
+	renderComponent = new RenderComponent(go, "Programming 4 Assignment", font);
+	go->AddComponent(renderComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(80, 20);
 	scene.Add(go);
@@ -78,9 +77,9 @@ void dae::Minigin::LoadGame() const
 
 	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go = new GameObject();
-	textComponent = new RenderComponent(go, "FPS", font);
-	go->AddComponent(textComponent);
-	auto fpsComponent = new FPSComponent(go, textComponent);
+	renderComponent = new RenderComponent(go, "FPS", font);
+	go->AddComponent(renderComponent);
+	auto fpsComponent = new FPSComponent(go, renderComponent);
 	go->AddComponent(fpsComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(5, 5);
