@@ -2,7 +2,7 @@
 #include "FPSComponent.h"
 #include "Time.h"
 
-dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pTextComponent)
+dae::FPSComponent::FPSComponent(GameObject* pOwner, RenderComponent* pTextComponent)
 	: Component(pOwner)
 	, m_pTextComponent{pTextComponent}
 {

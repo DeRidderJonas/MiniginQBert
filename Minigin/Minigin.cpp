@@ -12,8 +12,7 @@
 #include "Scene.h"
 #include "Time.h"
 #include "TransformComponent.h"
-#include "TextureComponent.h"
-#include "TextComponent.h"
+#include "RenderComponent.h"
 #include "FPSComponent.h"
 
 using namespace std;
@@ -50,14 +49,14 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = new GameObject();
-	auto textureComponent = new TextureComponent(go, "logo.png");
+	auto textureComponent = new RenderComponent(go, "logo.png");
 	go->AddComponent(textureComponent);
-	go->GetComponentOfType<TextureComponent>()->SetTexture("background.jpg");
+	go->GetComponentOfType<RenderComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
 	go = new GameObject();
 	//go->GetComponentOfType<TextureComponent>()->SetTexture("logo.png");
-	textureComponent = new TextureComponent(go, "logo.png");
+	textureComponent = new RenderComponent(go, "logo.png");
 	auto transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(216, 180);
 
@@ -66,7 +65,7 @@ void dae::Minigin::LoadGame() const
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	go = new GameObject();
-	auto textComponent = new TextComponent(go, "Programming 4 Assignment", font);
+	auto textComponent = new RenderComponent(go, "Programming 4 Assignment", font);
 	go->AddComponent(textComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(80, 20);
@@ -75,7 +74,7 @@ void dae::Minigin::LoadGame() const
 
 	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go = new GameObject();
-	textComponent = new TextComponent(go, "FPS", font);
+	textComponent = new RenderComponent(go, "FPS", font);
 	go->AddComponent(textComponent);
 	auto fpsComponent = new FPSComponent(go, textComponent);
 	go->AddComponent(fpsComponent);
@@ -115,11 +114,11 @@ void dae::Minigin::Run()
 			float deltaTime = Time::GetInstance().GetDeltaTime();
 			lag += deltaTime;
 			doContinue = input.ProcessInput();
-			while (lag >= (MsPerFrame / 1'000.f)) //Divide by a thousand because it's in MilliSeconds
-			{
+			//while (lag >= (MsPerFrame / 1'000.f)) //Divide by a thousand because it's in MilliSeconds
+			//{
 				sceneManager.Update();
-				lag -= (MsPerFrame / 1'000.f);
-			}
+			//	lag -= (MsPerFrame / 1'000.f);
+			//}
 			renderer.Render();
 		}
 	}

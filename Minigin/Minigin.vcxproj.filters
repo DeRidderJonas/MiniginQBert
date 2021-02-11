@@ -63,9 +63,6 @@
     <ClInclude Include="Time.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="TextureComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -76,9 +73,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="FPSComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,9 +116,6 @@
     <ClCompile Include="Time.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="TextureComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -132,9 +123,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
