@@ -18,6 +18,7 @@
 #include "TransformComponent.h"
 #include "RenderComponent.h"
 #include "FPSComponent.h"
+#include "TestCommand.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -109,6 +110,11 @@ void dae::Minigin::Run()
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
 
+		auto pTestCommand = std::make_shared<TestCommand>();
+		input.Bind(ControllerButton::ButtonA, pTestCommand, InputState::pressed);
+		input.Bind(ControllerButton::ButtonB, pTestCommand, InputState::down);
+		input.Bind(ControllerButton::ButtonX, pTestCommand, InputState::released);
+		
 		bool doContinue = true;
 		float lag{ 0.f };
 		float fixedUpdateDeltaTime{ MsPerFrame / 1'000.f }; //Divide by a thousand because it's in MilliSeconds

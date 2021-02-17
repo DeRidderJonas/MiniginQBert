@@ -37,19 +37,23 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+		InputManager();
 		bool ProcessInput();
-		InputState IsPressed(unsigned id, ControllerButton button) const;
-		void Bind(ControllerButton button, const std::shared_ptr<Command>& command);
+		void Bind(ControllerButton button, const std::shared_ptr<Command>& command, InputState inputState);
 	private:
 		XINPUT_STATE m_CurrentState{};
 
 		struct ButtonInfo
 		{
+		public:
 			bool pressed;
 			bool lastValue;
+			InputState stateRequired;
+
+			bool isActive() const;
 		};
 
-		void UpdateControllerCommandMap();
+		void ProcessControllerInput();
 		
 		//unsigned = controller id
 		using ControllerKey = std::pair<unsigned, ControllerButton>;

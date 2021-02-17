@@ -3,11 +3,27 @@
 #include <SDL.h>
 
 
+dae::InputManager::InputManager()
+{
+	const int amountOfControllers{ 1 };
+	for (int controllerId = 0; controllerId < amountOfControllers; ++controllerId)
+	{
+		for (int i = 0; i < int(ControllerButton::Last); ++i)
+		{
+			ControllerButton cb = ControllerButton(i);
+			ControllerKey ck = std::make_pair(controllerId, cb);
+			ButtonInfo bi{ false, false, InputState::up };
+			ControllerCommand cc = std::make_pair(bi, nullptr);
+			m_Controls.emplace(ck, cc);
+		}
+	}
+}
+
 bool dae::InputManager::ProcessInput()
 {
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);
-	UpdateControllerCommandMap();
+	ProcessControllerInput();
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -25,32 +41,37 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-dae::InputState dae::InputManager::IsPressed(unsigned id, ControllerButton button) const
-{
-	auto buttonIt = std::find_if(m_Controls.begin(), m_Controls.end(), [id, button](const std::pair<ControllerKey, ControllerCommand>& pair)
-	{
-			return pair.first.first == id && pair.first.second == button;
-	});
-
-	if (buttonIt == m_Controls.end()) return InputState::up;
-	const ButtonInfo& buttonInfo = buttonIt->second.first;
-
-	if (buttonInfo.pressed && !buttonInfo.lastValue) return InputState::pressed;
-	if (buttonInfo.pressed && buttonInfo.lastValue) return InputState::down;
-	if (!buttonInfo.pressed && buttonInfo.lastValue) return InputState::released;
-	return InputState::up;
-}
-
-void dae::InputManager::Bind(ControllerButton button, const std::shared_ptr<Command>& command)
+void dae::InputManager::Bind(ControllerButton button, const std::shared_ptr<Command>& command, InputState inputState)
 {
 	//For loop in case there are multiple controllers
 	for (auto& pair : m_Controls)
 	{
-		if (pair.first.second == button) pair.second.second = command;
+		if (pair.first.second == button)
+		{
+			pair.second.second = command;
+			pair.second.first.stateRequired = inputState;
+		}
 	}
 }
 
-void dae::InputManager::UpdateControllerCommandMap()
+bool dae::InputManager::ButtonInfo::isActive() const
+{
+	switch (stateRequired)
+	{
+		case InputState::pressed:
+			return pressed && !lastValue;
+		case InputState::released:
+			return !pressed && lastValue;
+		case InputState::down:
+			return pressed;
+		case InputState::up: 
+			return !pressed;
+		default: 
+			return false;
+	}
+}
+
+void dae::InputManager::ProcessControllerInput()
 {
 	for (auto& pair : m_Controls)
 	{
@@ -106,6 +127,9 @@ void dae::InputManager::UpdateControllerCommandMap()
 		default:
 			cc.first.pressed = false;
 		}
+
+		const ButtonInfo& buttonInfo = pair.second.first;
+		if (buttonInfo.isActive() && pair.second.second != nullptr) pair.second.second->Execute();
 	}
 }
 
