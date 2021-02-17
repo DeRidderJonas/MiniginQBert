@@ -252,19 +252,19 @@ void ImGui::ShowDemoWindow(bool* p_open)
 
     // Examples Apps (accessible from the "Examples" menu)
     static bool show_app_main_menu_bar = true;
-    static bool show_app_documents = true;
+    static bool show_app_documents = false;
 
-    static bool show_app_console = true;
-    static bool show_app_log = true;
-    static bool show_app_layout = true;
-    static bool show_app_property_editor = true;
-    static bool show_app_long_text = true;
-    static bool show_app_auto_resize = true;
-    static bool show_app_constrained_resize = true;
-    static bool show_app_simple_overlay = true;
-    static bool show_app_fullscreen = true;
-    static bool show_app_window_titles = true;
-    static bool show_app_custom_rendering = true;
+    static bool show_app_console = false;
+    static bool show_app_log = false;
+    static bool show_app_layout = false;
+    static bool show_app_property_editor = false;
+    static bool show_app_long_text = false;
+    static bool show_app_auto_resize = false;
+    static bool show_app_constrained_resize = false;
+    static bool show_app_simple_overlay = false;
+    static bool show_app_fullscreen = false;
+    static bool show_app_window_titles = false;
+    static bool show_app_custom_rendering = false;
 
     if (show_app_main_menu_bar)       ShowExampleAppMainMenuBar();
     if (show_app_documents)           ShowExampleAppDocuments(&show_app_documents);
