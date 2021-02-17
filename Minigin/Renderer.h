@@ -26,6 +26,8 @@ namespace dae
 		SDL_Window* m_pWindow{};
 
 		bool m_ShowDemo{ true };
+
+		int GetOpenGLDriverIndex();
 	};
 }
 
