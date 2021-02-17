@@ -19,6 +19,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{f5f953bc-31da-48fe-8c84-3569fd769aac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{ff55086c-2717-496a-91c4-dca99b6e1ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -75,6 +78,9 @@
     <ClInclude Include="FPSComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -127,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
