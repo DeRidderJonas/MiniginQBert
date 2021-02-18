@@ -210,15 +210,15 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="RenderComponent.h" />
-    <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TestCommand.h" />
-    <ClInclude Include="TextObject.h" />
+    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
@@ -286,8 +286,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TestCommand.cpp" />
-    <ClCompile Include="TextObject.cpp" />
+    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

@@ -19,6 +19,8 @@
 #include "RenderComponent.h"
 #include "FPSComponent.h"
 #include "TestCommand.h"
+#include "TextComponent.h"
+#include "TextureComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -54,13 +56,13 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = new GameObject();
-	auto renderComponent = new RenderComponent(go, "logo.png");
+	auto renderComponent = new TextureComponent(go, "logo.png");
 	go->AddComponent(renderComponent);
-	go->GetComponentOfType<RenderComponent>()->SetTexture("background.jpg");
+	go->GetComponentOfType<TextureComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
 	go = new GameObject();
-	renderComponent = new RenderComponent(go, "logo.png");
+	renderComponent = new TextureComponent(go, "logo.png");
 	auto transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(216, 180);
 
@@ -69,18 +71,21 @@ void dae::Minigin::LoadGame() const
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	go = new GameObject();
-	renderComponent = new RenderComponent(go, "Programming 4 Assignment", font);
+	renderComponent = new TextureComponent(go);
+	auto textComponent = new TextComponent(go, renderComponent, "Programming 4 Assignment", font);
 	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(80, 20);
 	scene.Add(go);
 
-
 	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go = new GameObject();
-	renderComponent = new RenderComponent(go, "FPS", font);
+	renderComponent = new TextureComponent(go);
+	textComponent = new TextComponent(go, renderComponent, "FPS", font);
+	auto fpsComponent = new FPSComponent(go, textComponent);
 	go->AddComponent(renderComponent);
-	auto fpsComponent = new FPSComponent(go, renderComponent);
+	go->AddComponent(textComponent);
 	go->AddComponent(fpsComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(5, 5);

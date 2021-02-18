@@ -2,14 +2,19 @@
 #include "FPSComponent.h"
 #include "Time.h"
 
-dae::FPSComponent::FPSComponent(GameObject* pOwner, RenderComponent* pRenderComponent)
+dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pRenderComponent)
 	: Component(pOwner)
-	, m_pRenderComponent{pRenderComponent}
+	, m_pTextComponent{pRenderComponent}
+	, m_FPS{}
 {
 }
 
 void dae::FPSComponent::Update()
 {
 	int fps = Time::GetInstance().GetFPS();
-	m_pRenderComponent->SetText(std::to_string(fps) + " FPS");
+	if(fps != m_FPS)
+	{
+		m_FPS = fps;
+		m_pTextComponent->SetText(std::to_string(fps) + " FPS");
+	}
 }

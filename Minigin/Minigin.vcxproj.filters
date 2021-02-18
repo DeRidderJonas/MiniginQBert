@@ -25,27 +25,18 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{fcbb22c8-6e9d-4707-b38d-b493355d0fd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\RenderComponent">
+      <UniqueIdentifier>{8e3d6552-81c0-4306-b422-a6b9f2fc71f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{b10700dc-bdf1-442a-9d44-007dfc5bbc8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
@@ -65,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Components</Filter>
@@ -108,27 +96,33 @@
     <ClInclude Include="Renderer.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Components\RenderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>Components\RenderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Util</Filter>
+    </ClInclude>
     <ClInclude Include="TestCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -148,9 +142,6 @@
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Components</Filter>
@@ -188,8 +179,26 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Components\RenderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp">
+      <Filter>Components\RenderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
     <ClCompile Include="TestCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Command</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
