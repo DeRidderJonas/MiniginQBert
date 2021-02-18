@@ -22,14 +22,6 @@ void Scene::Add(GameObject* object)
 	m_Objects.push_back(object);
 }
 
-void dae::Scene::FixedUpdate()
-{
-	for (auto object : m_Objects)
-	{
-		object->FixedUpdate();
-	}
-}
-
 void Scene::Update()
 {
 	for(auto object : m_Objects)

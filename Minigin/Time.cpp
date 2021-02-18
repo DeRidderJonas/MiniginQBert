@@ -47,16 +47,6 @@ const std::chrono::high_resolution_clock::time_point& dae::Time::GetNow() const
 	return m_LastTime;
 }
 
-void dae::Time::SetFixedUpdateDeltaTime(float value)
-{
-	m_FixedUpdateDeltaTime = value;
-}
-
-float dae::Time::GetFixedUpdateDeltaTime()
-{
-	return m_FixedUpdateDeltaTime;
-}
-
 dae::Time::Time()
 	: m_IsRunning{false}
 	, m_LastTime{}
@@ -64,6 +54,5 @@ dae::Time::Time()
 	, m_FPS{0}
 	, m_FPSTimer{0.f}
 	, m_FPSCounter{0}
-	, m_FixedUpdateDeltaTime{0.f}
 {
 }

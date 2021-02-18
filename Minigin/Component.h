@@ -8,7 +8,6 @@ namespace dae
 	public:
 		Component(const GameObject* pOwner) : m_pOwner{ pOwner } {};
 		virtual ~Component() = default;
-		virtual void FixedUpdate() {};
 		virtual void Update() {};
 
 		Component(const Component&) = delete;

@@ -7,7 +7,6 @@ namespace dae
 	class GameObject final
 	{
 	public:
-		void FixedUpdate(); //Used for Physics and Networking
 		void Update();
 
 		template<typename ComponentType>

@@ -116,23 +116,14 @@ void dae::Minigin::Run()
 		input.Bind(ControllerButton::ButtonX, pTestCommand, InputState::released);
 		
 		bool doContinue = true;
-		float lag{ 0.f };
-		float fixedUpdateDeltaTime{ MsPerFrame / 1'000.f }; //Divide by a thousand because it's in MilliSeconds
 		
 		time.Start();
 		while (doContinue)
 		{
 			time.Update();
-			float deltaTime = time.GetDeltaTime();
-			lag += deltaTime;
 
 			doContinue = input.ProcessInput();
 
-			while (lag >= fixedUpdateDeltaTime)
-			{
-				sceneManager.FixedUpdate(); //Uses Time.FixedUpdateDeltaTime
-				lag -= fixedUpdateDeltaTime;
-			}
 			sceneManager.Update(); //Uses Time.DeltaTime
 			
 			renderer.Render();
