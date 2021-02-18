@@ -16,11 +16,11 @@
 #include "Scene.h"
 #include "Time.h"
 #include "TransformComponent.h"
-#include "RenderComponent.h"
 #include "FPSComponent.h"
 #include "TestCommand.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
+#include "GameModeMenuComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -89,6 +89,11 @@ void dae::Minigin::LoadGame() const
 	go->AddComponent(fpsComponent);
 	transform = go->GetComponentOfType<TransformComponent>();
 	transform->SetPosition(5, 5);
+	scene.Add(go);
+
+	go = new GameObject();
+	GameModeMenuComponent* gmmc = new GameModeMenuComponent(go);
+	go->AddComponent(gmmc);
 	scene.Add(go);
 }
 

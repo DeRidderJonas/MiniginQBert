@@ -25,7 +25,7 @@ namespace dae
 		SDL_Renderer* m_Renderer{};
 		SDL_Window* m_pWindow{};
 
-		bool m_ShowDemo{ true };
+		bool m_ShowDemo{ false };
 
 		int GetOpenGLDriverIndex();
 	};

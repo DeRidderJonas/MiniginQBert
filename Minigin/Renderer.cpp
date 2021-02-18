@@ -32,11 +32,12 @@ void dae::Renderer::Render() const
 {
 	SDL_RenderClear(m_Renderer);
 
-	SceneManager::GetInstance().Render();
-
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_pWindow);
 	ImGui::NewFrame();
+
+	SceneManager::GetInstance().Render();
+
 	if (m_ShowDemo)
 	{
 		bool showDemo{ m_ShowDemo };
