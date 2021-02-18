@@ -22,6 +22,7 @@ void dae::Time::Update()
 	m_DeltaTime = std::chrono::duration<float>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;
 
+	//Prefer this method to only update FPS once every second (Don't spasm the counter)
 	m_FPSTimer += m_DeltaTime;
 	++m_FPSCounter;
 	if (m_FPSTimer >= 1.f)
