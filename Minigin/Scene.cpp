@@ -17,9 +17,20 @@ Scene::~Scene()
 	}
 }
 
-void Scene::Add(GameObject* object)
+void Scene::Add(GameObject* pObject)
 {
-	m_Objects.push_back(object);
+	m_Objects.push_back(pObject);
+	
+	auto pRenderComponent = pObject->GetComponentOfType<RenderComponent>();
+	if(pRenderComponent)
+	{
+		m_RenderComponents.push_back(pRenderComponent);
+	}
+}
+
+void Scene::Add(RenderComponent* pRenderComponent)
+{
+	m_RenderComponents.push_back(pRenderComponent);
 }
 
 void Scene::Update()
@@ -32,11 +43,8 @@ void Scene::Update()
 
 void Scene::Render() const
 {
-	for (const auto object : m_Objects)
+	for (const auto renderComponent : m_RenderComponents)
 	{
-		auto renderComponent = object->GetComponentOfType<RenderComponent>();
-		if (renderComponent == nullptr) continue;
-
 		renderComponent->Render();
 	}
 }

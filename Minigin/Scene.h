@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderComponent.h"
 #include "SceneManager.h"
 
 namespace dae
@@ -8,7 +9,9 @@ namespace dae
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(GameObject* object);
+		void Add(GameObject* pObject);
+		//Only to be used in case RenderComponent is added to GameObject AFTER it was already added to the scene
+		void Add(RenderComponent* pRenderComponent);
 
 		void Update();
 		void Render() const;
@@ -24,6 +27,7 @@ namespace dae
 
 		std::string m_Name;
 		std::vector <GameObject*> m_Objects{};
+		std::vector<RenderComponent*> m_RenderComponents{};
 
 		static unsigned int m_IdCounter; 
 	};
