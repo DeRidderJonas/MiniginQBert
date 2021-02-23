@@ -1,12 +1,12 @@
 #pragma once
 #include "RenderComponent.h"
 
-namespace dae
+namespace QBert
 {
-	class GameModeMenuComponent : public RenderComponent
+	class GameModeMenuComponent : public dae::RenderComponent
 	{
 	public:
-		GameModeMenuComponent(GameObject* pOwner);
+		GameModeMenuComponent(dae::GameObject* pOwner);
 		
 		void Update() override;
 		void Render() const override;

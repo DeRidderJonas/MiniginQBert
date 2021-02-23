@@ -92,7 +92,7 @@ void dae::Minigin::LoadGame() const
 	scene.Add(go);
 
 	go = new GameObject();
-	GameModeMenuComponent* gmmc = new GameModeMenuComponent(go);
+	QBert::GameModeMenuComponent* gmmc = new QBert::GameModeMenuComponent(go);
 	go->AddComponent(gmmc);
 	scene.Add(go);
 }

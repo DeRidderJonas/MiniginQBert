@@ -3,16 +3,16 @@
 
 #include "imgui.h"
 
-dae::GameModeMenuComponent::GameModeMenuComponent(GameObject* pOwner)
+QBert::GameModeMenuComponent::GameModeMenuComponent(dae::GameObject* pOwner)
 	: RenderComponent(pOwner)
 {
 }
 
-void dae::GameModeMenuComponent::Update()
+void QBert::GameModeMenuComponent::Update()
 {
 }
 
-void dae::GameModeMenuComponent::Render() const
+void QBert::GameModeMenuComponent::Render() const
 {
 	ImGui::Begin("Modes");
 	ImGui::Button("Single Player");
