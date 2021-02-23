@@ -8,6 +8,8 @@ void dae::SceneManager::Update()
 	{
 		scene->Update();
 	}
+
+	//TODO: once GO can be deleted, remove/erase them here
 }
 
 void dae::SceneManager::Render()
