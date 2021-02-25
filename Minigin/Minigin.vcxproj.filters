@@ -34,6 +34,9 @@
     <Filter Include="Observer">
       <UniqueIdentifier>{21195a25-e62d-46f5-871c-b3ea648be415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TMP_QBert">
+      <UniqueIdentifier>{2197cd21-5919-48c8-8f8a-12215fd5b91d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -114,32 +117,32 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="GameModeMenuComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureLineComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KillCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Observer</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModeMenuComponent.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="KillCommand.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLineComponent.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>TMP_QBert</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,32 +221,32 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="GameModeMenuComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureLineComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KillCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameModeMenuComponent.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="KillCommand.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLineComponent.cpp">
+      <Filter>TMP_QBert</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
