@@ -133,7 +133,9 @@ void dae::Minigin::LoadGame() const
 	coily->AddComponent(hc);
 	scene.Add(coily);
 
-	input.Bind(0,ControllerButton::ButtonB, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+	auto killCommand = std::make_shared<QBert::KillCommand>(hc);
+	input.Bind(0,ControllerButton::ButtonB, killCommand, InputState::pressed);
+	input.Bind(SDLK_q, killCommand, InputState::pressed);
 
 	go = new GameObject();
 	tlc = new QBert::TextureLineComponent(go, "Life.png");
@@ -153,9 +155,11 @@ void dae::Minigin::LoadGame() const
 	input.Bind(1,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 
 	std::cout << "Only controller is supported at the moment!\n";
-	std::cout << "A: Kill player 1\n";
-	std::cout << "B: Gain points\n";
-	std::cout << "X: Kill player 2\n";
+	std::cout << "[Controller 0] A: Kill player 1\n";
+	std::cout << "[Controller 0] B: Gain points\n";
+	std::cout << "[Keyboard] Q: Gain points\n";
+	std::cout << "[Controller 0] X: Kill player 2\n";
+	std::cout << "[Controller 1] X: Kill player 2\n";
 }
 
 void dae::Minigin::Cleanup()

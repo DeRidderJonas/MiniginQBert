@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <XInput.h>
+#include <SDL.h>
 
 #include "Command.h"
 #include "Singleton.h"
@@ -36,16 +37,17 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		InputManager();
+		InputManager() = default;
 		bool ProcessInput();
-		void Bind(unsigned controllerId, ControllerButton button, const std::shared_ptr<Command>& command, InputState inputState);
+		void Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState);
+		void Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState);
 	private:
 
-		struct ButtonInfo
+		struct InputInfo
 		{
 		public:
-			ButtonInfo(bool Pressed, bool LastValue, const InputState& InputState)
-				: pressed{ Pressed }, lastValue{ LastValue }, stateRequired{ InputState }{};
+			InputInfo(const InputState& InputState)
+				: pressed{ false }, lastValue{ false }, stateRequired{ InputState }{};
 			bool pressed;
 			bool lastValue;
 			InputState stateRequired;
@@ -54,12 +56,20 @@ namespace dae
 		};
 
 		void ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId);
-		
+		void ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType);
+
+		// MAPPING
+		using InputCommand = std::pair<InputInfo, std::shared_ptr<Command>>;
+
+		// CONTROLLER MAPPING
 		//unsigned = controller id
 		using ControllerKey = std::pair<unsigned, ControllerButton>;
-		using ControllerCommand = std::pair<ButtonInfo, std::shared_ptr<Command>>;
-		using ControllerCommandMap = std::map<ControllerKey, ControllerCommand>;
+		using ControllerCommandMap = std::map<ControllerKey, InputCommand>;
 		ControllerCommandMap m_Controls{};
+
+		// KEYBOARD MAPPING
+		using KeyboardCommandMap = std::map<SDL_Keycode, InputCommand>;
+		KeyboardCommandMap m_KeyboardControls{};
 	};
 
 }
