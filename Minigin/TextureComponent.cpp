@@ -1,6 +1,9 @@
 #include "MiniginPCH.h"
 #include "TextureComponent.h"
 
+#include <SDL_render.h>
+
+
 #include "Renderer.h"
 #include "ResourceManager.h"
 
@@ -39,4 +42,20 @@ void dae::TextureComponent::SetTexture(const std::shared_ptr<Texture2D>& pTextur
 void dae::TextureComponent::SetTexture(const std::string& fileName)
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(fileName);
+}
+
+void dae::TextureComponent::SetPosition(float x, float y)
+{
+	m_pTransform->SetPosition(x, y);
+}
+
+glm::vec2 dae::TextureComponent::GetTextureDimensions() const
+{
+	if (m_pTexture == nullptr) return glm::vec2{};
+	
+	int w{}, h{};
+	int result = SDL_QueryTexture(m_pTexture->GetSDLTexture(), NULL, NULL, &w, &h);
+	if (result == 0) return glm::vec2{w, h};
+	
+	return glm::vec2{};
 }

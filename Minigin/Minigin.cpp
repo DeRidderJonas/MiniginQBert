@@ -17,10 +17,14 @@
 #include "Time.h"
 #include "TransformComponent.h"
 #include "FPSComponent.h"
-#include "TestCommand.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "GameModeMenuComponent.h"
+#include "HealthComponent.h"
+#include "KillCommand.h"
+#include "LivesComponent.h"
+#include "ScoreComponent.h"
+#include "TextureLineComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -54,6 +58,7 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	auto& input = InputManager::GetInstance();
 
 	auto go = new GameObject();
 	auto renderComponent = new TextureComponent(go, "logo.png");
@@ -95,6 +100,61 @@ void dae::Minigin::LoadGame() const
 	QBert::GameModeMenuComponent* gmmc = new QBert::GameModeMenuComponent(go);
 	go->AddComponent(gmmc);
 	scene.Add(go);
+
+	go = new GameObject();
+	QBert::TextureLineComponent* tlc = new QBert::TextureLineComponent(go, "Life.png");
+	QBert::LivesComponent* lc = new QBert::LivesComponent(go, tlc, 5);
+	go->AddComponent(tlc);
+	go->AddComponent(lc);
+	go->GetComponentOfType<TransformComponent>()->SetPosition(5.f, 50.f);
+	scene.Add(go);
+
+	go = new GameObject();
+	renderComponent = new TextureComponent(go);
+	textComponent = new TextComponent(go, renderComponent, "", font);
+	auto scoreComponent = new QBert::ScoreComponent(go, textComponent);
+	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
+	go->AddComponent(scoreComponent);
+	go->GetComponentOfType<TransformComponent>()->SetPosition(5.f, 100.f);
+	scene.Add(go);
+	
+	GameObject* QBert = new GameObject();
+	QBert::HealthComponent* hc = new QBert::HealthComponent(QBert, QBert::HealthComponent::HealthOwner::QBert);
+	hc->AddObserver(lc);
+	QBert->AddComponent(hc);
+	scene.Add(QBert);
+
+	input.Bind(ControllerButton::ButtonA, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+
+	GameObject* coily = new GameObject();
+	hc = new QBert::HealthComponent(coily, QBert::HealthComponent::HealthOwner::Coily);
+	hc->AddObserver(scoreComponent);
+	coily->AddComponent(hc);
+	scene.Add(coily);
+
+	input.Bind(ControllerButton::ButtonB, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+
+	go = new GameObject();
+	tlc = new QBert::TextureLineComponent(go, "Life.png");
+	lc = new QBert::LivesComponent(go, tlc, 5);
+	go->AddComponent(tlc);
+	go->AddComponent(lc);
+	go->GetComponentOfType<TransformComponent>()->SetPosition(200.f, 50.f);
+	scene.Add(go);
+	
+	QBert = new GameObject();
+	hc = new QBert::HealthComponent(QBert, QBert::HealthComponent::HealthOwner::QBert);
+	hc->AddObserver(lc);
+	QBert->AddComponent(hc);
+	scene.Add(QBert);
+
+	input.Bind(ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+
+	std::cout << "Only controller is supported at the moment!\n";
+	std::cout << "A: Kill player 1\n";
+	std::cout << "B: Gain points\n";
+	std::cout << "X: Kill player 2\n";
 }
 
 void dae::Minigin::Cleanup()
@@ -120,11 +180,6 @@ void dae::Minigin::Run()
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
 
-		auto pTestCommand = std::make_shared<TestCommand>();
-		input.Bind(ControllerButton::ButtonA, pTestCommand, InputState::pressed);
-		input.Bind(ControllerButton::ButtonB, pTestCommand, InputState::down);
-		input.Bind(ControllerButton::ButtonX, pTestCommand, InputState::released);
-		
 		bool doContinue = true;
 		
 		time.Start();
