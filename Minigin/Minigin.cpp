@@ -125,7 +125,7 @@ void dae::Minigin::LoadGame() const
 	QBert->AddComponent(hc);
 	scene.Add(QBert);
 
-	input.Bind(ControllerButton::ButtonA, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+	input.Bind(0,ControllerButton::ButtonA, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 
 	GameObject* coily = new GameObject();
 	hc = new QBert::HealthComponent(coily, QBert::HealthComponent::HealthOwner::Coily);
@@ -133,7 +133,7 @@ void dae::Minigin::LoadGame() const
 	coily->AddComponent(hc);
 	scene.Add(coily);
 
-	input.Bind(ControllerButton::ButtonB, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+	input.Bind(0,ControllerButton::ButtonB, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 
 	go = new GameObject();
 	tlc = new QBert::TextureLineComponent(go, "Life.png");
@@ -149,7 +149,8 @@ void dae::Minigin::LoadGame() const
 	QBert->AddComponent(hc);
 	scene.Add(QBert);
 
-	input.Bind(ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+	input.Bind(0,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
+	input.Bind(1,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 
 	std::cout << "Only controller is supported at the moment!\n";
 	std::cout << "A: Kill player 1\n";

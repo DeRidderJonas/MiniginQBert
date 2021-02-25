@@ -5,25 +5,17 @@
 
 dae::InputManager::InputManager()
 {
-	const int amountOfControllers{ 1 };
-	for (int controllerId = 0; controllerId < amountOfControllers; ++controllerId)
-	{
-		for (int i = 0; i < int(ControllerButton::Last); ++i)
-		{
-			ControllerButton cb = ControllerButton(i);
-			ControllerKey ck = std::make_pair(controllerId, cb);
-			ButtonInfo bi{ false, false, InputState::up };
-			ControllerCommand cc = std::make_pair(bi, nullptr);
-			m_Controls.emplace(ck, cc);
-		}
-	}
 }
 
 bool dae::InputManager::ProcessInput()
 {
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
-	ProcessControllerInput();
+	for (int i = 0; i < XUSER_MAX_COUNT; ++i)
+	{
+		XINPUT_STATE inputState{};
+		ZeroMemory(&inputState, sizeof(XINPUT_STATE));
+		XInputGetState(i, &inputState);
+		ProcessControllerInput(inputState, i);
+	}
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -41,17 +33,15 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::Bind(ControllerButton button, const std::shared_ptr<Command>& command, InputState inputState)
+void dae::InputManager::Bind(unsigned controllerId, ControllerButton button, const std::shared_ptr<Command>& command, InputState inputState)
 {
-	//For loop in case there are multiple controllers
-	for (auto& pair : m_Controls)
-	{
-		if (pair.first.second == button)
-		{
-			pair.second.second = command;
-			pair.second.first.stateRequired = inputState;
-		}
-	}
+	ControllerKey controllerKey = std::make_pair(controllerId, button);
+	auto duplicateIt = m_Controls.find(controllerKey);
+	if (duplicateIt != m_Controls.end()) throw std::runtime_error("Button was already mapped for controller");
+
+	ButtonInfo buttonInfo{ false, false, inputState };
+	ControllerCommand controllerCommand = std::make_pair(buttonInfo, command);
+	m_Controls.emplace(controllerKey, controllerCommand);
 }
 
 bool dae::InputManager::ButtonInfo::isActive() const
@@ -71,62 +61,20 @@ bool dae::InputManager::ButtonInfo::isActive() const
 	}
 }
 
-void dae::InputManager::ProcessControllerInput()
+void dae::InputManager::ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId)
 {
 	for (auto& pair : m_Controls)
 	{
+		if (pair.first.first != controllerId) continue;
+		
 		ControllerCommand& cc = pair.second;
 		ButtonInfo& bi = cc.first;
 		bi.lastValue = bi.pressed;
 
 		const ControllerKey& ck = pair.first;
-		switch (ck.second)
-		{
-		case ControllerButton::ButtonA:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-			break;
-		case ControllerButton::ButtonB:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-			break;
-		case ControllerButton::ButtonX:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-			break;
-		case ControllerButton::ButtonY:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-			break;
-		case ControllerButton::ButtonStart:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_START;
-			break;
-		case ControllerButton::ButtonBack:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_BACK;
-			break;
-		case ControllerButton::ShoulderLeft:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER;
-			break;
-		case ControllerButton::ShoulderRight:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER;
-			break;
-		case ControllerButton::DpadLeft:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT;
-			break;
-		case ControllerButton::DpadRight:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT;
-			break;
-		case ControllerButton::DpadUp:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP;
-			break;
-		case ControllerButton::DpadDown:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN;
-			break;
-		case ControllerButton::ThumbLeft:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB;
-			break;
-		case ControllerButton::ThumbRight:
-			cc.first.pressed = m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB;
-			break;
-		default:
-			cc.first.pressed = false;
-		}
+		ControllerButton button = ck.second;
+
+		cc.first.pressed = inputState.Gamepad.wButtons & static_cast<int>(button);
 
 		const ButtonInfo& buttonInfo = pair.second.first;
 		if (buttonInfo.isActive() && pair.second.second != nullptr) pair.second.second->Execute();
