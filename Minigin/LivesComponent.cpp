@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "LivesComponent.h"
 
+
+#include "Event.h"
 #include "TextureLineComponent.h"
 
 QBert::LivesComponent::LivesComponent(dae::GameObject* pOwner, TextureLineComponent* pTextureLineComponent, int amountOfLives)
@@ -15,9 +17,9 @@ void QBert::LivesComponent::Update()
 {
 }
 
-void QBert::LivesComponent::OnNotify(const Event& event)
+void QBert::LivesComponent::OnNotify(const dae::Event& event)
 {
-	if (event.name == "PLAYERDEATH")
+	if (event.GetName() == "PLAYERDEATH")
 	{
 		m_AmountOfLives--;
 		m_pTextureLineComponent->SetAmountInLine(m_AmountOfLives);

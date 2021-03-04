@@ -14,7 +14,7 @@ void dae::Subject::RemoveObserver(Observer* pObserver)
 	m_Observers.erase(findIt, m_Observers.end());
 }
 
-void dae::Subject::Notify(const Observer::Event& event)
+void dae::Subject::Notify(const Event& event)
 {
 	for(Observer* pObserver : m_Observers)
 	{

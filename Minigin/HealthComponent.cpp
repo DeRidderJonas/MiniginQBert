@@ -2,6 +2,7 @@
 #include "HealthComponent.h"
 
 #include "Observer.h"
+#include "ScoreEvent.h"
 #include "Subject.h"
 
 QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner)
@@ -17,25 +18,30 @@ void QBert::HealthComponent::Update()
 
 void QBert::HealthComponent::Kill()
 {
-	dae::Observer::Event event{};
 	switch (m_HealthOwner)
 	{
-	case HealthOwner::QBert: 
-		//Notify player death
-		event.name = "PLAYERDEATH";
+	case HealthOwner::QBert:
+		{
+			//Notify player death
+			dae::Event event{"PLAYERDEATH"};
+			m_pSubject.Notify(event);
+		}
 		break;
 	case HealthOwner::Coily:
-		//Notify Coily death
-		event.name = "SCORE";
-		event.value = 500;
+		{
+			//Notify Coily death
+			ScoreEvent event{ "SCORE", 500 };
+			m_pSubject.Notify(event);
+		}
 		break;
-	case HealthOwner::SlickSam: 
-		//Notify Slick or Sam death
-		event.name = "SCORE";
-		event.value = 300;
+	case HealthOwner::SlickSam:
+		{
+			//Notify Slick or Sam death
+			ScoreEvent event{ "SCORE", 300 };
+			m_pSubject.Notify(event);
+		}
 		break;
 	}
-	m_pSubject.Notify(event);
 }
 
 const QBert::HealthComponent::HealthOwner& QBert::HealthComponent::GetHealthOwnerType() const

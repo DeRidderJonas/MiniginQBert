@@ -144,6 +144,12 @@
     <ClInclude Include="ScoreComponent.h">
       <Filter>TMP_QBert</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreEvent.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -247,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="TextureLineComponent.cpp">
       <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreEvent.cpp">
+      <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
