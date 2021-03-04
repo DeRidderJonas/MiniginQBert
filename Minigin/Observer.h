@@ -1,20 +1,13 @@
 #pragma once
 
+
 namespace dae
 {
-	class Component;
-	class GameObject;
+	class Event;
 
 	class Observer
 	{
 	public:
-		struct Event
-		{
-			std::string name;
-			double value;
-			GameObject* pOwner;
-			Component* pInstigator;
-		};
 
 		virtual void OnNotify(const Event& event) = 0;
 

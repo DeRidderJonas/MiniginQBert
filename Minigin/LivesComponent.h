@@ -14,7 +14,7 @@ namespace QBert
 
 		void Update() override;
 
-		void OnNotify(const Event& event) override;
+		void OnNotify(const dae::Event& event) override;
 	private:
 		int m_AmountOfLives{};
 		

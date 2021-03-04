@@ -16,7 +16,7 @@ namespace dae
 
 		void AddObserver(Observer* pObserver);
 		void RemoveObserver(Observer* pObserver);
-		void Notify(const Observer::Event& event);
+		void Notify(const Event& event);
 	private:
 		std::vector<Observer*> m_Observers{};
 	};
