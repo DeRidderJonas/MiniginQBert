@@ -1,8 +1,6 @@
 #include "MiniginPCH.h"
 #include "SoundSystem.h"
 
-#include <future>
-
 void dae::SoundSystem::QueueSound(int soundId, float volume)
 {
 	PlaySound playSound{ soundId, volume };
