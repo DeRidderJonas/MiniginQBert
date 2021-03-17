@@ -61,119 +61,6 @@ void dae::Minigin::Initialize()
 	initAudio();
 }
 
-/**
- * Code constructing the scene world starts here
- */
-void dae::Minigin::LoadGame() const
-{
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-	auto& input = InputManager::GetInstance();
-
-	auto go = new GameObject();
-	auto renderComponent = new TextureComponent(go, "logo.png");
-	go->AddComponent(renderComponent);
-	go->GetComponentOfType<TextureComponent>()->SetTexture("background.jpg");
-	scene.Add(go);
-
-	go = new GameObject();
-	renderComponent = new TextureComponent(go, "logo.png");
-	auto transform = go->GetComponentOfType<TransformComponent>();
-	transform->SetPosition(216, 180);
-
-	go->AddComponent(renderComponent);
-	scene.Add(go);
-
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	go = new GameObject();
-	renderComponent = new TextureComponent(go);
-	auto textComponent = new TextComponent(go, renderComponent, "Programming 4 Assignment", font);
-	go->AddComponent(renderComponent);
-	go->AddComponent(textComponent);
-	transform = go->GetComponentOfType<TransformComponent>();
-	transform->SetPosition(80, 20);
-	scene.Add(go);
-
-	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	go = new GameObject();
-	renderComponent = new TextureComponent(go);
-	textComponent = new TextComponent(go, renderComponent, "FPS", font);
-	auto fpsComponent = new FPSComponent(go, textComponent);
-	go->AddComponent(renderComponent);
-	go->AddComponent(textComponent);
-	go->AddComponent(fpsComponent);
-	transform = go->GetComponentOfType<TransformComponent>();
-	transform->SetPosition(5, 5);
-	scene.Add(go);
-
-	go = new GameObject();
-	QBert::GameModeMenuComponent* gmmc = new QBert::GameModeMenuComponent(go);
-	go->AddComponent(gmmc);
-	scene.Add(go);
-
-	go = new GameObject();
-	QBert::TextureLineComponent* tlc = new QBert::TextureLineComponent(go, "Life.png");
-	QBert::LivesComponent* lc = new QBert::LivesComponent(go, tlc, 5);
-	go->AddComponent(tlc);
-	go->AddComponent(lc);
-	go->GetComponentOfType<TransformComponent>()->SetPosition(5.f, 50.f);
-	scene.Add(go);
-
-	go = new GameObject();
-	renderComponent = new TextureComponent(go);
-	textComponent = new TextComponent(go, renderComponent, "", font);
-	auto scoreComponent = new QBert::ScoreComponent(go, textComponent);
-	go->AddComponent(renderComponent);
-	go->AddComponent(textComponent);
-	go->AddComponent(scoreComponent);
-	go->GetComponentOfType<TransformComponent>()->SetPosition(5.f, 100.f);
-	scene.Add(go);
-	
-	GameObject* QBert = new GameObject();
-	QBert::HealthComponent* hc = new QBert::HealthComponent(QBert, QBert::HealthComponent::HealthOwner::QBert);
-	hc->AddObserver(lc);
-	QBert->AddComponent(hc);
-	scene.Add(QBert);
-
-	input.Bind(0,ControllerButton::ButtonA, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
-
-	GameObject* coily = new GameObject();
-	hc = new QBert::HealthComponent(coily, QBert::HealthComponent::HealthOwner::Coily);
-	hc->AddObserver(scoreComponent);
-	coily->AddComponent(hc);
-	scene.Add(coily);
-
-	auto killCommand = std::make_shared<QBert::KillCommand>(hc);
-	input.Bind(0,ControllerButton::ButtonB, killCommand, InputState::pressed);
-	input.Bind(SDLK_q, killCommand, InputState::pressed);
-
-	go = new GameObject();
-	tlc = new QBert::TextureLineComponent(go, "Life.png");
-	lc = new QBert::LivesComponent(go, tlc, 5);
-	go->AddComponent(tlc);
-	go->AddComponent(lc);
-	go->GetComponentOfType<TransformComponent>()->SetPosition(200.f, 50.f);
-	scene.Add(go);
-	
-	QBert = new GameObject();
-	hc = new QBert::HealthComponent(QBert, QBert::HealthComponent::HealthOwner::QBert);
-	hc->AddObserver(lc);
-	QBert->AddComponent(hc);
-	scene.Add(QBert);
-
-	input.Bind(0,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
-	input.Bind(1,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
-
-	input.Bind(SDLK_e, std::make_shared<QBert::SoundCommand>(), InputState::pressed);
-	
-	std::cout << "Only controller is supported at the moment!\n";
-	std::cout << "[Controller 0] A: Kill player 1\n";
-	std::cout << "[Controller 0] B: Gain points\n";
-	std::cout << "[Keyboard] Q: Gain points\n";
-	std::cout << "[Controller 0] X: Kill player 2\n";
-	std::cout << "[Controller 1] X: Kill player 2\n";
-	std::cout << "[Keyboard] E: Make sound\n";
-}
-
 void dae::Minigin::Cleanup()
 {
 	endAudio();
@@ -183,7 +70,7 @@ void dae::Minigin::Cleanup()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run()
+void dae::Minigin::Run(std::function<void()> loadGame)
 {
 	Initialize();
 	auto pSoundSystem = new SimpleSDL2AudioSoundSystem();
@@ -192,7 +79,7 @@ void dae::Minigin::Run()
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
 
-	LoadGame();
+	loadGame();
 
 	{
 		auto& renderer = Renderer::GetInstance();

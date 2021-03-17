@@ -126,27 +126,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
     </ClInclude>
-    <ClInclude Include="GameModeMenuComponent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesComponent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="KillCommand.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureLineComponent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreEvent.h">
-      <Filter>TMP_QBert</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Observer</Filter>
     </ClInclude>
@@ -164,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="SimpleSDL2AudioSoundSystem.h">
       <Filter>Services</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundCommand.h">
-      <Filter>TMP_QBert</Filter>
     </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Managers</Filter>
@@ -254,27 +230,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
-    <ClCompile Include="GameModeMenuComponent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="KillCommand.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureLineComponent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreEvent.cpp">
-      <Filter>TMP_QBert</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
@@ -292,9 +247,6 @@
     </ClCompile>
     <ClCompile Include="SimpleSDL2AudioSoundSystem.cpp">
       <Filter>Services</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundCommand.cpp">
-      <Filter>TMP_QBert</Filter>
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Managers</Filter>
