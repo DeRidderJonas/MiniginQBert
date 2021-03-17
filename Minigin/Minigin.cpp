@@ -12,6 +12,9 @@
 #include <SDL.h>
 #pragma warning(pop)
 
+#include "audio.h"
+
+#include "ConsoleSoundSystem.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
@@ -24,6 +27,9 @@
 #include "KillCommand.h"
 #include "LivesComponent.h"
 #include "ScoreComponent.h"
+#include "ServiceLocator.h"
+#include "SimpleSDL2AudioSoundSystem.h"
+#include "SoundCommand.h"
 #include "TextureLineComponent.h"
 
 using namespace std;
@@ -50,6 +56,9 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+
+	SDL_Init(SDL_INIT_AUDIO);
+	initAudio();
 }
 
 /**
@@ -154,16 +163,20 @@ void dae::Minigin::LoadGame() const
 	input.Bind(0,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 	input.Bind(1,ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), InputState::pressed);
 
+	input.Bind(SDLK_e, std::make_shared<QBert::SoundCommand>(), InputState::pressed);
+	
 	std::cout << "Only controller is supported at the moment!\n";
 	std::cout << "[Controller 0] A: Kill player 1\n";
 	std::cout << "[Controller 0] B: Gain points\n";
 	std::cout << "[Keyboard] Q: Gain points\n";
 	std::cout << "[Controller 0] X: Kill player 2\n";
 	std::cout << "[Controller 1] X: Kill player 2\n";
+	std::cout << "[Keyboard] E: Make sound\n";
 }
 
 void dae::Minigin::Cleanup()
 {
+	endAudio();
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
@@ -173,6 +186,8 @@ void dae::Minigin::Cleanup()
 void dae::Minigin::Run()
 {
 	Initialize();
+	auto pSoundSystem = new SimpleSDL2AudioSoundSystem();
+	ServiceLocator::RegisterSoundSystem(pSoundSystem);
 
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
@@ -185,6 +200,10 @@ void dae::Minigin::Run()
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
 
+		ServiceLocator::GetSoundSystem().Start();
+
+		std::cout << std::this_thread::get_id() << '\n';
+		
 		bool doContinue = true;
 		
 		time.Start();
@@ -203,5 +222,7 @@ void dae::Minigin::Run()
 		}
 	}
 
+	ServiceLocator::GetSoundSystem().Stop();
+	delete pSoundSystem;
 	Cleanup();
 }

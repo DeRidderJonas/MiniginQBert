@@ -37,6 +37,9 @@
     <Filter Include="TMP_QBert">
       <UniqueIdentifier>{2197cd21-5919-48c8-8f8a-12215fd5b91d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Services">
+      <UniqueIdentifier>{83817da5-404c-40fd-b959-4d7deed8a6bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -150,6 +153,24 @@
     <ClInclude Include="Event.h">
       <Filter>Observer</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleSoundSystem.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSDL2AudioSoundSystem.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundCommand.h">
+      <Filter>TMP_QBert</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -259,6 +280,24 @@
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleSoundSystem.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleSDL2AudioSoundSystem.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundCommand.cpp">
+      <Filter>TMP_QBert</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
