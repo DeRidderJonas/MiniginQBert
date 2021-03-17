@@ -17,7 +17,7 @@
 #include "ConsoleSoundSystem.h"
 #include "GameObject.h"
 #include "Scene.h"
-#include "Time.h"
+#include "GameTime.h"
 #include "TransformComponent.h"
 #include "FPSComponent.h"
 #include "TextComponent.h"
@@ -198,7 +198,7 @@ void dae::Minigin::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
-		auto& time = Time::GetInstance();
+		auto& time = GameTime::GetInstance();
 
 		ServiceLocator::GetSoundSystem().Start();
 

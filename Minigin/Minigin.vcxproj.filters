@@ -60,9 +60,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -171,6 +168,9 @@
     <ClInclude Include="SoundCommand.h">
       <Filter>TMP_QBert</Filter>
     </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -189,9 +189,6 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
@@ -298,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="SoundCommand.cpp">
       <Filter>TMP_QBert</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

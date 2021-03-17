@@ -1,14 +1,14 @@
 #include "MiniginPCH.h"
-#include "Time.h"
+#include "GameTime.h"
 
 
-void dae::Time::Start()
+void dae::GameTime::Start()
 {
 	m_IsRunning = true;
 	m_LastTime = std::chrono::high_resolution_clock::now();
 }
 
-void dae::Time::Update()
+void dae::GameTime::Update()
 {
 	if (!m_IsRunning)
 	{
@@ -33,22 +33,22 @@ void dae::Time::Update()
 	}
 }
 
-int dae::Time::GetFPS()
+int dae::GameTime::GetFPS() const
 {
 	return m_FPS;
 }
 
-float dae::Time::GetDeltaTime()
+float dae::GameTime::GetDeltaTime() const
 {
 	return m_DeltaTime;
 }
 
-const std::chrono::high_resolution_clock::time_point& dae::Time::GetNow() const
+const std::chrono::high_resolution_clock::time_point& dae::GameTime::GetNow() const
 {
 	return m_LastTime;
 }
 
-dae::Time::Time()
+dae::GameTime::GameTime()
 	: m_IsRunning{false}
 	, m_LastTime{}
 	, m_DeltaTime{0.f}

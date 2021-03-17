@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "FPSComponent.h"
-#include "Time.h"
+#include "GameTime.h"
 
 dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pRenderComponent)
 	: Component(pOwner)
@@ -11,7 +11,7 @@ dae::FPSComponent::FPSComponent(GameObject* pOwner, TextComponent* pRenderCompon
 
 void dae::FPSComponent::Update()
 {
-	int fps = Time::GetInstance().GetFPS();
+	int fps = GameTime::GetInstance().GetFPS();
 	if(fps != m_FPS)
 	{
 		m_FPS = fps;
