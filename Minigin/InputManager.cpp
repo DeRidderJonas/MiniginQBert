@@ -1,7 +1,57 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
 
-bool dae::InputManager::ProcessInput()
+#include <XInput.h>
+#include <SDL.h>
+
+//PIMPL
+namespace dae
+{
+	class InputManagerImpl final
+	{
+	public:
+		bool ProcessInput();
+		void Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState);
+		void Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState);
+
+		InputManagerImpl() = default;
+		~InputManagerImpl() = default;
+		InputManagerImpl(const InputManagerImpl&) = delete;
+		InputManagerImpl& operator=(const InputManagerImpl&) = delete;
+		InputManagerImpl(InputManagerImpl&&) = delete;
+		InputManagerImpl& operator=(InputManagerImpl&&) = delete;
+	private:
+		struct InputInfo
+		{
+		public:
+			InputInfo(const InputState& InputState)
+				: pressed{ false }, lastValue{ false }, stateRequired{ InputState }{};
+			bool pressed;
+			bool lastValue;
+			InputState stateRequired;
+
+			bool isActive() const;
+		};
+
+		void ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId);
+		void ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType);
+
+		// MAPPING
+		using InputCommand = std::pair<InputInfo, std::shared_ptr<Command>>;
+
+		// CONTROLLER MAPPING
+		//unsigned = controller id
+		using ControllerKey = std::pair<unsigned, ControllerButton>;
+		using ControllerCommandMap = std::map<ControllerKey, InputCommand>;
+		ControllerCommandMap m_Controls{};
+
+		// KEYBOARD MAPPING
+		using KeyboardCommandMap = std::map<SDL_Keycode, InputCommand>;
+		KeyboardCommandMap m_KeyboardControls{};
+	};
+}
+
+bool dae::InputManagerImpl::ProcessInput()
 {
 	for (int i = 0; i < XUSER_MAX_COUNT; ++i)
 	{
@@ -27,7 +77,7 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState)
+void dae::InputManagerImpl::Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState)
 {
 	ControllerKey controllerKey = std::make_pair(controllerId, button);
 	auto duplicateIt = m_Controls.find(controllerKey);
@@ -38,7 +88,7 @@ void dae::InputManager::Bind(unsigned controllerId, const ControllerButton& butt
 	m_Controls.emplace(controllerKey, controllerCommand);
 }
 
-void dae::InputManager::Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState)
+void dae::InputManagerImpl::Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState)
 {
 	auto duplicateIt = m_KeyboardControls.find(keycode);
 	if (duplicateIt != m_KeyboardControls.end()) throw std::runtime_error("Key was already mapped");
@@ -48,7 +98,7 @@ void dae::InputManager::Bind(const SDL_Keycode& keycode, const std::shared_ptr<C
 	m_KeyboardControls.emplace(keycode, keyCommand);
 }
 
-bool dae::InputManager::InputInfo::isActive() const
+bool dae::InputManagerImpl::InputInfo::isActive() const
 {
 	switch (stateRequired)
 	{
@@ -66,7 +116,7 @@ bool dae::InputManager::InputInfo::isActive() const
 }
 
 //Updates each controller input button
-void dae::InputManager::ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId)
+void dae::InputManagerImpl::ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId)
 {
 	for (auto& pair : m_Controls)
 	{
@@ -86,7 +136,7 @@ void dae::InputManager::ProcessControllerInput(const XINPUT_STATE& inputState, u
 }
 
 //updates a single key
-void dae::InputManager::ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType)
+void dae::InputManagerImpl::ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType)
 {
 	auto keycodeIt = m_KeyboardControls.find(keycode);
 	if (keycodeIt == m_KeyboardControls.end()) return;
@@ -100,3 +150,29 @@ void dae::InputManager::ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 
 	if (inputInfo.isActive() && keycodeIt->second.second != nullptr) keycodeIt->second.second->Execute();
 }
 
+dae::InputManager::InputManager()
+{
+	m_pimpl = new InputManagerImpl();
+}
+
+dae::InputManager::~InputManager()
+{
+	delete m_pimpl;
+}
+
+bool dae::InputManager::ProcessInput()
+{
+	return m_pimpl->ProcessInput();
+}
+
+void dae::InputManager::Bind(unsigned controllerId, const ControllerButton& button,
+	const std::shared_ptr<Command>& command, const InputState& inputState)
+{
+	m_pimpl->Bind(controllerId, button, command, inputState);
+}
+
+void dae::InputManager::Bind(int keycode, const std::shared_ptr<Command>& command,
+	InputState inputState)
+{
+	m_pimpl->Bind(keycode, command, inputState);
+}

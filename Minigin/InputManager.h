@@ -1,7 +1,5 @@
 #pragma once
 #include <map>
-#include <XInput.h>
-#include <SDL.h>
 
 #include "Command.h"
 #include "Singleton.h"
@@ -33,43 +31,20 @@ namespace dae
 		down,
 		up
 	};
-
+	
+	class InputManagerImpl;
+	
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		InputManager() = default;
+		InputManager();
+		~InputManager();
 		bool ProcessInput();
 		void Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState);
-		void Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState);
+		void Bind(int keycode, const std::shared_ptr<Command>& command, InputState inputState);
+
 	private:
-
-		struct InputInfo
-		{
-		public:
-			InputInfo(const InputState& InputState)
-				: pressed{ false }, lastValue{ false }, stateRequired{ InputState }{};
-			bool pressed;
-			bool lastValue;
-			InputState stateRequired;
-
-			bool isActive() const;
-		};
-
-		void ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId);
-		void ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType);
-
-		// MAPPING
-		using InputCommand = std::pair<InputInfo, std::shared_ptr<Command>>;
-
-		// CONTROLLER MAPPING
-		//unsigned = controller id
-		using ControllerKey = std::pair<unsigned, ControllerButton>;
-		using ControllerCommandMap = std::map<ControllerKey, InputCommand>;
-		ControllerCommandMap m_Controls{};
-
-		// KEYBOARD MAPPING
-		using KeyboardCommandMap = std::map<SDL_Keycode, InputCommand>;
-		KeyboardCommandMap m_KeyboardControls{};
+		InputManagerImpl* m_pimpl{ nullptr };
 	};
 
 }
