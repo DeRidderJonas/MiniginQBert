@@ -7,7 +7,7 @@ namespace dae
 	class SoundSystem
 	{
 	public:
-		virtual ~SoundSystem() = default;
+		virtual ~SoundSystem();
 		void QueueSound(int soundId, float volume = 1.f);
 		void Start();
 		void Stop();

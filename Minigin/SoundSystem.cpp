@@ -1,6 +1,11 @@
 #include "MiniginPCH.h"
 #include "SoundSystem.h"
 
+dae::SoundSystem::~SoundSystem()
+{
+	std::unique_lock<std::mutex> mlock{m_mutex};
+}
+
 void dae::SoundSystem::QueueSound(int soundId, float volume)
 {
 	PlaySound playSound{ soundId, volume };
@@ -11,7 +16,7 @@ void dae::SoundSystem::QueueSound(int soundId, float volume)
 			std::cout << std::this_thread::get_id() << " queues" << '\n';
 			self->m_SoundQueue.push(playSound);
 		});
-	addThread.detach(); //TODO: fix crash if closed before thread finishes (mutex locked)
+	addThread.detach();
 }
 
 void dae::SoundSystem::Start()
