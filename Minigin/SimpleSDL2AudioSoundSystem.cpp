@@ -4,6 +4,5 @@
 
 void dae::SimpleSDL2AudioSoundSystem::Play(int , float )
 {
-	playMusic("../Data/door1.wav", SDL_MIX_MAXVOLUME);
-	SDL_Delay(2000);
+	playSound("../Data/door1.wav", SDL_MIX_MAXVOLUME);
 }

@@ -56,7 +56,7 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
-
+	_putenv("SDL_AUDIODRIVER=DirectSound");
 	SDL_Init(SDL_INIT_AUDIO);
 	initAudio();
 }
