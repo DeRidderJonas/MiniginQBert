@@ -9,6 +9,7 @@ namespace dae
 		SimpleSDL2AudioSoundSystem();
 		~SimpleSDL2AudioSoundSystem() override;
 		void Play(int soundId, float volume) override;
+		void ToggleMute() override;
 	private:
 		void Update();
 
@@ -18,6 +19,8 @@ namespace dae
 			float volume;
 		};
 
+		bool m_Muted{ false };
+		
 		std::atomic_bool m_playing;
 		std::mutex m_mutex;
 		std::condition_variable m_QueueActive{};

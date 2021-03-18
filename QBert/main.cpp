@@ -12,6 +12,7 @@
 #include "InputManager.h"
 #include "KillCommand.h"
 #include "LivesComponent.h"
+#include "MuteCommand.h"
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -126,7 +127,8 @@ void LoadGame()
 	input.Bind(0, dae::ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), dae::InputState::pressed);
 	input.Bind(1, dae::ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), dae::InputState::pressed);
 
-	input.Bind('e', std::make_shared<QBert::SoundCommand>(), dae::InputState::pressed);
+	input.Bind('e', std::make_shared<SoundCommand>(), dae::InputState::pressed);
+	input.Bind('r', std::make_shared<MuteCommand>(), dae::InputState::released);
 
 	std::cout << "Only controller is supported at the moment!\n";
 	std::cout << "[Controller 0] A: Kill player 1\n";

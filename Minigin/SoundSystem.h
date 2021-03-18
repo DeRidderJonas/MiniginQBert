@@ -9,6 +9,7 @@ namespace dae
 	public:
 		virtual ~SoundSystem() = default;
 		virtual void Play(int soundId, float volume = 1.f) = 0;
+		virtual void ToggleMute() = 0;
 		
 		SoundSystem() = default;
 		SoundSystem(const SoundSystem&) = delete;
@@ -23,5 +24,6 @@ namespace dae
 	public:
 		~NullSoundSystem() override = default;
 		void Play(int , float ) override {};
+		void ToggleMute() override{};
 	};
 }

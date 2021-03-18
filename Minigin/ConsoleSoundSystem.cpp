@@ -13,3 +13,8 @@ void dae::ConsoleSoundSystem::Play(int soundId, float volume)
 		std::cout << "Playing sound with id: " << soundId << " at volume: " << volume << '\n';
 	else m_pSoundSystem->Play(soundId, volume);
 }
+
+void dae::ConsoleSoundSystem::ToggleMute()
+{
+	m_IsMuted = !m_IsMuted;
+}

@@ -51,6 +51,9 @@
     <ClCompile Include="..\Minigin\ScoreEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="MuteCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\GameModeMenuComponent.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\Minigin\ScoreEvent.h">
       <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MuteCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
