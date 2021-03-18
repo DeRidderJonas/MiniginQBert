@@ -20,6 +20,7 @@ namespace dae
 
 		std::atomic_bool m_playing;
 		std::mutex m_mutex;
+		std::condition_variable m_QueueActive{};
 		std::thread m_soundThread;
 		std::queue<PlaySound> m_SoundQueue{};
 	};
