@@ -5,5 +5,5 @@
 
 void QBert::SoundCommand::Execute()
 {
-	dae::ServiceLocator::GetSoundSystem().QueueSound(0);
+	dae::ServiceLocator::GetSoundSystem().Play(0);
 }
