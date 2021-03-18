@@ -74,7 +74,8 @@ void dae::Minigin::Run(std::function<void()> loadGame)
 {
 	Initialize();
 	auto pSoundSystem = new SimpleSDL2AudioSoundSystem();
-	ServiceLocator::RegisterSoundSystem(pSoundSystem);
+	auto pConsoleSound = new ConsoleSoundSystem(pSoundSystem, false);
+	ServiceLocator::RegisterSoundSystem(pConsoleSound);
 
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
@@ -87,10 +88,6 @@ void dae::Minigin::Run(std::function<void()> loadGame)
 		auto& input = InputManager::GetInstance();
 		auto& time = GameTime::GetInstance();
 
-		ServiceLocator::GetSoundSystem().Start();
-
-		std::cout << std::this_thread::get_id() << '\n';
-		
 		bool doContinue = true;
 		
 		time.Start();
@@ -109,7 +106,7 @@ void dae::Minigin::Run(std::function<void()> loadGame)
 		}
 	}
 
-	ServiceLocator::GetSoundSystem().Stop();
+	delete pConsoleSound;
 	delete pSoundSystem;
 	Cleanup();
 }
