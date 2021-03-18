@@ -15,22 +15,9 @@
 #include "audio.h"
 
 #include "ConsoleSoundSystem.h"
-#include "GameObject.h"
-#include "Scene.h"
 #include "GameTime.h"
-#include "TransformComponent.h"
-#include "FPSComponent.h"
-#include "TextComponent.h"
-#include "TextureComponent.h"
-#include "GameModeMenuComponent.h"
-#include "HealthComponent.h"
-#include "KillCommand.h"
-#include "LivesComponent.h"
-#include "ScoreComponent.h"
 #include "ServiceLocator.h"
 #include "SimpleSDL2AudioSoundSystem.h"
-#include "SoundCommand.h"
-#include "TextureLineComponent.h"
 
 using namespace std;
 using namespace std::chrono;
