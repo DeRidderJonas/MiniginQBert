@@ -3,20 +3,13 @@
 
 dae::SoundSystem::~SoundSystem()
 {
-	std::unique_lock<std::mutex> mlock{m_mutex};
 }
 
 void dae::SoundSystem::QueueSound(int soundId, float volume)
 {
 	PlaySound playSound{ soundId, volume };
-	auto self = this;
-	std::thread addThread([&playSound, self]()
-		{
-			std::unique_lock<std::mutex> mlock{ self->m_mutex };
-			std::cout << std::this_thread::get_id() << " queues" << '\n';
-			self->m_SoundQueue.push(playSound);
-		});
-	addThread.detach();
+	std::unique_lock<std::mutex> mlock{ m_mutex };
+	m_SoundQueue.push(playSound);
 }
 
 void dae::SoundSystem::Start()
