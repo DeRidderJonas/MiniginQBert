@@ -35,9 +35,10 @@ void dae::SimpleSDL2AudioSoundSystem::Update()
 	{
 		while (!m_SoundQueue.empty())
 		{
+			std::unique_lock<std::mutex> mlock{ m_mutex };
 			PlaySound soundToPlay = m_SoundQueue.front();
 			m_SoundQueue.pop();
-			std::unique_lock<std::mutex> mlock{ m_mutex };
+			mlock.unlock();
 			if(!m_Muted) playSound("../Data/door1.wav", int(SDL_MIX_MAXVOLUME * soundToPlay.volume));
 		}
 
