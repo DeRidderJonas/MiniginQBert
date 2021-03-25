@@ -52,7 +52,7 @@
       <Filter>Events</Filter>
     </ClCompile>
     <ClCompile Include="MuteCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +81,7 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="MuteCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
