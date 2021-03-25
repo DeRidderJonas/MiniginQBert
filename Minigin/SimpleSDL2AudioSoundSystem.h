@@ -1,5 +1,7 @@
 #pragma once
 #include "SoundSystem.h"
+#include <mutex>
+#include <queue>
 
 namespace dae
 {
