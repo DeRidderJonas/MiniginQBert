@@ -61,7 +61,7 @@ void dae::Minigin::Run(std::function<void()> loadGame)
 {
 	Initialize();
 	auto pSoundSystem = new SimpleSDL2AudioSoundSystem();
-	auto pConsoleSound = new ConsoleSoundSystem(pSoundSystem, false);
+	auto pConsoleSound = new ConsoleSoundSystem(pSoundSystem);
 	ServiceLocator::RegisterSoundSystem(pConsoleSound);
 
 	// tell the resource manager where he can find the game data

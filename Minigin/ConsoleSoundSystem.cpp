@@ -1,9 +1,8 @@
 #include "MiniginPCH.h"
 #include "ConsoleSoundSystem.h"
 
-dae::ConsoleSoundSystem::ConsoleSoundSystem(SoundSystem* pSoundSystem, bool isMuted)
+dae::ConsoleSoundSystem::ConsoleSoundSystem(SoundSystem* pSoundSystem)
 	: m_pSoundSystem{pSoundSystem}
-	, m_IsMuted{isMuted}
 {
 }
 

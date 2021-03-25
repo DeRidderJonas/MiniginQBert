@@ -6,7 +6,7 @@ namespace dae
 	class ConsoleSoundSystem final : public SoundSystem
 	{
 	public:
-		ConsoleSoundSystem(SoundSystem* pSoundSystem, bool isMuted = false);
+		ConsoleSoundSystem(SoundSystem* pSoundSystem);
 		~ConsoleSoundSystem() override = default;
 		void Play(int soundId, float volume) override;
 		void ToggleMute() override;
