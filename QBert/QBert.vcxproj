@@ -175,27 +175,44 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Minigin\GameModeMenuComponent.cpp" />
-    <ClCompile Include="..\Minigin\HealthComponent.cpp" />
-    <ClCompile Include="..\Minigin\KillCommand.cpp" />
-    <ClCompile Include="..\Minigin\LivesComponent.cpp" />
-    <ClCompile Include="..\Minigin\ScoreComponent.cpp" />
-    <ClCompile Include="..\Minigin\ScoreEvent.cpp" />
-    <ClCompile Include="..\Minigin\SoundCommand.cpp" />
-    <ClCompile Include="..\Minigin\TextureLineComponent.cpp" />
+    <ClCompile Include="GameModeMenuComponent.cpp" />
+    <ClCompile Include="GoDownCommand.cpp" />
+    <ClCompile Include="GoLeftCommand.cpp" />
+    <ClCompile Include="GoRightCommand.cpp" />
+    <ClCompile Include="GoUpCommand.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
+    <ClCompile Include="KillCommand.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MuteCommand.cpp" />
+    <ClCompile Include="PlayableTerrainComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="ScoreEvent.cpp" />
+    <ClCompile Include="SoundCommand.cpp" />
+    <ClCompile Include="TextureLineComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\GameModeMenuComponent.h" />
-    <ClInclude Include="..\Minigin\HealthComponent.h" />
-    <ClInclude Include="..\Minigin\KillCommand.h" />
-    <ClInclude Include="..\Minigin\LivesComponent.h" />
-    <ClInclude Include="..\Minigin\ScoreComponent.h" />
-    <ClInclude Include="..\Minigin\ScoreEvent.h" />
-    <ClInclude Include="..\Minigin\SoundCommand.h" />
-    <ClInclude Include="..\Minigin\TextureLineComponent.h" />
+    <ClInclude Include="GameModeMenuComponent.h" />
+    <ClInclude Include="GoDownCommand.h" />
+    <ClInclude Include="GoLeftCommand.h" />
+    <ClInclude Include="GoRightCommand.h" />
+    <ClInclude Include="GoUpCommand.h" />
+    <ClInclude Include="HealthComponent.h" />
+    <ClInclude Include="KillCommand.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MuteCommand.h" />
+    <ClInclude Include="PlayableTerrainComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="ScoreEvent.h" />
+    <ClInclude Include="SoundCommand.h" />
+    <ClInclude Include="TextureLineComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
