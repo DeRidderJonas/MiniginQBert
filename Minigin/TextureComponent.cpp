@@ -59,3 +59,8 @@ glm::vec2 dae::TextureComponent::GetTextureDimensions() const
 	
 	return glm::vec2{};
 }
+
+void dae::TextureComponent::SetOverlayColor(const glm::vec3& color)
+{
+	m_pTexture->SetOverlayColor(color);
+}

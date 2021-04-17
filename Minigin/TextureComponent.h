@@ -4,9 +4,9 @@
 #include "TransformComponent.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
-#include <glm/vec2.hpp>
+#include <glm/glm.hpp>
 #pragma warning(pop)
-
+#include <string>
 
 namespace dae
 {
@@ -24,6 +24,8 @@ namespace dae
 		void SetPosition(float x, float y);
 
 		glm::vec2 GetTextureDimensions() const;
+
+		void SetOverlayColor(const glm::vec3& color);
 	private:
 		std::shared_ptr<Texture2D> m_pTexture;
 	protected:

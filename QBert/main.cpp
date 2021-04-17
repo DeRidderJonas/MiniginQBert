@@ -8,11 +8,18 @@
 #include "FPSComponent.h"
 #include "GameModeMenuComponent.h"
 #include "GameObject.h"
+#include "GoDownCommand.h"
+#include "GoLeftCommand.h"
+#include "GoRightCommand.h"
+#include "GoUpCommand.h"
 #include "HealthComponent.h"
 #include "InputManager.h"
 #include "KillCommand.h"
+#include "LevelManager.h"
 #include "LivesComponent.h"
+#include "MovementComponent.h"
 #include "MuteCommand.h"
+#include "PlayableTerrainComponent.h"
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -73,6 +80,8 @@ void LoadGame()
 	scene.Add(go);
 
 
+	LevelManager::GetInstance().CreateLevel(scene);
+
 	go = new dae::GameObject();
 	TextureLineComponent* tlc = new TextureLineComponent(go, "Life.png");
 	LivesComponent* lc = new LivesComponent(go, tlc, 5);
@@ -120,8 +129,12 @@ void LoadGame()
 
 	QBert = new dae::GameObject();
 	hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert);
+	auto mc = new MovementComponent(QBert, LevelManager::GetInstance().GetGameObject(0,6));
+	renderComponent = new dae::TextureComponent(QBert, "Life.png");
 	hc->AddObserver(lc);
 	QBert->AddComponent(hc);
+	QBert->AddComponent(mc);
+	QBert->AddComponent(renderComponent);
 	scene.Add(QBert);
 
 	input.Bind(0, dae::ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), dae::InputState::pressed);
@@ -130,6 +143,7 @@ void LoadGame()
 	input.Bind('e', std::make_shared<SoundCommand>(), dae::InputState::pressed);
 	input.Bind('r', std::make_shared<MuteCommand>(), dae::InputState::released);
 
+	
 	std::cout << "Only controller is supported at the moment!\n";
 	std::cout << "[Controller 0] A: Kill player 1\n";
 	std::cout << "[Controller 0] B: Gain points\n";
@@ -137,6 +151,13 @@ void LoadGame()
 	std::cout << "[Controller 0] X: Kill player 2\n";
 	std::cout << "[Controller 1] X: Kill player 2\n";
 	std::cout << "[Keyboard] E: Make sound\n";
+
+
+	input.Bind('w', std::make_shared<GoUpCommand>(mc), dae::InputState::pressed);
+	input.Bind('s', std::make_shared<GoDownCommand>(mc), dae::InputState::pressed);
+	input.Bind('a', std::make_shared<GoLeftCommand>(mc), dae::InputState::pressed);
+	input.Bind('d', std::make_shared<GoRightCommand>(mc), dae::InputState::pressed);
+	
 }
 
 int main(int, char* []) {

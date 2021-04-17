@@ -20,9 +20,9 @@ Scene::~Scene()
 void Scene::Add(GameObject* pObject)
 {
 	m_Objects.push_back(pObject);
-	
-	auto pRenderComponent = pObject->GetComponentOfType<RenderComponent>();
-	if(pRenderComponent)
+
+	auto renderComponents = pObject->GetAllComponentsOfType<RenderComponent>();
+	for (RenderComponent* pRenderComponent : renderComponents)
 	{
 		m_RenderComponents.push_back(pRenderComponent);
 	}

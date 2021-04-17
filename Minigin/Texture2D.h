@@ -1,4 +1,10 @@
 #pragma once
+
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/glm.hpp>
+#pragma warning(pop)
+
 struct SDL_Texture;
 namespace dae
 {
@@ -12,6 +18,8 @@ namespace dae
 		explicit Texture2D(SDL_Texture* texture);
 		~Texture2D();
 
+		void SetOverlayColor(const glm::vec3& color);
+		
 		Texture2D(const Texture2D &) = delete;
 		Texture2D(Texture2D &&) = delete;
 		Texture2D & operator= (const Texture2D &) = delete;

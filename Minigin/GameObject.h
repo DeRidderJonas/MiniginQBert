@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 
 namespace dae
 {
@@ -21,6 +22,17 @@ namespace dae
 			if (componentIt == m_Components.end()) return nullptr;
 			
 			return static_cast<ComponentType*>(*componentIt);
+		}
+		template<typename ComponentType>
+		std::vector<ComponentType*> GetAllComponentsOfType() const
+		{
+			std::vector<ComponentType*> components{};
+			for(Component* pComponent : m_Components)
+			{
+				ComponentType* pConverted = dynamic_cast<ComponentType*>(pComponent);
+				if (pConverted) components.push_back(pConverted);
+			}
+			return components;
 		}
 		void AddComponent(Component* pComponent);
 

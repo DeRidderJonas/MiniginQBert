@@ -6,6 +6,13 @@ dae::TransformComponent::TransformComponent(const GameObject* pOwner)
 {
 }
 
+void dae::TransformComponent::SetPosition(const glm::vec3& pos)
+{
+	m_Position.x = pos.x;
+	m_Position.y = pos.y;
+	m_Position.z = pos.z;
+}
+
 void dae::TransformComponent::SetPosition(float x, float y, float z)
 {
 	m_Position.x = x;
