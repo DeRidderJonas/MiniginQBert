@@ -38,11 +38,11 @@ void QBert::PlayableTerrainComponent::Activate()
 {
 	switch (m_Type)
 	{
-	case TerrainType::Normal: 
-	case TerrainType::Double: 
+	case TerrainType::Normal:
+	case TerrainType::Double:
 		if (m_StepsNeeded > 0) m_StepsNeeded--;
 		break;
-	case TerrainType::Reverting: 
+	case TerrainType::Reverting:
 		if (m_StepsNeeded > 0) m_StepsNeeded--;
 		else m_StepsNeeded++;
 		break;

@@ -9,7 +9,12 @@ QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameOb
 	: Component(pOwner)
 	, m_pStandingOn(pStandOn)
 {
-	if (m_pStandingOn) pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
+	if (!m_pStandingOn) 
+	{
+		m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
+	}
+
+	pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 }
 
 void QBert::MovementComponent::Update()
@@ -54,4 +59,11 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain)
 		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
 		if (pTerrainComponent) pTerrainComponent->Activate();
 	}
+}
+
+void QBert::MovementComponent::GoToSpawningPlatform()
+{
+	m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
+	m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
+	m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>()->Activate();
 }

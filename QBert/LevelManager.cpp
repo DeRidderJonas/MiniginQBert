@@ -59,6 +59,11 @@ void QBert::LevelManager::GetPositionForGameObject(dae::GameObject* pToFind, int
 	}
 }
 
+dae::GameObject* QBert::LevelManager::GetSpawnPlatform() const
+{
+	return m_GameObjects[0][m_width - 1];
+}
+
 QBert::LevelManager::LevelManager()
 {
 

@@ -14,6 +14,7 @@ namespace QBert
 		void CreateLevel(dae::Scene& pScene);
 		dae::GameObject* GetGameObject(int row, int col) const;
 		void GetPositionForGameObject(dae::GameObject* pToFind, int& row, int& col);
+		dae::GameObject* GetSpawnPlatform() const;
 	private:
 		friend class Singleton<LevelManager>;
 		LevelManager();

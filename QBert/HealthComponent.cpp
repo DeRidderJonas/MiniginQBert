@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "HealthComponent.h"
 
+#include "MovementComponent.h"
 #include "Observer.h"
 #include "ScoreEvent.h"
 #include "Subject.h"
@@ -25,6 +26,9 @@ void QBert::HealthComponent::Kill()
 			//Notify player death
 			dae::Event event{"PLAYERDEATH"};
 			m_pSubject.Notify(event);
+
+			auto pMovementComponent = m_pOwner->GetComponentOfType<MovementComponent>();
+			if (pMovementComponent) pMovementComponent->GoToSpawningPlatform();
 		}
 		break;
 	case HealthOwner::Coily:

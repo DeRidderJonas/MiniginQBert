@@ -126,7 +126,7 @@ void LoadGame()
 
 	QBert = new dae::GameObject();
 	hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert);
-	auto mc = new MovementComponent(QBert, LevelManager::GetInstance().GetGameObject(0,6));
+	auto mc = new MovementComponent(QBert);
 	renderComponent = new dae::TextureComponent(QBert, "Life.png");
 	hc->AddObserver(lc);
 	QBert->AddComponent(hc);
