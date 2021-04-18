@@ -2,6 +2,7 @@
 
 #include "HealthComponent.h"
 #include "LevelManager.h"
+#include "PlayableTerrainComponent.h"
 #include "TransformComponent.h"
 
 QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameObject* pStandOn)
@@ -15,7 +16,7 @@ void QBert::MovementComponent::Update()
 {
 }
 
-void QBert::MovementComponent::Move(Direction direction)
+void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain)
 {
 	int row{ -1 }, col{ -1 };
 	auto& levelManager = LevelManager::GetInstance();
@@ -48,5 +49,9 @@ void QBert::MovementComponent::Move(Direction direction)
 	auto ownerTransform = m_pOwner->GetComponentOfType<dae::TransformComponent>();
 	ownerTransform->SetPosition(pNext->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 	m_pStandingOn = pNext;
-	
+	if(activatesTerrain)
+	{
+		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
+		if (pTerrainComponent) pTerrainComponent->Activate();
+	}
 }
