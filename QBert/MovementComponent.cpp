@@ -21,7 +21,7 @@ void QBert::MovementComponent::Update()
 {
 }
 
-void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain)
+void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, bool revertsTerrain)
 {
 	int row{ -1 }, col{ -1 };
 	auto& levelManager = LevelManager::GetInstance();
@@ -54,10 +54,17 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain)
 	auto ownerTransform = m_pOwner->GetComponentOfType<dae::TransformComponent>();
 	ownerTransform->SetPosition(pNext->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 	m_pStandingOn = pNext;
+
 	if(activatesTerrain)
 	{
 		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
 		if (pTerrainComponent) pTerrainComponent->Activate();
+	}
+	
+	if(revertsTerrain)
+	{
+		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
+		if (pTerrainComponent) pTerrainComponent->Revert();
 	}
 }
 

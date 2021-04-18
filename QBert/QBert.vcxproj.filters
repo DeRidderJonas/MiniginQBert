@@ -36,16 +36,13 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameModeMenuComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
+    <ClCompile Include="LivesDisplayComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
@@ -66,6 +63,15 @@
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDeathEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MuteCommand.h">
@@ -77,16 +83,13 @@
     <ClInclude Include="LevelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameModeMenuComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LivesComponent.h">
+    <ClInclude Include="LivesDisplayComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
@@ -106,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeathEvent.h">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

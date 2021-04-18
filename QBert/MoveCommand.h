@@ -7,13 +7,14 @@ namespace QBert
 	class MoveCommand final : public dae::Command
 	{
 	public:
-		MoveCommand(MovementComponent* pMovementComponent, MovementComponent::Direction direction, bool activatesTerrain = false);
+		MoveCommand(MovementComponent* pMovementComponent, MovementComponent::Direction direction, bool activatesTerrain = false, bool revertsTerrain = false);
 		~MoveCommand() override = default;
 		void Execute() override;
 	private:
 		MovementComponent* m_pMovementComponent;
 		MovementComponent::Direction m_Direction;
-		bool m_activatesTerrain;
+		bool m_ActivatesTerrain;
+		bool m_RevertsTerrain;
 	};
 
 }

@@ -12,22 +12,12 @@ QBert::PlayableTerrainComponent::PlayableTerrainComponent(dae::GameObject* pOwne
 	, m_pLeft(pLeft)
 	, m_pRight(pRight)
 	, m_Type(type)
-{
-	switch (type)
-	{
-	case TerrainType::Normal: 
-	case TerrainType::Reverting: 
-		m_StepsNeeded = 1;
-		break;
-	case TerrainType::Double: 
-		m_StepsNeeded = 2;
-		break;
-	}
-	
+{	
 	m_pTop->SetTexture("HexTop.png");
 	m_pLeft->SetTexture("HexLeft.png");
 	m_pRight->SetTexture("HexRight.png");
-	SetTextureComponentColors();
+
+	Revert();
 }
 
 void QBert::PlayableTerrainComponent::Update()
@@ -45,6 +35,22 @@ void QBert::PlayableTerrainComponent::Activate()
 	case TerrainType::Reverting:
 		if (m_StepsNeeded > 0) m_StepsNeeded--;
 		else m_StepsNeeded++;
+		break;
+	}
+
+	SetTextureComponentColors();
+}
+
+void QBert::PlayableTerrainComponent::Revert()
+{
+	switch (m_Type)
+	{
+	case TerrainType::Normal:
+	case TerrainType::Reverting:
+		m_StepsNeeded = 1;
+		break;
+	case TerrainType::Double: 
+		m_StepsNeeded = 2;
 		break;
 	}
 

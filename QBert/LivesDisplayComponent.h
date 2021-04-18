@@ -6,18 +6,16 @@ namespace QBert
 {
 	class TextureLineComponent;
 
-	class LivesComponent final : public dae::Component, public dae::Observer
+	class LivesDisplayComponent final : public dae::Component, public dae::Observer
 	{
 	public:
-		LivesComponent(dae::GameObject* pOwner, TextureLineComponent* pTextureLineComponent, int amountOfLives);
-		virtual ~LivesComponent() = default;
+		LivesDisplayComponent(dae::GameObject* pOwner, TextureLineComponent* pTextureLineComponent, int amountOfLives);
+		virtual ~LivesDisplayComponent() = default;
 
 		void Update() override;
 
 		void OnNotify(const dae::Event& event) override;
 	private:
-		int m_AmountOfLives{};
-		
 		TextureLineComponent* m_pTextureLineComponent{};
 	};
 

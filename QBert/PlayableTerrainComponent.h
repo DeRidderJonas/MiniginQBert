@@ -26,6 +26,7 @@ namespace QBert
 		~PlayableTerrainComponent() override = default;
 		void Update() override;
 		void Activate();
+		void Revert();
 	private:
 		dae::TextureComponent* m_pTop;
 		dae::TextureComponent* m_pLeft;

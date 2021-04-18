@@ -175,31 +175,35 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="GameModeMenuComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="KillCommand.cpp" />
     <ClCompile Include="LevelManager.cpp" />
-    <ClCompile Include="LivesComponent.cpp" />
+    <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayableTerrainComponent.cpp" />
+    <ClCompile Include="PlayerDeathEvent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreEvent.cpp" />
     <ClCompile Include="SoundCommand.cpp" />
     <ClCompile Include="TextureLineComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIComponent.h" />
     <ClInclude Include="GameModeMenuComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="KillCommand.h" />
     <ClInclude Include="LevelManager.h" />
-    <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayableTerrainComponent.h" />
+    <ClInclude Include="PlayerDeathEvent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreEvent.h" />
     <ClInclude Include="SoundCommand.h" />

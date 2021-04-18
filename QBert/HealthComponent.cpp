@@ -3,13 +3,15 @@
 
 #include "MovementComponent.h"
 #include "Observer.h"
+#include "PlayerDeathEvent.h"
 #include "ScoreEvent.h"
 #include "Subject.h"
 
-QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner)
+QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives)
 	: Component{pOwner}
 	, m_HealthOwner{healthOwner}
 	, m_pSubject{}
+	, m_AmountOfLives(amountOfLives)
 {
 }
 
@@ -19,12 +21,14 @@ void QBert::HealthComponent::Update()
 
 void QBert::HealthComponent::Kill()
 {
+	m_AmountOfLives--;
+	
 	switch (m_HealthOwner)
 	{
 	case HealthOwner::QBert:
 		{
 			//Notify player death
-			dae::Event event{"PLAYERDEATH"};
+			PlayerDeathEvent event{"PLAYERDEATH", m_AmountOfLives};
 			m_pSubject.Notify(event);
 
 			auto pMovementComponent = m_pOwner->GetComponentOfType<MovementComponent>();
@@ -45,6 +49,11 @@ void QBert::HealthComponent::Kill()
 			m_pSubject.Notify(event);
 		}
 		break;
+	}
+
+	if(m_AmountOfLives <= 0)
+	{
+		m_pOwner->Destroy();
 	}
 }
 

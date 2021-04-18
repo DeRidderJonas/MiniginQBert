@@ -5,6 +5,7 @@
 #include <iostream>
 
 
+#include "AIComponent.h"
 #include "FPSComponent.h"
 #include "GameModeMenuComponent.h"
 #include "GameObject.h"
@@ -12,7 +13,7 @@
 #include "InputManager.h"
 #include "KillCommand.h"
 #include "LevelManager.h"
-#include "LivesComponent.h"
+#include "LivesDisplayComponent.h"
 #include "MoveCommand.h"
 #include "MovementComponent.h"
 #include "MuteCommand.h"
@@ -80,8 +81,8 @@ void LoadGame()
 	LevelManager::GetInstance().CreateLevel(scene);
 
 	go = new dae::GameObject();
-	TextureLineComponent* tlc = new TextureLineComponent(go, "Life.png");
-	LivesComponent* lc = new LivesComponent(go, tlc, 5);
+	TextureLineComponent* tlc = new TextureLineComponent(go, "QBert.png");
+	LivesDisplayComponent* lc = new LivesDisplayComponent(go, tlc, 5);
 	go->AddComponent(tlc);
 	go->AddComponent(lc);
 	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(5.f, 50.f);
@@ -99,7 +100,7 @@ void LoadGame()
 	scene.Add(go);
 
 	auto QBert = new dae::GameObject();
-	HealthComponent* hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert);
+	HealthComponent* hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert, 5);
 	hc->AddObserver(lc);
 	QBert->AddComponent(hc);
 	scene.Add(QBert);
@@ -107,9 +108,15 @@ void LoadGame()
 	input.Bind(0, dae::ControllerButton::ButtonA, std::make_shared<KillCommand>(hc), dae::InputState::pressed);
 
 	auto coily = new dae::GameObject();
-	hc = new HealthComponent(coily, HealthComponent::HealthOwner::Coily);
+	hc = new HealthComponent(coily, HealthComponent::HealthOwner::Coily, 1);
 	hc->AddObserver(scoreComponent);
+	auto mcC = new MovementComponent(coily);
+	renderComponent = new dae::TextureComponent(coily, "Coily.png");
+	auto aiC = new AIComponent(coily, AIComponent::EnemyType::Coily, mcC);
 	coily->AddComponent(hc);
+	coily->AddComponent(mcC);
+	coily->AddComponent(renderComponent);
+	coily->AddComponent(aiC);
 	scene.Add(coily);
 
 	auto killCommand = std::make_shared<QBert::KillCommand>(hc);
@@ -117,17 +124,17 @@ void LoadGame()
 	input.Bind('q', killCommand, dae::InputState::pressed);
 
 	go = new dae::GameObject();
-	tlc = new TextureLineComponent(go, "Life.png");
-	lc = new LivesComponent(go, tlc, 5);
+	tlc = new TextureLineComponent(go, "QBert.png");
+	lc = new LivesDisplayComponent(go, tlc, 5);
 	go->AddComponent(tlc);
 	go->AddComponent(lc);
 	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(200.f, 50.f);
 	scene.Add(go);
 
 	QBert = new dae::GameObject();
-	hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert);
+	hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert, 5);
 	auto mc = new MovementComponent(QBert);
-	renderComponent = new dae::TextureComponent(QBert, "Life.png");
+	renderComponent = new dae::TextureComponent(QBert, "QBert.png");
 	hc->AddObserver(lc);
 	QBert->AddComponent(hc);
 	QBert->AddComponent(mc);
@@ -149,7 +156,11 @@ void LoadGame()
 	std::cout << "[Controller 1] X: Kill player 2\n";
 	std::cout << "[Keyboard] E: Make sound\n";
 
-
+	std::cout << "[Keyboard] W: Move up\n";
+	std::cout << "[Keyboard] A: Move left\n";
+	std::cout << "[Keyboard] S: Move down\n";
+	std::cout << "[Keyboard] D: Move right\n";
+	
 	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true), dae::InputState::pressed);
 	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true), dae::InputState::pressed);
 	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true), dae::InputState::pressed);
