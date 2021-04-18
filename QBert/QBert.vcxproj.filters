@@ -63,16 +63,7 @@
     <ClCompile Include="MovementComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="GoUpCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GoDownCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GoLeftCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="GoRightCommand.cpp">
+    <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,16 +104,7 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="GoUpCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GoDownCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GoLeftCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="GoRightCommand.h">
+    <ClInclude Include="MoveCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>

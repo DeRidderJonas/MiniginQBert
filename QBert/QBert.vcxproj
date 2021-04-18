@@ -176,15 +176,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameModeMenuComponent.cpp" />
-    <ClCompile Include="GoDownCommand.cpp" />
-    <ClCompile Include="GoLeftCommand.cpp" />
-    <ClCompile Include="GoRightCommand.cpp" />
-    <ClCompile Include="GoUpCommand.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="KillCommand.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayableTerrainComponent.cpp" />
@@ -195,14 +192,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameModeMenuComponent.h" />
-    <ClInclude Include="GoDownCommand.h" />
-    <ClInclude Include="GoLeftCommand.h" />
-    <ClInclude Include="GoRightCommand.h" />
-    <ClInclude Include="GoUpCommand.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="KillCommand.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayableTerrainComponent.h" />

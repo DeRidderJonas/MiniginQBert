@@ -8,15 +8,12 @@
 #include "FPSComponent.h"
 #include "GameModeMenuComponent.h"
 #include "GameObject.h"
-#include "GoDownCommand.h"
-#include "GoLeftCommand.h"
-#include "GoRightCommand.h"
-#include "GoUpCommand.h"
 #include "HealthComponent.h"
 #include "InputManager.h"
 #include "KillCommand.h"
 #include "LevelManager.h"
 #include "LivesComponent.h"
+#include "MoveCommand.h"
 #include "MovementComponent.h"
 #include "MuteCommand.h"
 #include "PlayableTerrainComponent.h"
@@ -153,10 +150,10 @@ void LoadGame()
 	std::cout << "[Keyboard] E: Make sound\n";
 
 
-	input.Bind('w', std::make_shared<GoUpCommand>(mc), dae::InputState::pressed);
-	input.Bind('s', std::make_shared<GoDownCommand>(mc), dae::InputState::pressed);
-	input.Bind('a', std::make_shared<GoLeftCommand>(mc), dae::InputState::pressed);
-	input.Bind('d', std::make_shared<GoRightCommand>(mc), dae::InputState::pressed);
+	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true), dae::InputState::pressed);
+	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true), dae::InputState::pressed);
+	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true), dae::InputState::pressed);
+	input.Bind('d', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true), dae::InputState::pressed);
 	
 }
 
