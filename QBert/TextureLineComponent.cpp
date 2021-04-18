@@ -1,7 +1,7 @@
 #include "MiniginPCH.h"
 #include "TextureLineComponent.h"
 
-QBert::TextureLineComponent::TextureLineComponent(const dae::GameObject* pOwner, const std::string& fileName, int amountInLine)
+QBert::TextureLineComponent::TextureLineComponent(dae::GameObject* pOwner, const std::string& fileName, int amountInLine)
 	: TextureComponent(pOwner, fileName)
 	, m_AmountInLine{amountInLine}
 {

@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "TransformComponent.h"
 
-dae::RenderComponent::RenderComponent(const GameObject* pOwner)
+dae::RenderComponent::RenderComponent(GameObject* pOwner)
 	: Component{pOwner}
 {
 }

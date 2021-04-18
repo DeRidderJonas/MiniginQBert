@@ -8,7 +8,7 @@ namespace dae
 	class TextComponent : public Component
 	{
 	public:
-		TextComponent(const GameObject* pOwner, TextureComponent* pTextureComponent, const std::string& text, const std::shared_ptr<Font>& font);
+		TextComponent(GameObject* pOwner, TextureComponent* pTextureComponent, const std::string& text, const std::shared_ptr<Font>& font);
 
 		void Update() override;
 

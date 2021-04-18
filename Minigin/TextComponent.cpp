@@ -5,7 +5,7 @@
 
 #include "Renderer.h"
 
-dae::TextComponent::TextComponent(const GameObject* pOwner, TextureComponent* pTextureComponet, const std::string& text, const std::shared_ptr<Font>& font)
+dae::TextComponent::TextComponent(GameObject* pOwner, TextureComponent* pTextureComponet, const std::string& text, const std::shared_ptr<Font>& font)
 	: Component(pOwner)
 	, m_Text{ text }
 	, m_Font{font}

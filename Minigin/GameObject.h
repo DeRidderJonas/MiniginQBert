@@ -36,6 +36,9 @@ namespace dae
 		}
 		void AddComponent(Component* pComponent);
 
+		void Destroy();
+		bool ShouldBeDestroyed() const;
+		
 		GameObject();
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -44,5 +47,6 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 	private:
 		std::vector<Component*> m_Components;
+		bool m_ToBeDestroyed;
 	};
 }

@@ -6,7 +6,7 @@ namespace QBert
 	class TextureLineComponent final : public dae::TextureComponent
 	{
 	public:
-		TextureLineComponent(const dae::GameObject* pOwner, const std::string& fileName, int amountInLine = 1);
+		TextureLineComponent(dae::GameObject* pOwner, const std::string& fileName, int amountInLine = 1);
 		~TextureLineComponent() override = default;
 
 		void Render() const override;

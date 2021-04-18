@@ -6,7 +6,7 @@ namespace dae
 	class RenderComponent : public Component
 	{
 	public:
-		RenderComponent(const GameObject* pOwner);
+		RenderComponent(GameObject* pOwner);
 		virtual ~RenderComponent() = default;
 
 		void Update() override;

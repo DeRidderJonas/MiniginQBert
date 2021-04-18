@@ -1,7 +1,7 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
 
-dae::TransformComponent::TransformComponent(const GameObject* pOwner)
+dae::TransformComponent::TransformComponent(GameObject* pOwner)
 	: Component(pOwner)
 {
 }

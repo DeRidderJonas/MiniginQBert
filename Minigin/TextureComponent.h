@@ -13,8 +13,8 @@ namespace dae
 	class TextureComponent : public RenderComponent
 	{
 	public:
-		TextureComponent(const GameObject* pOwner, const std::string& fileName);
-		TextureComponent(const GameObject* pOwner);
+		TextureComponent(GameObject* pOwner, const std::string& fileName);
+		TextureComponent(GameObject* pOwner);
 
 		void Render() const override;
 

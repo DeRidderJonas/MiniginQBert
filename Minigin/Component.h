@@ -6,16 +6,17 @@ namespace dae
 	class Component
 	{
 	public:
-		Component(const GameObject* pOwner) : m_pOwner{ pOwner } {};
+		Component(GameObject* pOwner) : m_pOwner{ pOwner } {};
 		virtual ~Component() = default;
 		virtual void Update() = 0;
+		GameObject* GetOwner() const { return m_pOwner; }
 
 		Component(const Component&) = delete;
 		Component& operator=(const Component&) = delete;
 		Component(Component&&) = delete;
 		Component& operator=(Component&&) = delete;
 	protected:
-		const GameObject* m_pOwner;
+		GameObject* m_pOwner;
 	};
 
 }

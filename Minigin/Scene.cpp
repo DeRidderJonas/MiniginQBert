@@ -35,9 +35,29 @@ void Scene::Add(RenderComponent* pRenderComponent)
 
 void Scene::Update()
 {
+	std::vector<GameObject*> toDelete{};
 	for(auto object : m_Objects)
 	{
 		object->Update();
+		if (object->ShouldBeDestroyed())
+			toDelete.push_back(object);
+	}
+
+	if(toDelete.size() > 0)
+	{
+		m_Objects.erase(std::remove_if(m_Objects.begin(), m_Objects.end(), [&toDelete](GameObject* pObj)
+			{
+				return std::find(toDelete.begin(), toDelete.end(), pObj) != toDelete.end();
+			}), m_Objects.end());
+
+		for (auto object : toDelete)
+		{
+			m_RenderComponents.erase(std::remove_if(m_RenderComponents.begin(), m_RenderComponents.end(), [&object](RenderComponent* pComp)
+				{
+					return pComp->GetOwner() == object;
+				}));
+			delete object;
+		}
 	}
 }
 
