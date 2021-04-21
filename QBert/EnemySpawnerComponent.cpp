@@ -1,5 +1,7 @@
 #include "EnemySpawnerComponent.h"
 
+#include <iostream>
+
 #include "EnemyManager.h"
 #include "GameTime.h"
 
@@ -16,7 +18,7 @@ void QBert::EnemySpawnerComponent::Update()
 
 	if(m_timeElapsed > m_SpawnInterval)
 	{
-		EnemyManager::GetInstance().Spawn(AIComponent::EnemyType::Coily, m_pScoreComponent);
+		EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(0), m_pScoreComponent);
 		m_timeElapsed = 0.f;
 	}
 }

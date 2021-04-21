@@ -1,5 +1,6 @@
 #include "MovementComponent.h"
 
+#include "AIComponent.h"
 #include "HealthComponent.h"
 #include "LevelManager.h"
 #include "MoveEvent.h"
@@ -70,6 +71,12 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		if (pTerrainComponent) pTerrainComponent->Revert();
 	}
 
+	if(LevelManager::GetInstance().IsOnBottom(m_pStandingOn))
+	{
+		auto aiComponent = m_pOwner->GetComponentOfType<AIComponent>();
+		if (aiComponent) aiComponent->OnReachBottom();
+	}
+	
 	MoveEvent event{ "MOVE", m_pOwner };
 	m_Subject.Notify(event);
 }

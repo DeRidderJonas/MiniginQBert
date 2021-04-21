@@ -17,6 +17,7 @@ namespace QBert
 		dae::GameObject* GetGameObject(int row, int col) const;
 		void GetPositionForGameObject(dae::GameObject* pToFind, int& row, int& col);
 		dae::GameObject* GetSpawnPlatform() const;
+		bool IsOnBottom(dae::GameObject* pGo) const;
 	private:
 		friend class Singleton<LevelManager>;
 		LevelManager();

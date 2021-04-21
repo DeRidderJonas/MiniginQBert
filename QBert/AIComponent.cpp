@@ -2,6 +2,7 @@
 
 #include "GameTime.h"
 #include "MoveCommand.h"
+#include "TextureComponent.h"
 
 QBert::AIComponent::AIComponent(dae::GameObject* pOwner, EnemyType type, MovementComponent* pMovementComponent, dae::GameObject* pPlayer)
 	: Component(pOwner)
@@ -9,7 +10,7 @@ QBert::AIComponent::AIComponent(dae::GameObject* pOwner, EnemyType type, Movemen
 	, m_pPlayer(pPlayer)
 	, m_movementTime(0.f)
 {
-	bool revertsTiles = type == EnemyType::Ugg || type == EnemyType::WrongWay;
+	bool revertsTiles = type == EnemyType::SlickSam;
 	m_pUpCommand = new MoveCommand(pMovementComponent, MovementComponent::Direction::UP, false, revertsTiles);
 	m_pDownCommand = new MoveCommand(pMovementComponent, MovementComponent::Direction::DOWN, false, revertsTiles);
 	m_pLeftCommand = new MoveCommand(pMovementComponent, MovementComponent::Direction::LEFT, false, revertsTiles);
@@ -31,15 +32,22 @@ void QBert::AIComponent::Update()
 		return;
 
 	m_movementTime = 0.f;
-	MovementComponent::Direction toGo{ rand() % 2 == 0 ? MovementComponent::Direction::DOWN : MovementComponent::Direction::RIGHT };
-	
-	bool followsPlayer = m_Type == EnemyType::Coily;
-	if(followsPlayer && m_pPlayer)
-	{
-		//TODO: Get actual direction towards player
-		//https://www.redblobgames.com/grids/hexagons/#pathfinding
-	}
 
+	
+	MovementComponent::Direction toGo{ rand() % 2 == 0 ? MovementComponent::Direction::DOWN : MovementComponent::Direction::RIGHT };
+	switch (m_Type)
+	{
+	case EnemyType::Coily: 
+		//https://www.redblobgames.com/grids/hexagons/#pathfinding
+		toGo = (rand() % 2) == 0 ? MovementComponent::Direction::UP : MovementComponent::Direction::LEFT;
+		break;
+	case EnemyType::UggWrongWay:
+		break;
+	case EnemyType::SlickSam:
+	case EnemyType::CoilyEgg:
+		break;
+	}
+	
 	switch (toGo)
 	{
 	case MovementComponent::Direction::UP: 
@@ -60,4 +68,13 @@ void QBert::AIComponent::Update()
 QBert::AIComponent::EnemyType QBert::AIComponent::GetType() const
 {
 	return m_Type;
+}
+
+void QBert::AIComponent::OnReachBottom()
+{
+	if(m_Type == EnemyType::CoilyEgg)
+	{
+		m_Type = EnemyType::Coily;
+		m_pOwner->GetComponentOfType<dae::TextureComponent>()->SetTexture("Coily.png");
+	}
 }

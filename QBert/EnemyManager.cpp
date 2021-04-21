@@ -19,13 +19,15 @@ void QBert::EnemyManager::SetPlayer(dae::GameObject* pPlayer)
 
 void QBert::EnemyManager::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent, dae::GameObject* pSpawnOn)
 {
+	if (enemyType == AIComponent::EnemyType::Coily) enemyType = AIComponent::EnemyType::CoilyEgg;
+	
 	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
 
 	dae::GameObject* newEnemy = new dae::GameObject();
 
 	//Health component
-	HealthComponent::HealthOwner healthOwnerType{ enemyType == AIComponent::EnemyType::Coily ? HealthComponent::HealthOwner::Coily :
-		(enemyType == AIComponent::EnemyType::Ugg || enemyType == AIComponent::EnemyType::WrongWay) ? HealthComponent::HealthOwner::UggWrongWay : HealthComponent::HealthOwner::SlickSam };
+	HealthComponent::HealthOwner healthOwnerType{ enemyType == AIComponent::EnemyType::CoilyEgg ? HealthComponent::HealthOwner::Coily :
+		(enemyType == AIComponent::EnemyType::UggWrongWay) ? HealthComponent::HealthOwner::UggWrongWay : HealthComponent::HealthOwner::SlickSam };
 	auto pHealthComponent = new HealthComponent(newEnemy, healthOwnerType, 1);
 	pHealthComponent->AddObserver(pScoreComponent);
 	pHealthComponent->AddObserver(this);
@@ -37,7 +39,8 @@ void QBert::EnemyManager::Spawn(AIComponent::EnemyType enemyType, ScoreComponent
 	pMovementComponent->AddObserver(this);
 
 	//Render component
-	dae::TextureComponent* pRenderComponent = new dae::TextureComponent(newEnemy, "Coily.png"); //TODO: Fix png based on AIComponent::EnemyType
+	dae::TextureComponent* pRenderComponent = new dae::TextureComponent(newEnemy, enemyType == AIComponent::EnemyType::CoilyEgg ? "CoilyEgg.png" : 
+		enemyType == AIComponent::EnemyType::UggWrongWay ? "UggWrongWay.png" : "SlickSam.png");
 	newEnemy->AddComponent(pRenderComponent);
 
 	//AI component
@@ -74,16 +77,16 @@ void QBert::EnemyManager::OnNotify(const dae::Event& event)
 			dae::GameObject* pEnemy = *enemyIt;
 			auto pAIComponent = pEnemy->GetComponentOfType<AIComponent>();
 			auto pEnemyHealthComponent = pEnemy->GetComponentOfType<HealthComponent>();
+			std::cout << "About to kill\n";
 			switch (pAIComponent->GetType())
 			{
-			case AIComponent::EnemyType::Coily: 
-			case AIComponent::EnemyType::Ugg: 
-			case AIComponent::EnemyType::WrongWay:
+			case AIComponent::EnemyType::Coily:
+			case AIComponent::EnemyType::CoilyEgg:
+			case AIComponent::EnemyType::UggWrongWay: 
 				m_pPlayer->GetComponentOfType<HealthComponent>()->Kill();
 				pEnemyHealthComponent->Kill(false);
 				break;
-			case AIComponent::EnemyType::Slick: 
-			case AIComponent::EnemyType::Sam:
+			case AIComponent::EnemyType::SlickSam: 
 				pEnemyHealthComponent->Kill();
 				break;
 			}

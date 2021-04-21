@@ -11,11 +11,10 @@ namespace QBert
 	public:
 		enum class EnemyType
 		{
-			Coily,
-			Ugg,
-			WrongWay,
-			Slick,
-			Sam
+			Coily = 0,
+			UggWrongWay = 1,
+			SlickSam = 2,
+			CoilyEgg = 3
 		};
 		
 		AIComponent(dae::GameObject* pOwner, EnemyType type, MovementComponent* pMovementComponent, dae::GameObject* pPlayer = nullptr);
@@ -23,6 +22,7 @@ namespace QBert
 		void Update() override;
 
 		EnemyType GetType() const;
+		void OnReachBottom();
 	private:
 		EnemyType m_Type;
 		dae::GameObject* m_pPlayer;

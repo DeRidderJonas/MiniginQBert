@@ -66,6 +66,16 @@ dae::GameObject* QBert::LevelManager::GetSpawnPlatform() const
 	return m_GameObjects[0][m_width - 1];
 }
 
+bool QBert::LevelManager::IsOnBottom(dae::GameObject* pGo) const
+{
+	for (int i = 0; i < m_width; ++i)
+	{
+		if (m_GameObjects[m_width - 1][i] == pGo) return true;
+	}
+
+	return false;
+}
+
 QBert::LevelManager::LevelManager()
 {
 

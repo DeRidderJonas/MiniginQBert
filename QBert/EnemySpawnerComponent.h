@@ -12,7 +12,7 @@ namespace QBert
 		~EnemySpawnerComponent() override = default;
 		void Update() override;
 	private:
-		float m_SpawnInterval{ 5.f };
+		float m_SpawnInterval{ 5.5f };
 		float m_timeElapsed;
 
 		ScoreComponent* m_pScoreComponent;
