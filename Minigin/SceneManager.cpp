@@ -26,3 +26,12 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	m_Scenes.push_back(scene);
 	return *scene;
 }
+
+dae::Scene& dae::SceneManager::GetScene(const std::string& name)
+{
+	auto foundIt = std::find_if(m_Scenes.begin(), m_Scenes.end(), [&name](std::shared_ptr<Scene>& pScene) {return pScene->GetName() == name; });
+	if (foundIt != m_Scenes.end()) 
+		return **foundIt;
+
+	throw "No scene with name " + name;
+}

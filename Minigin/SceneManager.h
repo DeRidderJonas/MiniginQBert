@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include <string>
 
 namespace dae
 {
@@ -8,6 +9,7 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		Scene& GetScene(const std::string& name);
 
 		void Update();
 		void Render();

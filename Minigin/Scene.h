@@ -16,6 +16,8 @@ namespace dae
 		void Update();
 		void Render() const;
 
+		const std::string& GetName() const;
+
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
