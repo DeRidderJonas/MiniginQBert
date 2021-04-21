@@ -6,6 +6,8 @@
 
 
 #include "AIComponent.h"
+#include "EnemyManager.h"
+#include "EnemySpawnerComponent.h"
 #include "FPSComponent.h"
 #include "GameModeMenuComponent.h"
 #include "GameObject.h"
@@ -31,7 +33,7 @@ using namespace QBert;
 
 void LoadGame()
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("QBert");
 	auto& input = dae::InputManager::GetInstance();
 
 	auto go = new dae::GameObject();
@@ -107,7 +109,7 @@ void LoadGame()
 
 	input.Bind(0, dae::ControllerButton::ButtonA, std::make_shared<KillCommand>(hc), dae::InputState::pressed);
 
-	auto coily = new dae::GameObject();
+	/*auto coily = new dae::GameObject();
 	hc = new HealthComponent(coily, HealthComponent::HealthOwner::Coily, 1);
 	hc->AddObserver(scoreComponent);
 	auto mcC = new MovementComponent(coily);
@@ -117,8 +119,13 @@ void LoadGame()
 	coily->AddComponent(mcC);
 	coily->AddComponent(renderComponent);
 	coily->AddComponent(aiC);
-	scene.Add(coily);
+	scene.Add(coily);*/
 
+	go = new dae::GameObject();
+	auto esc = new EnemySpawnerComponent(go, scoreComponent, true);
+	go->AddComponent(esc);
+	scene.Add(go);
+	
 	auto killCommand = std::make_shared<QBert::KillCommand>(hc);
 	input.Bind(0, dae::ControllerButton::ButtonB, killCommand, dae::InputState::pressed);
 	input.Bind('q', killCommand, dae::InputState::pressed);

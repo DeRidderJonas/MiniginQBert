@@ -2,7 +2,7 @@
 #include "ScoreComponent.h"
 
 
-#include "ScoreEvent.h"
+#include "EnemyDeathEvent.h"
 #include "TextComponent.h"
 
 QBert::ScoreComponent::ScoreComponent(dae::GameObject* pOwner, dae::TextComponent* pTextComponent)
@@ -19,10 +19,10 @@ void QBert::ScoreComponent::Update()
 
 void QBert::ScoreComponent::OnNotify(const dae::Event& event)
 {
-	if(event.GetName() == "SCORE")
+	if(event.GetName() == "ENEMYDEATH")
 	{
-		const ScoreEvent& scoreEvent = dynamic_cast<const ScoreEvent&>(event);
-		m_Score += int(scoreEvent.GetValue());
+		const EnemyDeathEvent& scoreEvent = dynamic_cast<const EnemyDeathEvent&>(event);
+		m_Score += int(scoreEvent.GetScoreValue());
 		char buffer[10]{};
 		sprintf_s(buffer, "%05d", m_Score);
 		m_pTextComponent->SetText(buffer);

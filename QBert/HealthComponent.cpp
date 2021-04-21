@@ -4,7 +4,7 @@
 #include "MovementComponent.h"
 #include "Observer.h"
 #include "PlayerDeathEvent.h"
-#include "ScoreEvent.h"
+#include "EnemyDeathEvent.h"
 #include "Subject.h"
 
 QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives)
@@ -38,14 +38,22 @@ void QBert::HealthComponent::Kill()
 	case HealthOwner::Coily:
 		{
 			//Notify Coily death
-			ScoreEvent event{ "SCORE", 500 };
+			EnemyDeathEvent event{ "ENEMYDEATH", 500, m_pOwner };
 			m_pSubject.Notify(event);
 		}
 		break;
 	case HealthOwner::SlickSam:
 		{
 			//Notify Slick or Sam death
-			ScoreEvent event{ "SCORE", 300 };
+			EnemyDeathEvent event{ "ENEMYDEATH", 300, m_pOwner };
+			m_pSubject.Notify(event);
+		}
+		break;
+	
+	case HealthOwner::UggWrongWay:
+		{
+			//Notify Ugg or WrongWay death
+			EnemyDeathEvent event{ "ENEMYDEATH", 0, m_pOwner };
 			m_pSubject.Notify(event);
 		}
 		break;

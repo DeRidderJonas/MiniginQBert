@@ -15,7 +15,8 @@ namespace QBert
 		{
 			QBert,
 			Coily,
-			SlickSam
+			SlickSam,
+			UggWrongWay
 		};
 		HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives);
 		~HealthComponent() override = default;
