@@ -19,7 +19,7 @@ void QBert::HealthComponent::Update()
 {
 }
 
-void QBert::HealthComponent::Kill()
+void QBert::HealthComponent::Kill(bool awardPoints)
 {
 	m_AmountOfLives--;
 	
@@ -30,22 +30,19 @@ void QBert::HealthComponent::Kill()
 			//Notify player death
 			PlayerDeathEvent event{"PLAYERDEATH", m_AmountOfLives};
 			m_pSubject.Notify(event);
-
-			auto pMovementComponent = m_pOwner->GetComponentOfType<MovementComponent>();
-			if (pMovementComponent) pMovementComponent->GoToSpawningPlatform();
 		}
 		break;
 	case HealthOwner::Coily:
 		{
 			//Notify Coily death
-			EnemyDeathEvent event{ "ENEMYDEATH", 500, m_pOwner };
+			EnemyDeathEvent event{ "ENEMYDEATH", awardPoints ? 500 : 0, m_pOwner };
 			m_pSubject.Notify(event);
 		}
 		break;
 	case HealthOwner::SlickSam:
 		{
 			//Notify Slick or Sam death
-			EnemyDeathEvent event{ "ENEMYDEATH", 300, m_pOwner };
+			EnemyDeathEvent event{ "ENEMYDEATH", awardPoints ? 300 : 0, m_pOwner };
 			m_pSubject.Notify(event);
 		}
 		break;

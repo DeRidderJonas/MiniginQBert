@@ -23,7 +23,7 @@ namespace QBert
 		
 		void Update() override;
 
-		void Kill();
+		void Kill(bool awardPoints = true);
 		const HealthOwner& GetHealthOwnerType() const;
 
 		void AddObserver(dae::Observer* pObserver);

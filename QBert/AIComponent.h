@@ -21,6 +21,8 @@ namespace QBert
 		AIComponent(dae::GameObject* pOwner, EnemyType type, MovementComponent* pMovementComponent, dae::GameObject* pPlayer = nullptr);
 		~AIComponent() override;
 		void Update() override;
+
+		EnemyType GetType() const;
 	private:
 		EnemyType m_Type;
 		dae::GameObject* m_pPlayer;

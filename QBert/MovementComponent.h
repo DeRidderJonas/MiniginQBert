@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "Subject.h"
+
 
 namespace QBert
 {
@@ -19,8 +21,12 @@ namespace QBert
 		void Update() override;
 		void Move(Direction direction, bool activatesTerrain = false, bool revertsTerrain = false);
 		void GoToSpawningPlatform();
+		dae::GameObject* GetPlatform() const;
+
+		void AddObserver(dae::Observer* pObserver);
 	private:
 		dae::GameObject* m_pStandingOn;
+		dae::Subject m_Subject;
 	};
 }
 

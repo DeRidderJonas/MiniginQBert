@@ -2,12 +2,14 @@
 
 #include "HealthComponent.h"
 #include "LevelManager.h"
+#include "MoveEvent.h"
 #include "PlayableTerrainComponent.h"
 #include "TransformComponent.h"
 
 QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameObject* pStandOn)
 	: Component(pOwner)
 	, m_pStandingOn(pStandOn)
+	, m_Subject()
 {
 	if (!m_pStandingOn) 
 	{
@@ -48,6 +50,7 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		//Fell into the void
 		auto pHealthComponent = m_pOwner->GetComponentOfType<HealthComponent>();
 		if (pHealthComponent) pHealthComponent->Kill();
+		GoToSpawningPlatform();
 		return;
 	}
 
@@ -66,6 +69,9 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
 		if (pTerrainComponent) pTerrainComponent->Revert();
 	}
+
+	MoveEvent event{ "MOVE", m_pOwner };
+	m_Subject.Notify(event);
 }
 
 void QBert::MovementComponent::GoToSpawningPlatform()
@@ -73,4 +79,14 @@ void QBert::MovementComponent::GoToSpawningPlatform()
 	m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
 	m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 	m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>()->Activate();
+}
+
+dae::GameObject* QBert::MovementComponent::GetPlatform() const
+{
+	return m_pStandingOn;
+}
+
+void QBert::MovementComponent::AddObserver(dae::Observer* pObserver)
+{
+	m_Subject.AddObserver(pObserver);
 }

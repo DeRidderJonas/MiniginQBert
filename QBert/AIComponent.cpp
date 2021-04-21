@@ -56,3 +56,8 @@ void QBert::AIComponent::Update()
 		break;
 	}
 }
+
+QBert::AIComponent::EnemyType QBert::AIComponent::GetType() const
+{
+	return m_Type;
+}

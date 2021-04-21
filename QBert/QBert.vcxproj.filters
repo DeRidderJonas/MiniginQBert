@@ -81,6 +81,9 @@
     <ClCompile Include="EnemySpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="MoveEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MuteCommand.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="EnemySpawnerComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveEvent.h">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

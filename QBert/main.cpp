@@ -121,10 +121,6 @@ void LoadGame()
 	coily->AddComponent(aiC);
 	scene.Add(coily);*/
 
-	go = new dae::GameObject();
-	auto esc = new EnemySpawnerComponent(go, scoreComponent, true);
-	go->AddComponent(esc);
-	scene.Add(go);
 	
 	auto killCommand = std::make_shared<QBert::KillCommand>(hc);
 	input.Bind(0, dae::ControllerButton::ButtonB, killCommand, dae::InputState::pressed);
@@ -147,6 +143,13 @@ void LoadGame()
 	QBert->AddComponent(mc);
 	QBert->AddComponent(renderComponent);
 	scene.Add(QBert);
+
+	EnemyManager::GetInstance().SetPlayer(QBert);
+
+	go = new dae::GameObject();
+	auto esc = new EnemySpawnerComponent(go, scoreComponent, true);
+	go->AddComponent(esc);
+	scene.Add(go);
 
 	input.Bind(0, dae::ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), dae::InputState::pressed);
 	input.Bind(1, dae::ControllerButton::ButtonX, std::make_shared<QBert::KillCommand>(hc), dae::InputState::pressed);
