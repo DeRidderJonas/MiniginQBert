@@ -29,6 +29,7 @@ namespace dae
 
 		std::string m_Name;
 		std::vector <GameObject*> m_Objects{};
+		std::vector<GameObject*> m_ObjectsToAdd{};
 		std::vector<RenderComponent*> m_RenderComponents{};
 
 		static unsigned int m_IdCounter; 

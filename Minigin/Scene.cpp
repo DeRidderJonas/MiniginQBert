@@ -19,8 +19,8 @@ Scene::~Scene()
 
 void Scene::Add(GameObject* pObject)
 {
-	m_Objects.push_back(pObject);
-
+	m_ObjectsToAdd.push_back(pObject);
+	
 	auto renderComponents = pObject->GetAllComponentsOfType<RenderComponent>();
 	for (RenderComponent* pRenderComponent : renderComponents)
 	{
@@ -35,6 +35,12 @@ void Scene::Add(RenderComponent* pRenderComponent)
 
 void Scene::Update()
 {
+	if(m_ObjectsToAdd.size() > 0)
+	{
+		m_Objects.insert(m_Objects.end(), m_ObjectsToAdd.begin(), m_ObjectsToAdd.end());
+		m_ObjectsToAdd.clear();
+	}
+	
 	std::vector<GameObject*> toDelete{};
 	for(auto object : m_Objects)
 	{
