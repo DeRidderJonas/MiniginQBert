@@ -84,6 +84,9 @@
     <ClCompile Include="MoveEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MuteCommand.h">
@@ -138,6 +141,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="MoveEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>

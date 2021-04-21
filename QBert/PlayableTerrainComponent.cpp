@@ -4,6 +4,8 @@
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm/gtx/compatibility.hpp>
+
+#include "ScoreEvent.h"
 #pragma warning(pop)
 
 QBert::PlayableTerrainComponent::PlayableTerrainComponent(dae::GameObject* pOwner, TerrainType type, dae::TextureComponent* pTop, dae::TextureComponent* pLeft, dae::TextureComponent* pRight)
@@ -12,6 +14,7 @@ QBert::PlayableTerrainComponent::PlayableTerrainComponent(dae::GameObject* pOwne
 	, m_pLeft(pLeft)
 	, m_pRight(pRight)
 	, m_Type(type)
+	, m_Subject()
 {	
 	m_pTop->SetTexture("HexTop.png");
 	m_pLeft->SetTexture("HexLeft.png");
@@ -39,6 +42,9 @@ void QBert::PlayableTerrainComponent::Activate()
 	}
 
 	SetTextureComponentColors();
+
+	ScoreEvent event{ "SCORE", 25 };
+	m_Subject.Notify(event);
 }
 
 void QBert::PlayableTerrainComponent::Revert()
@@ -55,6 +61,11 @@ void QBert::PlayableTerrainComponent::Revert()
 	}
 
 	SetTextureComponentColors();
+}
+
+void QBert::PlayableTerrainComponent::AddObserver(dae::Observer* pObserver)
+{
+	m_Subject.AddObserver(pObserver);
 }
 
 void QBert::PlayableTerrainComponent::SetTextureComponentColors() const

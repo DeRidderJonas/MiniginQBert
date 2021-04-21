@@ -4,9 +4,10 @@
 #include "GameObject.h"
 #include "PlayableTerrainComponent.h"
 #include "Scene.h"
+#include "ScoreComponent.h"
 #include "TextureComponent.h"
 
-void QBert::LevelManager::CreateLevel(dae::Scene& scene)
+void QBert::LevelManager::CreateLevel(dae::Scene& scene, ScoreComponent* pScoreComponent)
 {
 	float HexWidth{ 20.f };
 	
@@ -25,6 +26,7 @@ void QBert::LevelManager::CreateLevel(dae::Scene& scene)
 			go->AddComponent(pLeftTexture);
 			go->AddComponent(pRightTexture);
 			auto play = new PlayableTerrainComponent(go, PlayableTerrainComponent::TerrainType::Reverting, pTopTexture, pLeftTexture, pRightTexture);
+			play->AddObserver(pScoreComponent);
 			go->AddComponent(play);
 			
 			m_GameObjects[r][q] = go;

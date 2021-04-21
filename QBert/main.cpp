@@ -80,7 +80,6 @@ void LoadGame()
 	scene.Add(go);
 
 
-	LevelManager::GetInstance().CreateLevel(scene);
 
 	go = new dae::GameObject();
 	TextureLineComponent* tlc = new TextureLineComponent(go, "QBert.png");
@@ -100,6 +99,8 @@ void LoadGame()
 	go->AddComponent(scoreComponent);
 	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(5.f, 100.f);
 	scene.Add(go);
+
+	LevelManager::GetInstance().CreateLevel(scene, scoreComponent);
 
 	auto QBert = new dae::GameObject();
 	HealthComponent* hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert, 5);

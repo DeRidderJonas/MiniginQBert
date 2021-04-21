@@ -8,10 +8,12 @@ namespace dae {
 
 namespace QBert
 {
+	class ScoreComponent;
+
 	class LevelManager final : public dae::Singleton<LevelManager>
 	{
 	public:
-		void CreateLevel(dae::Scene& pScene);
+		void CreateLevel(dae::Scene& pScene, ScoreComponent* pScoreComponent);
 		dae::GameObject* GetGameObject(int row, int col) const;
 		void GetPositionForGameObject(dae::GameObject* pToFind, int& row, int& col);
 		dae::GameObject* GetSpawnPlatform() const;

@@ -78,7 +78,6 @@ void QBert::MovementComponent::GoToSpawningPlatform()
 {
 	m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
 	m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
-	m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>()->Activate();
 }
 
 dae::GameObject* QBert::MovementComponent::GetPlatform() const

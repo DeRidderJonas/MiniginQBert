@@ -192,6 +192,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="PlayerDeathEvent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="EnemyDeathEvent.cpp" />
+    <ClCompile Include="ScoreEvent.cpp" />
     <ClCompile Include="SoundCommand.cpp" />
     <ClCompile Include="TextureLineComponent.cpp" />
   </ItemGroup>
@@ -212,6 +213,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="PlayerDeathEvent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="EnemyDeathEvent.h" />
+    <ClInclude Include="ScoreEvent.h" />
     <ClInclude Include="SoundCommand.h" />
     <ClInclude Include="TextureLineComponent.h" />
   </ItemGroup>

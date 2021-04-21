@@ -4,7 +4,7 @@
 #pragma warning (disable:4201)
 #include <glm/glm.hpp>
 #pragma warning(pop)
-
+#include "Subject.h"
 
 namespace dae {
 	class TextureComponent;
@@ -12,6 +12,8 @@ namespace dae {
 
 namespace QBert
 {
+	class ScoreComponent;
+
 	class PlayableTerrainComponent : public dae::Component
 	{
 	public:
@@ -27,6 +29,8 @@ namespace QBert
 		void Update() override;
 		void Activate();
 		void Revert();
+
+		void AddObserver(dae::Observer* pObserver);
 	private:
 		dae::TextureComponent* m_pTop;
 		dae::TextureComponent* m_pLeft;
@@ -39,7 +43,9 @@ namespace QBert
 		TerrainType m_Type;
 		int m_StepsNeeded;
 
-		void SetTextureComponentColors() const;
+		dae::Subject m_Subject;
+
+		auto SetTextureComponentColors() const -> void;
 	};
 
 }
