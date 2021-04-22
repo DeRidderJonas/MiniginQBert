@@ -77,7 +77,6 @@ void QBert::EnemyManager::OnNotify(const dae::Event& event)
 			dae::GameObject* pEnemy = *enemyIt;
 			auto pAIComponent = pEnemy->GetComponentOfType<AIComponent>();
 			auto pEnemyHealthComponent = pEnemy->GetComponentOfType<HealthComponent>();
-			std::cout << "About to kill\n";
 			switch (pAIComponent->GetType())
 			{
 			case AIComponent::EnemyType::Coily:

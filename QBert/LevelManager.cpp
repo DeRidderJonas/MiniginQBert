@@ -25,7 +25,7 @@ void QBert::LevelManager::CreateLevel(dae::Scene& scene, ScoreComponent* pScoreC
 			go->AddComponent(pTopTexture);
 			go->AddComponent(pLeftTexture);
 			go->AddComponent(pRightTexture);
-			auto play = new PlayableTerrainComponent(go, PlayableTerrainComponent::TerrainType::Reverting, pTopTexture, pLeftTexture, pRightTexture);
+			auto play = new PlayableTerrainComponent(go, PlayableTerrainComponent::TerrainType::Normal, pTopTexture, pLeftTexture, pRightTexture);
 			play->AddObserver(pScoreComponent);
 			go->AddComponent(play);
 			

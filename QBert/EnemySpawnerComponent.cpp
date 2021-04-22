@@ -18,7 +18,8 @@ void QBert::EnemySpawnerComponent::Update()
 
 	if(m_timeElapsed > m_SpawnInterval)
 	{
-		EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(0), m_pScoreComponent);
+		//EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(0), m_pScoreComponent);
+		EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(rand() % 3), m_pScoreComponent);
 		m_timeElapsed = 0.f;
 	}
 }
