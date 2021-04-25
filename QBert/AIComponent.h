@@ -1,6 +1,8 @@
 #pragma once
 #include <Component.h>
 
+#include "MovementComponent.h"
+
 namespace QBert
 {
 	class MovementComponent;
@@ -13,8 +15,7 @@ namespace QBert
 		{
 			Coily = 0,
 			UggWrongWay = 1,
-			SlickSam = 2,
-			CoilyEgg = 3
+			SlickSam = 2
 		};
 		
 		AIComponent(dae::GameObject* pOwner, EnemyType type, dae::GameObject* pPlayer = nullptr);
@@ -24,8 +25,10 @@ namespace QBert
 		void Update() override;
 
 		EnemyType GetType() const;
-		void OnReachBottom();
-	private:
+		virtual void OnReachBottom() = 0;
+	protected:
+		virtual MovementComponent::Direction GetNextDirectionToGo() const = 0;
+		
 		EnemyType m_Type;
 		dae::GameObject* m_pPlayer;
 

@@ -46,19 +46,8 @@ void QBert::AIComponent::Update()
 	m_movementTime = 0.f;
 
 	
-	MovementComponent::Direction toGo{ rand() % 2 == 0 ? MovementComponent::Direction::DOWN : MovementComponent::Direction::RIGHT };
-	switch (m_Type)
-	{
-	case EnemyType::Coily: 
-		//https://www.redblobgames.com/grids/hexagons/#pathfinding
-		toGo = (rand() % 2) == 0 ? MovementComponent::Direction::UP : MovementComponent::Direction::LEFT;
-		break;
-	case EnemyType::UggWrongWay:
-		break;
-	case EnemyType::SlickSam:
-	case EnemyType::CoilyEgg:
-		break;
-	}
+	//MovementComponent::Direction toGo{ rand() % 2 == 0 ? MovementComponent::Direction::DOWN : MovementComponent::Direction::RIGHT };
+	auto toGo = GetNextDirectionToGo();
 	
 	switch (toGo)
 	{
@@ -80,13 +69,4 @@ void QBert::AIComponent::Update()
 QBert::AIComponent::EnemyType QBert::AIComponent::GetType() const
 {
 	return m_Type;
-}
-
-void QBert::AIComponent::OnReachBottom()
-{
-	if(m_Type == EnemyType::CoilyEgg)
-	{
-		m_Type = EnemyType::Coily;
-		m_pOwner->GetComponentOfType<dae::TextureComponent>()->SetTexture("Coily.png");
-	}
 }

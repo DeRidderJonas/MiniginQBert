@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "EnemyFactory.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
 #include "InputManager.h"
@@ -149,32 +150,9 @@ void QBert::QBertGameContext::CreatePlayer()
 
 void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent, dae::GameObject* pSpawnOn)
 {
-	if (enemyType == AIComponent::EnemyType::Coily) enemyType = AIComponent::EnemyType::CoilyEgg;
-
+	auto newEnemy = EnemyFactory::CreateEnemy(enemyType, pScoreComponent, m_pPlayer, pSpawnOn);
 	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
-
-	dae::GameObject* newEnemy = new dae::GameObject();
-
-	//Health component
-	HealthComponent::HealthOwner healthOwnerType{ enemyType == AIComponent::EnemyType::CoilyEgg ? HealthComponent::HealthOwner::Coily :
-		(enemyType == AIComponent::EnemyType::UggWrongWay) ? HealthComponent::HealthOwner::UggWrongWay : HealthComponent::HealthOwner::SlickSam };
-	auto pHealthComponent = new HealthComponent(newEnemy, healthOwnerType, 1);
-	pHealthComponent->AddObserver(pScoreComponent);
-	newEnemy->AddComponent(pHealthComponent);
-
-	//Movement component
-	MovementComponent* pMovementComponent = new MovementComponent(newEnemy, pSpawnOn);
-	newEnemy->AddComponent(pMovementComponent);
-
-	//Render component
-	dae::TextureComponent* pRenderComponent = new dae::TextureComponent(newEnemy, enemyType == AIComponent::EnemyType::CoilyEgg ? "CoilyEgg.png" :
-		enemyType == AIComponent::EnemyType::UggWrongWay ? "UggWrongWay.png" : "SlickSam.png");
-	newEnemy->AddComponent(pRenderComponent);
-
-	//AI component
-	AIComponent* pAIComponent = new AIComponent(newEnemy, enemyType, m_pPlayer);
-	newEnemy->AddComponent(pAIComponent);
-
+	
 	m_Enemies.push_back(newEnemy);
 	scene.Add(newEnemy);
 }
@@ -202,7 +180,6 @@ void QBert::QBertGameContext::CheckCollisions()
 		switch (pAIComponent->GetType())
 		{
 		case AIComponent::EnemyType::Coily:
-		case AIComponent::EnemyType::CoilyEgg:
 		case AIComponent::EnemyType::UggWrongWay:
 			m_pPlayer->GetComponentOfType<HealthComponent>()->Kill();
 			pEnemyHealthComponent->Kill(false);

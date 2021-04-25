@@ -25,6 +25,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{d127852a-1bf1-47fe-9077-ab981ca14f19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\AIComponent">
+      <UniqueIdentifier>{b070b1d7-015f-4b64-9962-1e5a6507a6b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{c31bd23d-31dc-4c07-b879-70b759cefc4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,9 +69,6 @@
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="AIComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyDeathEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
@@ -83,6 +86,21 @@
     </ClCompile>
     <ClCompile Include="QBertGameContext.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Components\AIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyAIComponent.cpp">
+      <Filter>Components\AIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="UggWrongWayAIComponent.cpp">
+      <Filter>Components\AIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickSamAIComponent.cpp">
+      <Filter>Components\AIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +137,6 @@
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="AIComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyDeathEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
@@ -139,6 +154,21 @@
     </ClInclude>
     <ClInclude Include="QBertGameContext.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyAIComponent.h">
+      <Filter>Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="UggWrongWayAIComponent.h">
+      <Filter>Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickSamAIComponent.h">
+      <Filter>Components\AIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

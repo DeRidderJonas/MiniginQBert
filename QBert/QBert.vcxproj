@@ -176,6 +176,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="CoilyAIComponent.cpp" />
+    <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemySpawnerComponent.cpp" />
     <ClCompile Include="GameModeMenuComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
@@ -192,11 +194,15 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="EnemyDeathEvent.cpp" />
     <ClCompile Include="ScoreEvent.cpp" />
+    <ClCompile Include="SlickSamAIComponent.cpp" />
     <ClCompile Include="SoundCommand.cpp" />
     <ClCompile Include="TextureLineComponent.cpp" />
+    <ClCompile Include="UggWrongWayAIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="CoilyAIComponent.h" />
+    <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemySpawnerComponent.h" />
     <ClInclude Include="GameModeMenuComponent.h" />
     <ClInclude Include="HealthComponent.h" />
@@ -212,8 +218,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="EnemyDeathEvent.h" />
     <ClInclude Include="ScoreEvent.h" />
+    <ClInclude Include="SlickSamAIComponent.h" />
     <ClInclude Include="SoundCommand.h" />
     <ClInclude Include="TextureLineComponent.h" />
+    <ClInclude Include="UggWrongWayAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
