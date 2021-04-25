@@ -22,7 +22,7 @@
     <Filter Include="Events">
       <UniqueIdentifier>{0cc5d1d3-c11a-490c-bc8b-f7cfc1d4e028}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Managers">
+    <Filter Include="Utils">
       <UniqueIdentifier>{d127852a-1bf1-47fe-9077-ab981ca14f19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -72,12 +72,6 @@
     <ClCompile Include="PlayerDeathEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="LevelManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="EnemySpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -86,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="ScoreEvent.cpp">
       <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="QBertGameContext.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,12 +128,6 @@
     <ClInclude Include="PlayerDeathEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="LevelManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="EnemySpawnerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -145,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="ScoreEvent.h">
       <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertGameContext.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

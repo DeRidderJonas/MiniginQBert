@@ -18,3 +18,7 @@ void dae::FPSComponent::Update()
 		m_pTextComponent->SetText(std::to_string(fps) + " FPS");
 	}
 }
+
+void dae::FPSComponent::Initialize()
+{
+}

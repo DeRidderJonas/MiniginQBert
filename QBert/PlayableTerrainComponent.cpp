@@ -16,6 +16,10 @@ QBert::PlayableTerrainComponent::PlayableTerrainComponent(dae::GameObject* pOwne
 	, m_Type(type)
 	, m_Subject()
 {	
+}
+
+void QBert::PlayableTerrainComponent::Initialize()
+{
 	m_pTop->SetTexture("HexTop.png");
 	m_pLeft->SetTexture("HexLeft.png");
 	m_pRight->SetTexture("HexRight.png");

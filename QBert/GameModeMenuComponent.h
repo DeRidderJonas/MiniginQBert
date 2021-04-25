@@ -9,6 +9,7 @@ namespace QBert
 		GameModeMenuComponent(dae::GameObject* pOwner);
 		
 		void Update() override;
+		void Initialize() override;
 		void Render() const override;
 	};
 

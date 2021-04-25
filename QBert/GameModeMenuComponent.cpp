@@ -12,6 +12,10 @@ void QBert::GameModeMenuComponent::Update()
 {
 }
 
+void QBert::GameModeMenuComponent::Initialize()
+{
+}
+
 void QBert::GameModeMenuComponent::Render() const
 {
 	ImGui::Begin("Modes");

@@ -26,7 +26,10 @@ namespace QBert
 		
 		PlayableTerrainComponent(dae::GameObject* pOwner, TerrainType type, dae::TextureComponent* pTop, dae::TextureComponent* pLeft, dae::TextureComponent* pRight);
 		~PlayableTerrainComponent() override = default;
+
+		void Initialize() override;
 		void Update() override;
+
 		void Activate();
 		void Revert();
 

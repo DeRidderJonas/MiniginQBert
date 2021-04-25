@@ -15,6 +15,10 @@ QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner hea
 {
 }
 
+void QBert::HealthComponent::Initialize()
+{
+}
+
 void QBert::HealthComponent::Update()
 {
 }

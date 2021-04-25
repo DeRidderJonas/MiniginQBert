@@ -147,6 +147,9 @@
     <ClInclude Include="GameTime.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="GameContext.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContext.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -176,12 +176,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIComponent.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemySpawnerComponent.cpp" />
     <ClCompile Include="GameModeMenuComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="KillCommand.cpp" />
-    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
@@ -190,6 +188,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayableTerrainComponent.cpp" />
     <ClCompile Include="PlayerDeathEvent.cpp" />
+    <ClCompile Include="QBertGameContext.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="EnemyDeathEvent.cpp" />
     <ClCompile Include="ScoreEvent.cpp" />
@@ -198,12 +197,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIComponent.h" />
-    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemySpawnerComponent.h" />
     <ClInclude Include="GameModeMenuComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="KillCommand.h" />
-    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="MoveEvent.h" />
@@ -211,6 +208,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayableTerrainComponent.h" />
     <ClInclude Include="PlayerDeathEvent.h" />
+    <ClInclude Include="QBertGameContext.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="EnemyDeathEvent.h" />
     <ClInclude Include="ScoreEvent.h" />

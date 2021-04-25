@@ -20,7 +20,8 @@ namespace QBert
 		};
 		HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives);
 		~HealthComponent() override = default;
-		
+
+		void Initialize() override;
 		void Update() override;
 
 		void Kill(bool awardPoints = true);

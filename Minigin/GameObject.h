@@ -4,10 +4,12 @@
 
 namespace dae
 {
+	class Scene;
 	class Component;
 	class GameObject final
 	{
 	public:
+		void Initialize();
 		void Update();
 
 		template<typename ComponentType>
@@ -38,6 +40,9 @@ namespace dae
 
 		void Destroy();
 		bool ShouldBeDestroyed() const;
+
+		void SetScene(Scene* pScene);
+		Scene* GetScene() const;
 		
 		GameObject();
 		virtual ~GameObject();
@@ -48,5 +53,6 @@ namespace dae
 	private:
 		std::vector<Component*> m_Components;
 		bool m_ToBeDestroyed;
+		Scene* m_pScene;
 	};
 }

@@ -1,5 +1,7 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
+
+#include "GameContext.h"
 #include "GameObject.h"
 #include "RenderComponent.h"
 
@@ -7,7 +9,7 @@ using namespace dae;
 
 unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_Name(name) {}
+Scene::Scene(const std::string& name) : m_Name(name), m_pGameContext(nullptr) {}
 
 Scene::~Scene()
 {
@@ -15,17 +17,13 @@ Scene::~Scene()
 	{
 		delete object;
 	}
+	
+	delete m_pGameContext;
 }
 
 void Scene::Add(GameObject* pObject)
 {
 	m_ObjectsToAdd.push_back(pObject);
-	
-	auto renderComponents = pObject->GetAllComponentsOfType<RenderComponent>();
-	for (RenderComponent* pRenderComponent : renderComponents)
-	{
-		m_RenderComponents.push_back(pRenderComponent);
-	}
 }
 
 void Scene::Add(RenderComponent* pRenderComponent)
@@ -37,6 +35,17 @@ void Scene::Update()
 {
 	if(m_ObjectsToAdd.size() > 0)
 	{
+		for(auto pGo : m_ObjectsToAdd)
+		{
+			pGo->SetScene(this);
+			pGo->Initialize();
+
+			auto renderComponents = pGo->GetAllComponentsOfType<RenderComponent>();
+			for (RenderComponent* pRenderComponent : renderComponents)
+			{
+				m_RenderComponents.push_back(pRenderComponent);
+			}
+		}
 		m_Objects.insert(m_Objects.end(), m_ObjectsToAdd.begin(), m_ObjectsToAdd.end());
 		m_ObjectsToAdd.clear();
 	}
@@ -62,9 +71,12 @@ void Scene::Update()
 				{
 					return pComp->GetOwner() == object;
 				}));
+			if (m_pGameContext) m_pGameContext->OnRemoveGameObject(object);
 			delete object;
 		}
 	}
+
+	if (m_pGameContext) m_pGameContext->Update();
 }
 
 void Scene::Render() const
@@ -78,5 +90,18 @@ void Scene::Render() const
 const std::string& Scene::GetName() const
 {
 	return m_Name;
+}
+
+void Scene::SetGameContext(GameContext* pGameContext, bool deletePrevious)
+{
+	if (deletePrevious && m_pGameContext) 
+		delete m_pGameContext;
+	
+	m_pGameContext = pGameContext;
+}
+
+GameContext* Scene::GetGameContext() const
+{
+	return m_pGameContext;
 }
 

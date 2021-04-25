@@ -10,8 +10,8 @@
 dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& fileName)
 	: RenderComponent(pOwner)
 	, m_pTexture(ResourceManager::GetInstance().LoadTexture(fileName))
+	, m_pTransform(nullptr)
 {
-	m_pTransform = pOwner->GetComponentOfType<TransformComponent>();
 }
 
 dae::TextureComponent::TextureComponent(GameObject* pOwner)
@@ -32,6 +32,11 @@ void dae::TextureComponent::Render() const
 	
 	const auto& pos = m_pTransform->GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+}
+
+void dae::TextureComponent::Initialize()
+{
+	m_pTransform = m_pOwner->GetComponentOfType<TransformComponent>();
 }
 
 void dae::TextureComponent::SetTexture(const std::shared_ptr<Texture2D>& pTexture)

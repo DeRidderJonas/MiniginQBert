@@ -2,9 +2,10 @@
 
 #include "AIComponent.h"
 #include "HealthComponent.h"
-#include "LevelManager.h"
 #include "MoveEvent.h"
 #include "PlayableTerrainComponent.h"
+#include "QBertGameContext.h"
+#include "Scene.h"
 #include "TransformComponent.h"
 
 QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameObject* pStandOn)
@@ -12,12 +13,18 @@ QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameOb
 	, m_pStandingOn(pStandOn)
 	, m_Subject()
 {
-	if (!m_pStandingOn) 
+	
+}
+
+void QBert::MovementComponent::Initialize()
+{
+	if (!m_pStandingOn)
 	{
-		m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
+		auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
+		if (pGameContext) m_pStandingOn = pGameContext->GetSpawnPlatform();
 	}
 
-	pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
+	if (m_pStandingOn) m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 }
 
 void QBert::MovementComponent::Update()
@@ -27,22 +34,22 @@ void QBert::MovementComponent::Update()
 void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, bool revertsTerrain)
 {
 	int row{ -1 }, col{ -1 };
-	auto& levelManager = LevelManager::GetInstance();
-	levelManager.GetPositionForGameObject(m_pStandingOn, row, col);
+	auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
+	pGameContext->GetPlatformForGameObject(m_pStandingOn, row, col);
 	dae::GameObject* pNext{ nullptr };
 	switch (direction)
 	{
 	case Direction::UP:
-		pNext = levelManager.GetGameObject(row-1, col+1);
+		pNext = pGameContext->GetPlatform(row-1, col+1);
 		break;
 	case Direction::DOWN:
-		pNext = levelManager.GetGameObject(row+1, col-1);
+		pNext = pGameContext->GetPlatform(row+1, col-1);
 		break;
 	case Direction::LEFT:
-		pNext = levelManager.GetGameObject(row-1, col);
+		pNext = pGameContext->GetPlatform(row-1, col);
 		break;
 	case Direction::RIGHT:
-		pNext = levelManager.GetGameObject(row+1, col);
+		pNext = pGameContext->GetPlatform(row+1, col);
 		break;
 	}
 
@@ -71,7 +78,7 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		if (pTerrainComponent) pTerrainComponent->Revert();
 	}
 
-	if(LevelManager::GetInstance().IsOnBottom(m_pStandingOn))
+	if(pGameContext->IsPlatformOnBottom(m_pStandingOn))
 	{
 		auto aiComponent = m_pOwner->GetComponentOfType<AIComponent>();
 		if (aiComponent) aiComponent->OnReachBottom();
@@ -83,8 +90,12 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 
 void QBert::MovementComponent::GoToSpawningPlatform()
 {
-	m_pStandingOn = LevelManager::GetInstance().GetSpawnPlatform();
-	m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
+	auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
+	if (pGameContext)
+	{
+		m_pStandingOn = pGameContext->GetSpawnPlatform();
+		m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
+	}
 }
 
 dae::GameObject* QBert::MovementComponent::GetPlatform() const

@@ -11,7 +11,11 @@ QBert::ScoreComponent::ScoreComponent(dae::GameObject* pOwner, dae::TextComponen
 	, m_pTextComponent{pTextComponent}
 	, m_Score{}
 {
-	pTextComponent->SetText("00000");
+}
+
+void QBert::ScoreComponent::Initialize()
+{
+	m_pTextComponent->SetText("00000");
 }
 
 void QBert::ScoreComponent::Update()

@@ -40,6 +40,10 @@ void dae::TextComponent::Update()
 	}
 }
 
+void dae::TextComponent::Initialize()
+{
+}
+
 void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;

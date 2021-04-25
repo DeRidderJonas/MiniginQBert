@@ -17,6 +17,7 @@ namespace dae
 		TextureComponent(GameObject* pOwner);
 
 		void Render() const override;
+		void Initialize() override;
 
 		void SetTexture(const std::shared_ptr<Texture2D>& pTexture);
 		void SetTexture(const std::string& fileName);

@@ -14,6 +14,7 @@ namespace dae
 		virtual ~TransformComponent() = default;
 
 		void Update() override{};
+		void Initialize() override;
 		
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(const glm::vec3& pos);

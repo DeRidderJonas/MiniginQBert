@@ -18,7 +18,10 @@ namespace QBert
 		
 		MovementComponent(dae::GameObject* pOwner, dae::GameObject* pStandOn = nullptr);
 		~MovementComponent() override = default;
+
+		void Initialize() override;
 		void Update() override;
+
 		void Move(Direction direction, bool activatesTerrain = false, bool revertsTerrain = false);
 		void GoToSpawningPlatform();
 		dae::GameObject* GetPlatform() const;

@@ -17,8 +17,10 @@ namespace QBert
 			CoilyEgg = 3
 		};
 		
-		AIComponent(dae::GameObject* pOwner, EnemyType type, MovementComponent* pMovementComponent, dae::GameObject* pPlayer = nullptr);
+		AIComponent(dae::GameObject* pOwner, EnemyType type, dae::GameObject* pPlayer = nullptr);
 		~AIComponent() override;
+
+		void Initialize() override;
 		void Update() override;
 
 		EnemyType GetType() const;

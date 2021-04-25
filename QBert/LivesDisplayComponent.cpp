@@ -13,6 +13,10 @@ QBert::LivesDisplayComponent::LivesDisplayComponent(dae::GameObject* pOwner, Tex
 	m_pTextureLineComponent->SetAmountInLine(amountOfLives);
 }
 
+void QBert::LivesDisplayComponent::Initialize()
+{
+}
+
 void QBert::LivesDisplayComponent::Update()
 {
 }

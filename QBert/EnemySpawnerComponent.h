@@ -10,7 +10,9 @@ namespace QBert
 	public:
 		EnemySpawnerComponent(dae::GameObject* pOwner, ScoreComponent* pScoreComponent, bool spawnInstantly = false);
 		~EnemySpawnerComponent() override = default;
+
 		void Update() override;
+		void Initialize() override;
 	private:
 		float m_SpawnInterval{ 5.5f };
 		float m_timeElapsed;

@@ -12,6 +12,7 @@ namespace QBert
 		LivesDisplayComponent(dae::GameObject* pOwner, TextureLineComponent* pTextureLineComponent, int amountOfLives);
 		virtual ~LivesDisplayComponent() = default;
 
+		void Initialize() override;
 		void Update() override;
 
 		void OnNotify(const dae::Event& event) override;

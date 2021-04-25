@@ -12,6 +12,7 @@ namespace dae
 		virtual ~FPSComponent() = default;
 
 		virtual void Update() override;
+		void Initialize() override;
 	private:
 		TextComponent* m_pTextComponent;
 		int m_FPS;

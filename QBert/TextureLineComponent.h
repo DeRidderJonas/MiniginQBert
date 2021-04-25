@@ -9,7 +9,9 @@ namespace QBert
 		TextureLineComponent(dae::GameObject* pOwner, const std::string& fileName, int amountInLine = 1);
 		~TextureLineComponent() override = default;
 
+		void Initialize() override;
 		void Render() const override;
+		
 		void SetAmountInLine(int amount);
 	private:
 		int m_AmountInLine;

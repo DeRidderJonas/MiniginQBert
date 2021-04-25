@@ -2,8 +2,10 @@
 #include "RenderComponent.h"
 #include "SceneManager.h"
 
+
 namespace dae
 {
+	class GameContext;
 	class GameObject;
 	class Scene
 	{
@@ -17,6 +19,8 @@ namespace dae
 		void Render() const;
 
 		const std::string& GetName() const;
+		void SetGameContext(GameContext* pGameContext, bool deletePrevious = true);
+		GameContext* GetGameContext() const;
 
 		~Scene();
 		Scene(const Scene& other) = delete;
@@ -31,6 +35,7 @@ namespace dae
 		std::vector <GameObject*> m_Objects{};
 		std::vector<GameObject*> m_ObjectsToAdd{};
 		std::vector<RenderComponent*> m_RenderComponents{};
+		GameContext* m_pGameContext;
 
 		static unsigned int m_IdCounter; 
 	};

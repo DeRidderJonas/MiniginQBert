@@ -1,40 +1,26 @@
 #include <MiniginPCH.h>
 #include <Minigin.h>
-#include <vld.h>
-
-#include <iostream>
 
 
-#include "AIComponent.h"
-#include "EnemyManager.h"
 #include "EnemySpawnerComponent.h"
 #include "FPSComponent.h"
 #include "GameModeMenuComponent.h"
 #include "GameObject.h"
-#include "HealthComponent.h"
 #include "InputManager.h"
-#include "KillCommand.h"
-#include "LevelManager.h"
-#include "LivesDisplayComponent.h"
-#include "MoveCommand.h"
-#include "MovementComponent.h"
-#include "MuteCommand.h"
 #include "PlayableTerrainComponent.h"
+#include "QBertGameContext.h"
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"
-#include "SoundCommand.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
-#include "TextureLineComponent.h"
 
 using namespace QBert;
 
 void LoadGame()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("QBert");
-	auto& input = dae::InputManager::GetInstance();
 
 	//Background
 	auto go = new dae::GameObject();
@@ -74,53 +60,16 @@ void LoadGame()
 	scene.Add(go);
 
 	//Create level
-	LevelManager::GetInstance().CreateLevel(scene, scoreComponent);
-
-	//Lives display
-	go = new dae::GameObject();
-	auto tlc = new TextureLineComponent(go, "QBert.png");
-	auto lc = new LivesDisplayComponent(go, tlc, 5);
-	go->AddComponent(tlc);
-	go->AddComponent(lc);
-	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(200.f, 50.f);
-	scene.Add(go);
-
-	//Player
-	auto QBert = new dae::GameObject();
-	auto hc = new HealthComponent(QBert, HealthComponent::HealthOwner::QBert, 5);
-	auto mc = new MovementComponent(QBert);
-	renderComponent = new dae::TextureComponent(QBert, "QBert.png");
-	hc->AddObserver(lc);
-	QBert->AddComponent(hc);
-	QBert->AddComponent(mc);
-	QBert->AddComponent(renderComponent);
-	scene.Add(QBert);
-
-	EnemyManager::GetInstance().SetPlayer(QBert);
+	auto pGameContext = new QBertGameContext(&scene);
+	scene.SetGameContext(pGameContext);
+	pGameContext->CreateLevel(scoreComponent);
+	pGameContext->CreatePlayer();
 
 	//Enemy spawner
 	go = new dae::GameObject();
 	auto esc = new EnemySpawnerComponent(go, scoreComponent, true);
 	go->AddComponent(esc);
 	scene.Add(go);
-
-	//Input
-	input.Bind('e', std::make_shared<SoundCommand>(), dae::InputState::pressed);
-	input.Bind('r', std::make_shared<MuteCommand>(), dae::InputState::released);
-
-	
-	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true), dae::InputState::pressed);
-	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true), dae::InputState::pressed);
-	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true), dae::InputState::pressed);
-	input.Bind('d', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true), dae::InputState::pressed);
-	
-	std::cout << "[Keyboard] E: Make sound\n";
-	std::cout << "[Keyboard] R: Mute sound\n";
-
-	std::cout << "[Keyboard] W: Move up\n";
-	std::cout << "[Keyboard] A: Move left\n";
-	std::cout << "[Keyboard] S: Move down\n";
-	std::cout << "[Keyboard] D: Move right\n";
 	
 }
 

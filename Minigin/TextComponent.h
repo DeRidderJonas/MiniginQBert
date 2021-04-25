@@ -11,6 +11,7 @@ namespace dae
 		TextComponent(GameObject* pOwner, TextureComponent* pTextureComponent, const std::string& text, const std::shared_ptr<Font>& font);
 
 		void Update() override;
+		void Initialize() override;
 
 		void SetText(const std::string& text);
 	private:

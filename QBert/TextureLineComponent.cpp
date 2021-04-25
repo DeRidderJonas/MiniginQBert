@@ -7,6 +7,11 @@ QBert::TextureLineComponent::TextureLineComponent(dae::GameObject* pOwner, const
 {
 }
 
+void QBert::TextureLineComponent::Initialize()
+{
+	m_pTransform = m_pOwner->GetComponentOfType<dae::TransformComponent>();
+}
+
 void QBert::TextureLineComponent::Render() const
 {
 	auto textureDimensions = GetTextureDimensions();
