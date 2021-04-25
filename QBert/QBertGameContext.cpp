@@ -176,17 +176,6 @@ void QBert::QBertGameContext::CheckCollisions()
 		//Player and enemy on same platform
 		dae::GameObject* pEnemy = *enemyIt;
 		auto pAIComponent = pEnemy->GetComponentOfType<AIComponent>();
-		auto pEnemyHealthComponent = pEnemy->GetComponentOfType<HealthComponent>();
-		switch (pAIComponent->GetType())
-		{
-		case AIComponent::EnemyType::Coily:
-		case AIComponent::EnemyType::UggWrongWay:
-			m_pPlayer->GetComponentOfType<HealthComponent>()->Kill();
-			pEnemyHealthComponent->Kill(false);
-			break;
-		case AIComponent::EnemyType::SlickSam:
-			pEnemyHealthComponent->Kill();
-			break;
-		}
+		if (pAIComponent) pAIComponent->OnCollisionWithPlayer(m_pPlayer);
 	}
 }

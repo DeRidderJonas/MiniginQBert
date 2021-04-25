@@ -1,5 +1,6 @@
 #include "CoilyAIComponent.h"
 
+#include "HealthComponent.h"
 #include "TextureComponent.h"
 
 QBert::CoilyAIComponent::CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer)
@@ -14,6 +15,14 @@ void QBert::CoilyAIComponent::OnReachBottom()
 
 	m_HasHatched = true;
 	m_pOwner->GetComponentOfType<dae::TextureComponent>()->SetTexture("Coily.png");
+}
+
+void QBert::CoilyAIComponent::OnCollisionWithPlayer(dae::GameObject* pPlayer)
+{
+	if(pPlayer) pPlayer->GetComponentOfType<HealthComponent>()->Kill();
+
+	auto pEnemyHealthComponent = m_pOwner->GetComponentOfType<HealthComponent>();
+	if(pEnemyHealthComponent) pEnemyHealthComponent->Kill(false);
 }
 
 QBert::MovementComponent::Direction QBert::CoilyAIComponent::GetNextDirectionToGo() const

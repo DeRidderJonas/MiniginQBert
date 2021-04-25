@@ -45,10 +45,7 @@ void QBert::AIComponent::Update()
 
 	m_movementTime = 0.f;
 
-	
-	//MovementComponent::Direction toGo{ rand() % 2 == 0 ? MovementComponent::Direction::DOWN : MovementComponent::Direction::RIGHT };
 	auto toGo = GetNextDirectionToGo();
-	
 	switch (toGo)
 	{
 	case MovementComponent::Direction::UP: 

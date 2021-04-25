@@ -10,6 +10,7 @@ namespace QBert
 		virtual ~CoilyAIComponent() override = default;
 		
 		void OnReachBottom() override;
+		void OnCollisionWithPlayer(dae::GameObject* pPlayer) override;
 	protected:
 		MovementComponent::Direction GetNextDirectionToGo() const override;
 	private:

@@ -26,6 +26,7 @@ namespace QBert
 
 		EnemyType GetType() const;
 		virtual void OnReachBottom() = 0;
+		virtual void OnCollisionWithPlayer(dae::GameObject* pPlayer) = 0;
 	protected:
 		virtual MovementComponent::Direction GetNextDirectionToGo() const = 0;
 		

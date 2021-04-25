@@ -9,6 +9,7 @@ namespace QBert
 		SlickSamAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer);
 		virtual ~SlickSamAIComponent() override = default;
 
+		void OnCollisionWithPlayer(dae::GameObject* pPlayer) override;
 		void OnReachBottom() override;
 	protected:
 		MovementComponent::Direction GetNextDirectionToGo() const override;
