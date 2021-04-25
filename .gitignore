@@ -4,3 +4,6 @@ Win32
 Debug
 Release
 Minigin.sln.DotSettings.user
+!3rdParty/SDL2/lib/x64
+!3rdParty/SDL2_ttf/lib/x64
+!3rdParty/SDL2_image/lib/x64
