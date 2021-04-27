@@ -25,13 +25,15 @@ namespace QBert
 
 		void CreateLevel(QBert::ScoreComponent* pScoreComponent);
 		void CreatePlayer();
-		void Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent = nullptr, dae::GameObject* pSpawnOn = nullptr);
+		void Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent = nullptr);
 		
 		dae::GameObject* GetPlatform(int row, int col) const;
 		void GetPlatformForGameObject(dae::GameObject* pToFind, int& row, int& col);
 		dae::GameObject* GetSpawnPlatform() const;
 		bool IsPlatformOnBottom(dae::GameObject* pGo) const;
 
+		int GetLevelWidth() const;
+		
 		void CheckCollisions();
 	private:
 

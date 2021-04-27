@@ -19,12 +19,11 @@ void QBert::EnemySpawnerComponent::Update()
 
 	if(m_timeElapsed > m_SpawnInterval)
 	{
-		//EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(0), m_pScoreComponent);
-		//EnemyManager::GetInstance().Spawn(AIComponent::EnemyType(rand() % 3), m_pScoreComponent);
 		auto pQBertGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
 		if(pQBertGameContext)
 		{
 			pQBertGameContext->Spawn(AIComponent::EnemyType(rand() % 3), m_pScoreComponent);
+			//pQBertGameContext->Spawn(AIComponent::EnemyType::Coily, m_pScoreComponent);
 		}
 		m_timeElapsed = 0.f;
 	}

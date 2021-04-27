@@ -105,6 +105,11 @@ bool QBert::QBertGameContext::IsPlatformOnBottom(dae::GameObject* pGo) const
 	return false;
 }
 
+int QBert::QBertGameContext::GetLevelWidth() const
+{
+	return m_LevelWidth;
+}
+
 void QBert::QBertGameContext::CreatePlayer()
 {
 	//Lives display
@@ -148,9 +153,9 @@ void QBert::QBertGameContext::CreatePlayer()
 	std::cout << "[Keyboard] D: Move right\n";
 }
 
-void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent, dae::GameObject* pSpawnOn)
+void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent)
 {
-	auto newEnemy = EnemyFactory::CreateEnemy(enemyType, pScoreComponent, m_pPlayer, pSpawnOn);
+	auto newEnemy = EnemyFactory::CreateEnemy(enemyType, pScoreComponent, this, m_pPlayer);
 	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
 	
 	m_Enemies.push_back(newEnemy);
