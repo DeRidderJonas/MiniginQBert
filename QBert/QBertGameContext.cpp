@@ -128,7 +128,7 @@ void QBert::QBertGameContext::CreatePlayer()
 	m_pPlayer = new dae::GameObject();
 	auto hc = new HealthComponent(m_pPlayer, HealthComponent::HealthOwner::QBert, 5);
 	auto mc = new MovementComponent(m_pPlayer);
-	auto renderComponent = new dae::TextureComponent(m_pPlayer, "QBert.png");
+	auto renderComponent = new dae::TextureComponent(m_pPlayer, "QBert.png", 1);
 	hc->AddObserver(lc);
 	m_pPlayer->AddComponent(hc);
 	m_pPlayer->AddComponent(mc);

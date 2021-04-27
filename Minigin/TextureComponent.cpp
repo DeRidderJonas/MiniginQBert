@@ -7,15 +7,15 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& fileName)
-	: RenderComponent(pOwner)
+dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& fileName, int renderPriority)
+	: RenderComponent(pOwner, renderPriority)
 	, m_pTexture(ResourceManager::GetInstance().LoadTexture(fileName))
 	, m_pTransform(nullptr)
 {
 }
 
-dae::TextureComponent::TextureComponent(GameObject* pOwner)
-	: RenderComponent(pOwner)
+dae::TextureComponent::TextureComponent(GameObject* pOwner, int renderPriority)
+	: RenderComponent(pOwner, renderPriority)
 	, m_pTexture{nullptr}
 {
 	m_pTransform = pOwner->GetComponentOfType<TransformComponent>();

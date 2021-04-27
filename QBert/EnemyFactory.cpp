@@ -24,7 +24,7 @@ dae::GameObject* QBert::EnemyFactory::CreateEnemy(AIComponent::EnemyType type, S
 	newEnemy->AddComponent(pMovementComponent);
 
 	//Render component
-	dae::TextureComponent* pRenderComponent = new dae::TextureComponent(newEnemy, GetTexturePath(type, startLeft));
+	dae::TextureComponent* pRenderComponent = new dae::TextureComponent(newEnemy, GetTexturePath(type, startLeft), 1);
 	newEnemy->AddComponent(pRenderComponent);
 
 	//AI component

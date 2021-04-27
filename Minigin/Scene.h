@@ -12,8 +12,8 @@ namespace dae
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(GameObject* pObject);
-		//Only to be used in case RenderComponent is added to GameObject AFTER it was already added to the scene
-		void Add(RenderComponent* pRenderComponent);
+
+		void SortRenderComponents();
 
 		void Update();
 		void Render() const;

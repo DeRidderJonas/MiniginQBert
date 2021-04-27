@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
 
+#include <algorithm>
+
 #include "GameContext.h"
 #include "GameObject.h"
 #include "RenderComponent.h"
@@ -26,9 +28,12 @@ void Scene::Add(GameObject* pObject)
 	m_ObjectsToAdd.push_back(pObject);
 }
 
-void Scene::Add(RenderComponent* pRenderComponent)
+void Scene::SortRenderComponents()
 {
-	m_RenderComponents.push_back(pRenderComponent);
+	std::sort(m_RenderComponents.begin(), m_RenderComponents.end(), [](RenderComponent* pLeft, RenderComponent* pRight)
+		{
+			return pLeft->GetRenderPriority() < pRight->GetRenderPriority();
+		});
 }
 
 void Scene::Update()
@@ -48,6 +53,7 @@ void Scene::Update()
 		}
 		m_Objects.insert(m_Objects.end(), m_ObjectsToAdd.begin(), m_ObjectsToAdd.end());
 		m_ObjectsToAdd.clear();
+		SortRenderComponents();
 	}
 	
 	std::vector<GameObject*> toDelete{};
