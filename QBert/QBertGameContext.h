@@ -33,13 +33,15 @@ namespace QBert
 		bool IsPlatformOnBottom(dae::GameObject* pGo) const;
 
 		int GetLevelWidth() const;
+		void GetEnemyPlayableRange(int& rowMin, int& rowMax, int& colMin, int& colMax) const;
 		
 		void CheckCollisions();
 		void OnPlayerDestroy();
 	private:
 
-		const static int m_LevelWidth{ 7 };
-		dae::GameObject* m_GameObjects[m_LevelWidth][m_LevelWidth]{};
+		const static int m_LevelWidth{ 9 };
+		const static int m_LevelHeight{ m_LevelWidth - 2 };
+		dae::GameObject* m_GameObjects[m_LevelHeight][m_LevelWidth]{};
 
 		std::vector<dae::GameObject*> m_Enemies{};
 		dae::GameObject* m_pPlayer{ nullptr };

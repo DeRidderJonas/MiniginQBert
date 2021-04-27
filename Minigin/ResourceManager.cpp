@@ -1,5 +1,7 @@
 #include "MiniginPCH.h"
 #include "ResourceManager.h"
+
+#include <fstream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -44,4 +46,17 @@ std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::str
 std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
 	return std::make_shared<Font>(m_DataPath + file, size);
+}
+
+std::string dae::ResourceManager::LoadFile(const std::string& file) const
+{
+	std::ifstream is{ m_DataPath + file };
+	std::string str{};
+
+	is.seekg(0, std::ios::end);
+	str.reserve(static_cast<size_t>(is.tellg()));
+	is.seekg(0, std::ios::beg);
+
+	str.assign(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>());
+	return str;
 }

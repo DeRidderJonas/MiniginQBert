@@ -22,12 +22,14 @@ namespace QBert
 		void Initialize() override;
 		void Update() override;
 
-		void Move(Direction direction, bool activatesTerrain = false, bool revertsTerrain = false);
+		void Move(Direction direction, bool activatesTerrain = false, bool revertsTerrain = false, bool canStandOnDisc = false);
 		void GoToSpawningPlatform();
 		dae::GameObject* GetPlatform() const;
 
 		void AddObserver(dae::Observer* pObserver);
 	private:
+		void FallOffGrid();
+		
 		dae::GameObject* m_pStandingOn;
 		dae::Subject m_Subject;
 	};

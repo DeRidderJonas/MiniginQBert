@@ -31,7 +31,7 @@ void QBert::MovementComponent::Update()
 {
 }
 
-void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, bool revertsTerrain)
+void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, bool revertsTerrain, bool canStandOnDisc)
 {
 	int row{ -1 }, col{ -1 };
 	auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
@@ -55,10 +55,14 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 
 	if(pNext == nullptr)
 	{
-		//Fell into the void
-		auto pHealthComponent = m_pOwner->GetComponentOfType<HealthComponent>();
-		if (pHealthComponent) pHealthComponent->Kill();
-		GoToSpawningPlatform();
+		FallOffGrid();
+		return;
+	}
+
+	auto pTerrainComponent = pNext->GetComponentOfType<PlayableTerrainComponent>();
+	if(pTerrainComponent->GetType() == PlayableTerrainComponent::TerrainType::Disc && !canStandOnDisc)
+	{
+		FallOffGrid();
 		return;
 	}
 
@@ -68,13 +72,11 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 
 	if(activatesTerrain)
 	{
-		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
 		if (pTerrainComponent) pTerrainComponent->Activate();
 	}
 	
 	if(revertsTerrain)
 	{
-		auto pTerrainComponent = m_pStandingOn->GetComponentOfType<PlayableTerrainComponent>();
 		if (pTerrainComponent) pTerrainComponent->Revert();
 	}
 
@@ -106,4 +108,12 @@ dae::GameObject* QBert::MovementComponent::GetPlatform() const
 void QBert::MovementComponent::AddObserver(dae::Observer* pObserver)
 {
 	m_Subject.AddObserver(pObserver);
+}
+
+void QBert::MovementComponent::FallOffGrid()
+{
+	//Fell into the void
+	auto pHealthComponent = m_pOwner->GetComponentOfType<HealthComponent>();
+	if (pHealthComponent) pHealthComponent->Kill();
+	GoToSpawningPlatform();
 }

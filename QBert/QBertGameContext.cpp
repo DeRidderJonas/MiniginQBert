@@ -1,6 +1,7 @@
 #include "QBertGameContext.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "EnemyFactory.h"
 #include "GameObject.h"
@@ -11,6 +12,8 @@
 #include "MovementComponent.h"
 #include "MuteCommand.h"
 #include "PlayableTerrainComponent.h"
+#include "PlayableTerrainFactory.h"
+#include "ResourceManager.h"
 #include "Scene.h"
 #include "ScoreComponent.h"
 #include "SoundCommand.h"
@@ -39,44 +42,36 @@ void QBert::QBertGameContext::Update()
 void QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent)
 {
 	float HexWidth{ 20.f };
+	float startX{ 80.f }, startY{ 110.f };
 
-	for (int r = 0; r < m_LevelWidth; ++r)
+	int row{}, col{};
+	std::string levelLayout{ dae::ResourceManager::GetInstance().LoadFile("Level1.txt") };
+	std::stringstream ss{ levelLayout };
+	std::string rowData{};
+	while(std::getline(ss, rowData))
 	{
-		for (int q = 0; q < m_LevelWidth; ++q)
+		for(auto platformType : rowData)
 		{
-			if (q < m_LevelWidth - r - 1)
-				continue;
-
-			auto go = new dae::GameObject();
-			auto pTopTexture = new dae::TextureComponent(go);
-			auto pLeftTexture = new dae::TextureComponent(go);
-			auto pRightTexture = new dae::TextureComponent(go);
-			go->AddComponent(pTopTexture);
-			go->AddComponent(pLeftTexture);
-			go->AddComponent(pRightTexture);
-			auto play = new QBert::PlayableTerrainComponent(go, PlayableTerrainComponent::TerrainType::Normal, pTopTexture, pLeftTexture, pRightTexture);
-			play->AddObserver(pScoreComponent);
-			go->AddComponent(play);
-
-			m_GameObjects[r][q] = go;
-			float x{ sqrtf(3) * static_cast<float>(q) + sqrtf(3) / 2.f * static_cast<float>(r) };
-			float y{ 3.f / 2.f * static_cast<float>(r) };
-			go->GetComponentOfType<dae::TransformComponent>()->SetPosition(HexWidth * x + 80.f, HexWidth * y + 110.f);
-			m_pScene->Add(go);
+			auto pGo = PlayableTerrainFactory::CreatePlatform(platformType, pScoreComponent, row, col, HexWidth, startX, startY);
+			m_GameObjects[row][col] = pGo;
+			col++;
+			if(pGo) m_pScene->Add(pGo);
 		}
+		row++;
+		col = 0;
 	}
 }
 
 dae::GameObject* QBert::QBertGameContext::GetPlatform(int row, int col) const
 {
-	if (row >= m_LevelWidth || row < 0 || col >= m_LevelWidth || col < 0) return nullptr;
+	if (row >= m_LevelHeight || row < 0 || col >= m_LevelWidth || col < 0) return nullptr;
 
 	return m_GameObjects[row][col];
 }
 
 void QBert::QBertGameContext::GetPlatformForGameObject(dae::GameObject* pToFind, int& row, int& col)
 {
-	for (int r = 0; r < m_LevelWidth; ++r)
+	for (int r = 0; r < m_LevelHeight; ++r)
 	{
 		for (int c = 0; c < m_LevelWidth; ++c)
 		{
@@ -92,14 +87,14 @@ void QBert::QBertGameContext::GetPlatformForGameObject(dae::GameObject* pToFind,
 
 dae::GameObject* QBert::QBertGameContext::GetSpawnPlatform() const
 {
-	return m_GameObjects[0][m_LevelWidth - 1];
+	return m_GameObjects[0][m_LevelWidth - 2];
 }
 
 bool QBert::QBertGameContext::IsPlatformOnBottom(dae::GameObject* pGo) const
 {
 	for (int i = 0; i < m_LevelWidth; ++i)
 	{
-		if (m_GameObjects[m_LevelWidth - 1][i] == pGo) return true;
+		if (m_GameObjects[m_LevelHeight - 1][i] == pGo) return true;
 	}
 
 	return false;
@@ -108,6 +103,14 @@ bool QBert::QBertGameContext::IsPlatformOnBottom(dae::GameObject* pGo) const
 int QBert::QBertGameContext::GetLevelWidth() const
 {
 	return m_LevelWidth;
+}
+
+void QBert::QBertGameContext::GetEnemyPlayableRange(int& rowMin, int& rowMax, int& colMin, int& colMax) const
+{
+	rowMin = 0;
+	rowMax = m_LevelHeight - 1;
+	colMin = 1;
+	colMax = m_LevelWidth - 2;
 }
 
 void QBert::QBertGameContext::CreatePlayer()
@@ -138,11 +141,10 @@ void QBert::QBertGameContext::CreatePlayer()
 	input.Bind('e', std::make_shared<SoundCommand>(), dae::InputState::pressed);
 	input.Bind('r', std::make_shared<MuteCommand>(), dae::InputState::released);
 
-
-	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true), dae::InputState::pressed);
-	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true), dae::InputState::pressed);
-	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true), dae::InputState::pressed);
-	input.Bind('d', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true), dae::InputState::pressed);
+	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true, false, true), dae::InputState::pressed);
+	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true, false, true), dae::InputState::pressed);
+	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true, false, true), dae::InputState::pressed);
+	input.Bind('d', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true, false, true), dae::InputState::pressed);
 
 	std::cout << "[Keyboard] E: Make sound\n";
 	std::cout << "[Keyboard] R: Mute sound\n";

@@ -102,6 +102,9 @@
     <ClCompile Include="EnemyFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
+    <ClCompile Include="PlayableTerrainFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MuteCommand.h">
@@ -168,6 +171,9 @@
       <Filter>Components\AIComponent</Filter>
     </ClInclude>
     <ClInclude Include="EnemyFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayableTerrainFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>

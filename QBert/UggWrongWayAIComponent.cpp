@@ -34,20 +34,18 @@ QBert::MovementComponent::Direction QBert::UggWrongWayAIComponent::GetNextDirect
 			return rand() % 2 == 0 ? MovementComponent::Direction::RIGHT : MovementComponent::Direction::UP;
 	}
 
-	int row{}, col{};
-	pGameContext->GetPlatformForGameObject(pMovementComponent->GetPlatform(), row, col);
-	int levelWidth{ pGameContext->GetLevelWidth() };
+	bool isOnBottom{ pGameContext->IsPlatformOnBottom(pMovementComponent->GetPlatform()) };
 
 	if(m_GoingLeft)
 	{
-		if (row == levelWidth - 1)
+		if (isOnBottom)
 			return MovementComponent::Direction::LEFT;
 		else
 			return rand() % 2 == 0 ? MovementComponent::Direction::LEFT : MovementComponent::Direction::DOWN;
 	}
 	else
 	{
-		if (row == levelWidth - 1)
+		if (isOnBottom)
 			return MovementComponent::Direction::UP;
 		else
 			return rand() % 2 == 0 ? MovementComponent::Direction::RIGHT : MovementComponent::Direction::UP;

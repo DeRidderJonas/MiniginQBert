@@ -189,6 +189,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayableTerrainComponent.cpp" />
+    <ClCompile Include="PlayableTerrainFactory.cpp" />
     <ClCompile Include="PlayerDeathEvent.cpp" />
     <ClCompile Include="QBertGameContext.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
@@ -213,6 +214,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayableTerrainComponent.h" />
+    <ClInclude Include="PlayableTerrainFactory.h" />
     <ClInclude Include="PlayerDeathEvent.h" />
     <ClInclude Include="QBertGameContext.h" />
     <ClInclude Include="ScoreComponent.h" />

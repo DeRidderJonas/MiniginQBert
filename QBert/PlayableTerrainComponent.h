@@ -21,10 +21,11 @@ namespace QBert
 		{
 			Normal,
 			Double,
-			Reverting
+			Reverting,
+			Disc
 		};
 		
-		PlayableTerrainComponent(dae::GameObject* pOwner, TerrainType type, dae::TextureComponent* pTop, dae::TextureComponent* pLeft, dae::TextureComponent* pRight);
+		PlayableTerrainComponent(dae::GameObject* pOwner, TerrainType type, dae::TextureComponent* pPlatform);
 		~PlayableTerrainComponent() override = default;
 
 		void Initialize() override;
@@ -33,11 +34,11 @@ namespace QBert
 		void Activate();
 		void Revert();
 
+		TerrainType GetType() const;
+		
 		void AddObserver(dae::Observer* pObserver);
 	private:
-		dae::TextureComponent* m_pTop;
-		dae::TextureComponent* m_pLeft;
-		dae::TextureComponent* m_pRight;
+		dae::TextureComponent* m_pPlatform;
 
 		glm::vec3 m_ColorInactive{ 200,200,200 };
 		glm::vec3 m_ColorIntermediate{ 255,255,0 };

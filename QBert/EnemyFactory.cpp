@@ -79,14 +79,16 @@ QBert::AIComponent* QBert::EnemyFactory::CreateAIComponent(AIComponent::EnemyTyp
 dae::GameObject* QBert::EnemyFactory::GetSpawnPlatform(AIComponent::EnemyType type, QBertGameContext* pGamecontext, bool startLeft)
 {
 	dae::GameObject* pSpawnOn{ nullptr };
-	int levelWidth{ pGamecontext->GetLevelWidth() };
+
+	int rowMin{}, rowMax{}, colMin{}, colMax{};
+	pGamecontext->GetEnemyPlayableRange(rowMin, rowMax, colMin, colMax);
 	switch (type)
 	{
 	case AIComponent::EnemyType::Coily:
-		pSpawnOn = startLeft ? pGamecontext->GetPlatform(1, levelWidth - 2) : pGamecontext->GetPlatform(1, levelWidth - 1);
+		pSpawnOn = startLeft ? pGamecontext->GetPlatform(rowMin+1, colMax - 1) : pGamecontext->GetPlatform(rowMin+1, colMax);
 		break;
 	case AIComponent::EnemyType::UggWrongWay:
-		pSpawnOn = startLeft ? pGamecontext->GetPlatform(levelWidth - 1, 0) : pGamecontext->GetPlatform(levelWidth - 1, levelWidth - 1);
+		pSpawnOn = startLeft ? pGamecontext->GetPlatform(rowMax, colMin) : pGamecontext->GetPlatform(rowMax, colMax);
 		break;
 	case AIComponent::EnemyType::SlickSam:
 		pSpawnOn = pGamecontext->GetSpawnPlatform();
