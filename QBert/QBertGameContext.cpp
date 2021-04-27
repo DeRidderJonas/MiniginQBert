@@ -60,7 +60,7 @@ bool QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent
 	
 	m_pScoreComponent = pScoreComponent;
 	
-	float HexWidth{ 20.f };
+	float HexWidth{ 17.f };
 	float startX{ 80.f }, startY{ 110.f };
 
 	int row{}, col{};
