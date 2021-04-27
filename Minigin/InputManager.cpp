@@ -7,7 +7,7 @@
 //PIMPL
 namespace dae
 {
-	class InputManagerImpl final
+	class InputManager::InputManagerImpl final
 	{
 	public:
 		bool ProcessInput();
@@ -54,7 +54,7 @@ namespace dae
 	};
 }
 
-bool dae::InputManagerImpl::ProcessInput()
+bool dae::InputManager::InputManagerImpl::ProcessInput()
 {
 	for (int i = 0; i < XUSER_MAX_COUNT; ++i)
 	{
@@ -80,7 +80,7 @@ bool dae::InputManagerImpl::ProcessInput()
 	return true;
 }
 
-void dae::InputManagerImpl::Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState)
+void dae::InputManager::InputManagerImpl::Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState)
 {
 	ControllerKey controllerKey = std::make_pair(controllerId, button);
 	auto duplicateIt = m_Controls.find(controllerKey);
@@ -91,7 +91,7 @@ void dae::InputManagerImpl::Bind(unsigned controllerId, const ControllerButton& 
 	m_Controls.emplace(controllerKey, controllerCommand);
 }
 
-void dae::InputManagerImpl::Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState)
+void dae::InputManager::InputManagerImpl::Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState)
 {
 	auto duplicateIt = m_KeyboardControls.find(keycode);
 	if (duplicateIt != m_KeyboardControls.end()) throw std::runtime_error("Key was already mapped");
@@ -101,7 +101,7 @@ void dae::InputManagerImpl::Bind(const SDL_Keycode& keycode, const std::shared_p
 	m_KeyboardControls.emplace(keycode, keyCommand);
 }
 
-void dae::InputManagerImpl::Unbind(const SDL_Keycode& keycode)
+void dae::InputManager::InputManagerImpl::Unbind(const SDL_Keycode& keycode)
 {
 	auto findIt = m_KeyboardControls.find(keycode);
 	if (findIt == m_KeyboardControls.end())
@@ -110,7 +110,7 @@ void dae::InputManagerImpl::Unbind(const SDL_Keycode& keycode)
 	m_KeyboardControls.erase(findIt);
 }
 
-void dae::InputManagerImpl::Unbind(unsigned controlledId, const ControllerButton& button)
+void dae::InputManager::InputManagerImpl::Unbind(unsigned controlledId, const ControllerButton& button)
 {
 	ControllerKey controllerKey = std::make_pair(controlledId, button);
 	auto findIt = m_Controls.find(controllerKey);
@@ -120,7 +120,7 @@ void dae::InputManagerImpl::Unbind(unsigned controlledId, const ControllerButton
 	m_Controls.erase(findIt);
 }
 
-bool dae::InputManagerImpl::InputInfo::isActive() const
+bool dae::InputManager::InputManagerImpl::InputInfo::isActive() const
 {
 	switch (stateRequired)
 	{
@@ -138,7 +138,7 @@ bool dae::InputManagerImpl::InputInfo::isActive() const
 }
 
 //Updates each controller input button
-void dae::InputManagerImpl::ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId)
+void dae::InputManager::InputManagerImpl::ProcessControllerInput(const XINPUT_STATE& inputState, unsigned controllerId)
 {
 	for (auto& pair : m_Controls)
 	{
@@ -158,7 +158,7 @@ void dae::InputManagerImpl::ProcessControllerInput(const XINPUT_STATE& inputStat
 }
 
 //updates a single key
-void dae::InputManagerImpl::ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType)
+void dae::InputManager::InputManagerImpl::ProcessKeyboardInput(const SDL_Keycode& keycode, Uint32 eventType)
 {
 	auto keycodeIt = m_KeyboardControls.find(keycode);
 	if (keycodeIt == m_KeyboardControls.end()) return;

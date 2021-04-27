@@ -32,7 +32,6 @@ namespace dae
 		up
 	};
 	
-	class InputManagerImpl;
 	
 	class InputManager final : public Singleton<InputManager>
 	{
@@ -46,6 +45,7 @@ namespace dae
 		void Unbind(int keycode);
 		void Unbind(unsigned controlledId, const ControllerButton& button);
 	private:
+		class InputManagerImpl;
 		InputManagerImpl* m_pimpl{ nullptr };
 	};
 
