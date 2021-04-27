@@ -84,6 +84,13 @@ void QBert::PlayableTerrainComponent::Revert()
 	SetTextureComponentColors();
 }
 
+bool QBert::PlayableTerrainComponent::IsFullyActivated() const
+{
+	if (m_Type == TerrainType::Disc) return true;
+
+	return m_StepsNeeded == 0;
+}
+
 QBert::PlayableTerrainComponent::TerrainType QBert::PlayableTerrainComponent::GetType() const
 {
 	return m_Type;

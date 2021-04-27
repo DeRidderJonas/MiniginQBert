@@ -33,6 +33,7 @@ namespace QBert
 
 		void Activate();
 		void Revert();
+		bool IsFullyActivated() const;
 
 		TerrainType GetType() const;
 		

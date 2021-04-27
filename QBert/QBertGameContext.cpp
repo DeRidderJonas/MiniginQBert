@@ -1,5 +1,6 @@
 #include "QBertGameContext.h"
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
@@ -37,15 +38,23 @@ void QBert::QBertGameContext::OnRemoveGameObject(dae::GameObject* pGameObject)
 void QBert::QBertGameContext::Update()
 {
 	CheckCollisions();
+	CheckPlatforms();
 }
 
-void QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent)
+bool QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent)
 {
+	std::string levelLayout{ dae::ResourceManager::GetInstance().LoadFile("Level" + std::to_string(m_CurrentLevel) + ".txt") };
+
+	if (levelLayout.empty())
+		return false;
+	
+	m_pScoreComponent = pScoreComponent;
+	
 	float HexWidth{ 20.f };
 	float startX{ 80.f }, startY{ 110.f };
 
 	int row{}, col{};
-	std::string levelLayout{ dae::ResourceManager::GetInstance().LoadFile("Level1.txt") };
+	
 	std::stringstream ss{ levelLayout };
 	std::string rowData{};
 	while(std::getline(ss, rowData))
@@ -53,20 +62,22 @@ void QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent
 		for(auto platformType : rowData)
 		{
 			auto pGo = PlayableTerrainFactory::CreatePlatform(platformType, pScoreComponent, row, col, HexWidth, startX, startY);
-			m_GameObjects[row][col] = pGo;
+			m_PlayableGrid[row][col] = pGo;
 			col++;
 			if(pGo) m_pScene->Add(pGo);
 		}
 		row++;
 		col = 0;
 	}
+
+	return true;
 }
 
 dae::GameObject* QBert::QBertGameContext::GetPlatform(int row, int col) const
 {
 	if (row >= m_LevelHeight || row < 0 || col >= m_LevelWidth || col < 0) return nullptr;
 
-	return m_GameObjects[row][col];
+	return m_PlayableGrid[row][col];
 }
 
 void QBert::QBertGameContext::GetPlatformForGameObject(dae::GameObject* pToFind, int& row, int& col)
@@ -75,7 +86,7 @@ void QBert::QBertGameContext::GetPlatformForGameObject(dae::GameObject* pToFind,
 	{
 		for (int c = 0; c < m_LevelWidth; ++c)
 		{
-			if (m_GameObjects[r][c] == pToFind)
+			if (m_PlayableGrid[r][c] == pToFind)
 			{
 				row = r;
 				col = c;
@@ -87,14 +98,14 @@ void QBert::QBertGameContext::GetPlatformForGameObject(dae::GameObject* pToFind,
 
 dae::GameObject* QBert::QBertGameContext::GetSpawnPlatform() const
 {
-	return m_GameObjects[0][m_LevelWidth - 2];
+	return m_PlayableGrid[0][m_LevelWidth - 2];
 }
 
 bool QBert::QBertGameContext::IsPlatformOnBottom(dae::GameObject* pGo) const
 {
 	for (int i = 0; i < m_LevelWidth; ++i)
 	{
-		if (m_GameObjects[m_LevelHeight - 1][i] == pGo) return true;
+		if (m_PlayableGrid[m_LevelHeight - 1][i] == pGo) return true;
 	}
 
 	return false;
@@ -157,6 +168,9 @@ void QBert::QBertGameContext::CreatePlayer()
 
 void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent)
 {
+	if (!m_pPlayer)
+		return;
+	
 	auto newEnemy = EnemyFactory::CreateEnemy(enemyType, pScoreComponent, this, m_pPlayer);
 	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
 	
@@ -187,6 +201,23 @@ void QBert::QBertGameContext::CheckCollisions()
 	}
 }
 
+void QBert::QBertGameContext::CheckPlatforms()
+{
+	for(auto& row : m_PlayableGrid)
+	{
+		for(auto pGo : row)
+		{
+			if (!pGo) continue;
+
+			auto pPlayableTerrain = pGo->GetComponentOfType<PlayableTerrainComponent>();
+			if (!pPlayableTerrain->IsFullyActivated())
+				return;
+		}
+	}
+
+	GoToNextLevel();
+}
+
 void QBert::QBertGameContext::OnPlayerDestroy()
 {
 	m_pPlayer = nullptr;
@@ -197,4 +228,46 @@ void QBert::QBertGameContext::OnPlayerDestroy()
 	input.Unbind('s');
 	input.Unbind('a');
 	input.Unbind('d');
+}
+
+void QBert::QBertGameContext::GoToNextLevel()
+{
+	if (!m_pPlayer) 
+		return;
+	
+	KillEnemies();
+	DestroyLevel();
+
+	m_CurrentLevel++;
+	if (CreateLevel(m_pScoreComponent))
+		m_pPlayer->GetComponentOfType<MovementComponent>()->GoToSpawningPlatform();
+	else
+	{
+		m_pPlayer->Destroy();
+		OnPlayerDestroy();
+	}
+}
+
+void QBert::QBertGameContext::KillEnemies()
+{
+	for(auto pEnemy : m_Enemies)
+	{
+		pEnemy->Destroy();
+	}
+	m_Enemies.clear();
+}
+
+void QBert::QBertGameContext::DestroyLevel()
+{
+	for (int row = 0; row < m_LevelHeight; ++row)
+	{
+		for (int col = 0; col < m_LevelWidth; ++col)
+		{
+			auto pGo = m_PlayableGrid[row][col];
+			if (!pGo) continue;
+
+			pGo->Destroy();
+			m_PlayableGrid[row][col] = nullptr;
+		}
+	}
 }

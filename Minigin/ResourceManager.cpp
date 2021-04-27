@@ -51,6 +51,9 @@ std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& fil
 std::string dae::ResourceManager::LoadFile(const std::string& file) const
 {
 	std::ifstream is{ m_DataPath + file };
+
+	if (!is.good()) return "";
+	
 	std::string str{};
 
 	is.seekg(0, std::ios::end);
