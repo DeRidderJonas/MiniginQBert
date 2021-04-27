@@ -43,6 +43,8 @@ namespace dae
 		void Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState);
 		void Bind(int keycode, const std::shared_ptr<Command>& command, InputState inputState);
 
+		void Unbind(int keycode);
+		void Unbind(unsigned controlledId, const ControllerButton& button);
 	private:
 		InputManagerImpl* m_pimpl{ nullptr };
 	};

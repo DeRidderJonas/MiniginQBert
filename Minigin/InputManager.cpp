@@ -14,6 +14,9 @@ namespace dae
 		void Bind(unsigned controllerId, const ControllerButton& button, const std::shared_ptr<Command>& command, const InputState& inputState);
 		void Bind(const SDL_Keycode& keycode, const std::shared_ptr<Command>& command, InputState inputState);
 
+		void Unbind(const SDL_Keycode& keycode);
+		void Unbind(unsigned controlledId, const ControllerButton& button);
+
 		InputManagerImpl() = default;
 		~InputManagerImpl() = default;
 		InputManagerImpl(const InputManagerImpl&) = delete;
@@ -98,6 +101,25 @@ void dae::InputManagerImpl::Bind(const SDL_Keycode& keycode, const std::shared_p
 	m_KeyboardControls.emplace(keycode, keyCommand);
 }
 
+void dae::InputManagerImpl::Unbind(const SDL_Keycode& keycode)
+{
+	auto findIt = m_KeyboardControls.find(keycode);
+	if (findIt == m_KeyboardControls.end())
+		return;
+
+	m_KeyboardControls.erase(findIt);
+}
+
+void dae::InputManagerImpl::Unbind(unsigned controlledId, const ControllerButton& button)
+{
+	ControllerKey controllerKey = std::make_pair(controlledId, button);
+	auto findIt = m_Controls.find(controllerKey);
+	if (findIt == m_Controls.end())
+		return;
+
+	m_Controls.erase(findIt);
+}
+
 bool dae::InputManagerImpl::InputInfo::isActive() const
 {
 	switch (stateRequired)
@@ -175,4 +197,14 @@ void dae::InputManager::Bind(int keycode, const std::shared_ptr<Command>& comman
 	InputState inputState)
 {
 	m_pimpl->Bind(keycode, command, inputState);
+}
+
+void dae::InputManager::Unbind(int keycode)
+{
+	m_pimpl->Unbind(keycode);
+}
+
+void dae::InputManager::Unbind(unsigned controlledId, const ControllerButton& button)
+{
+	m_pimpl->Unbind(controlledId, button);
 }

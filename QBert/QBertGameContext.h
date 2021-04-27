@@ -35,6 +35,7 @@ namespace QBert
 		int GetLevelWidth() const;
 		
 		void CheckCollisions();
+		void OnPlayerDestroy();
 	private:
 
 		const static int m_LevelWidth{ 7 };

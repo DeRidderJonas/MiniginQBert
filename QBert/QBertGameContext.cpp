@@ -184,3 +184,15 @@ void QBert::QBertGameContext::CheckCollisions()
 		if (pAIComponent) pAIComponent->OnCollisionWithPlayer(m_pPlayer);
 	}
 }
+
+void QBert::QBertGameContext::OnPlayerDestroy()
+{
+	m_pPlayer = nullptr;
+
+	auto& input = dae::InputManager::GetInstance();
+
+	input.Unbind('w');
+	input.Unbind('s');
+	input.Unbind('a');
+	input.Unbind('d');
+}

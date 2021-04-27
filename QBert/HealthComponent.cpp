@@ -5,6 +5,8 @@
 #include "Observer.h"
 #include "PlayerDeathEvent.h"
 #include "EnemyDeathEvent.h"
+#include "QBertGameContext.h"
+#include "Scene.h"
 #include "Subject.h"
 
 QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives)
@@ -63,6 +65,13 @@ void QBert::HealthComponent::Kill(bool awardPoints)
 	if(m_AmountOfLives <= 0)
 	{
 		m_pOwner->Destroy();
+
+		if(m_HealthOwner == HealthOwner::QBert)
+		{
+			auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
+			if (pGameContext)
+				pGameContext->OnPlayerDestroy();
+		}
 	}
 }
 
