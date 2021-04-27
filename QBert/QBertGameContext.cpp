@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "ScoreComponent.h"
+#include "ScoreEvent.h"
 #include "SoundCommand.h"
 #include "TextureComponent.h"
 #include "TextureLineComponent.h"
@@ -33,6 +34,15 @@ void QBert::QBertGameContext::OnAddGameObject(dae::GameObject* )
 void QBert::QBertGameContext::OnRemoveGameObject(dae::GameObject* pGameObject)
 {
 	m_Enemies.erase(std::remove(m_Enemies.begin(), m_Enemies.end(), pGameObject), m_Enemies.end());
+
+	for (int row = 0; row < m_LevelHeight; ++row)
+	{
+		for (int col = 0; col < m_LevelWidth; ++col)
+		{
+			if (m_PlayableGrid[row][col] == pGameObject) 
+				m_PlayableGrid[row][col] = nullptr;
+		}
+	}
 }
 
 void QBert::QBertGameContext::Update()
@@ -266,6 +276,16 @@ void QBert::QBertGameContext::DestroyLevel()
 			auto pGo = m_PlayableGrid[row][col];
 			if (!pGo) continue;
 
+			auto pPlayableTerrainComponent = pGo->GetComponentOfType<PlayableTerrainComponent>();
+			if(pPlayableTerrainComponent)
+			{
+				if(pPlayableTerrainComponent->GetType() == PlayableTerrainComponent::TerrainType::Disc)
+				{
+					ScoreEvent event{ "SCORE", 50 };
+					m_pScoreComponent->OnNotify(event);
+				}
+			}
+			
 			pGo->Destroy();
 			m_PlayableGrid[row][col] = nullptr;
 		}

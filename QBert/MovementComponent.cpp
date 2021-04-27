@@ -72,7 +72,7 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 
 	if(activatesTerrain)
 	{
-		if (pTerrainComponent) pTerrainComponent->Activate();
+		if (pTerrainComponent) pTerrainComponent->Activate(m_pOwner);
 	}
 	
 	if(revertsTerrain)

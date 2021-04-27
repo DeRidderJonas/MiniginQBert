@@ -31,7 +31,7 @@ namespace QBert
 		void Initialize() override;
 		void Update() override;
 
-		void Activate();
+		void Activate(dae::GameObject* pActivatedBy = nullptr);
 		void Revert();
 		bool IsFullyActivated() const;
 

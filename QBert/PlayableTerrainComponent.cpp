@@ -5,6 +5,7 @@
 #pragma warning (disable:4201)
 #include <glm/gtx/compatibility.hpp>
 
+#include "MovementComponent.h"
 #include "ScoreEvent.h"
 #pragma warning(pop)
 
@@ -31,7 +32,7 @@ void QBert::PlayableTerrainComponent::Update()
 {
 }
 
-void QBert::PlayableTerrainComponent::Activate()
+void QBert::PlayableTerrainComponent::Activate(dae::GameObject* pActivatedBy)
 {
 	bool awardPoints{ false };
 	switch (m_Type)
@@ -46,7 +47,15 @@ void QBert::PlayableTerrainComponent::Activate()
 		break;
 	case TerrainType::Disc:
 		if (m_StepsNeeded > 0)
+		{
 			m_StepsNeeded--;
+			if(pActivatedBy)
+			{
+				auto pMovementComponent = pActivatedBy->GetComponentOfType<MovementComponent>();
+				if (pMovementComponent) pMovementComponent->GoToSpawningPlatform();
+				m_pOwner->Destroy();
+			}
+		}
 		break;
 	case TerrainType::Reverting:
 		if (m_StepsNeeded > 0)
