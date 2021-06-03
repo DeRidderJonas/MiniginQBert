@@ -3,7 +3,7 @@
 
 namespace QBert
 {
-	class KillCommand : public dae::Command
+	class KillCommand final : public dae::Command
 	{
 	public:
 		KillCommand(dae::Component* pDestination);

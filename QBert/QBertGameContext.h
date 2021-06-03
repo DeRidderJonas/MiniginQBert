@@ -13,7 +13,7 @@ namespace QBert
 {
 	class ScoreComponent;
 	
-	class QBertGameContext : public dae::GameContext
+	class QBertGameContext final : public dae::GameContext
 	{
 	public:
 		enum class GameMode

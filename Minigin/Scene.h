@@ -7,7 +7,7 @@ namespace dae
 {
 	class GameContext;
 	class GameObject;
-	class Scene
+	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:

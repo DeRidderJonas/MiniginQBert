@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		TransformComponent(GameObject* pOwner);
-		virtual ~TransformComponent() = default;
+		virtual ~TransformComponent() override = default;
 
 		void Update() override{};
 		void Initialize() override;

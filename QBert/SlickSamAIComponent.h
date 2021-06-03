@@ -3,7 +3,7 @@
 
 namespace QBert
 {
-	class SlickSamAIComponent : public AIComponent
+	class SlickSamAIComponent final : public AIComponent
 	{
 	public:
 		SlickSamAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer);

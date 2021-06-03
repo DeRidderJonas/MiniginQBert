@@ -3,7 +3,7 @@
 
 namespace QBert
 {
-	class UggWrongWayAIComponent : public AIComponent
+	class UggWrongWayAIComponent final : public AIComponent
 	{
 	public:
 		UggWrongWayAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer, bool goLeft);

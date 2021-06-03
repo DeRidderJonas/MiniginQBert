@@ -5,7 +5,7 @@
 
 namespace dae
 {
-	class TextComponent : public Component
+	class TextComponent final : public Component
 	{
 	public:
 		TextComponent(GameObject* pOwner, TextureComponent* pTextureComponent, const std::string& text, const std::shared_ptr<Font>& font);

@@ -3,7 +3,7 @@
 
 namespace QBert
 {
-	class BackToMenuComponent : public dae::RenderComponent
+	class BackToMenuComponent final : public dae::RenderComponent
 	{
 	public:
 		BackToMenuComponent(dae::GameObject* pOwner);

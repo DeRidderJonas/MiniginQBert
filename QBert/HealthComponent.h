@@ -8,7 +8,7 @@ namespace dae {
 
 namespace QBert
 {
-	class HealthComponent : public dae::Component
+	class HealthComponent final : public dae::Component
 	{
 	public:
 		enum class HealthOwner

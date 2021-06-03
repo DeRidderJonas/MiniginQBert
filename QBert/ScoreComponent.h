@@ -9,7 +9,7 @@ namespace dae {
 
 namespace QBert
 {	
-	class ScoreComponent : public dae::Component, public dae::Observer
+	class ScoreComponent final : public dae::Component, public dae::Observer
 	{
 	public:
 		ScoreComponent(dae::GameObject* pOwner, dae::TextComponent* pTextComponent);

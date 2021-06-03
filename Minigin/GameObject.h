@@ -18,8 +18,6 @@ namespace dae
 			auto componentIt = std::find_if(m_Components.begin(), m_Components.end(), [](const Component* component) {
 				auto convertedPtr = dynamic_cast<const ComponentType*>(component);
 				return convertedPtr != nullptr;
-				//return typeid(*component) == typeid(ComponentType);
-				//return std::is_base_of<ComponentType, typeid(component)>::value;
 			});
 			if (componentIt == m_Components.end()) return nullptr;
 			

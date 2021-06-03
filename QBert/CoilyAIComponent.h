@@ -3,7 +3,7 @@
 
 namespace QBert
 {
-	class CoilyAIComponent : public AIComponent
+	class CoilyAIComponent final : public AIComponent
 	{
 	public:
 		CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer = nullptr, bool useAI = true);

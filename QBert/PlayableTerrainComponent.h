@@ -14,7 +14,7 @@ namespace QBert
 {
 	class ScoreComponent;
 
-	class PlayableTerrainComponent : public dae::Component
+	class PlayableTerrainComponent final : public dae::Component
 	{
 	public:
 		enum class TerrainType

@@ -34,9 +34,6 @@
     <Filter Include="Observer">
       <UniqueIdentifier>{21195a25-e62d-46f5-871c-b3ea648be415}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TMP_QBert">
-      <UniqueIdentifier>{2197cd21-5919-48c8-8f8a-12215fd5b91d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Services">
       <UniqueIdentifier>{83817da5-404c-40fd-b959-4d7deed8a6bd}</UniqueIdentifier>
     </Filter>

@@ -4,7 +4,7 @@
 
 namespace QBert
 {
-	class GameModeMenuComponent : public dae::RenderComponent
+	class GameModeMenuComponent final : public dae::RenderComponent
 	{
 	public:
 		GameModeMenuComponent(dae::GameObject* pOwner);
