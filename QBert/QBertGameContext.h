@@ -16,7 +16,14 @@ namespace QBert
 	class QBertGameContext : public dae::GameContext
 	{
 	public:
-		QBertGameContext(dae::Scene* pScene);
+		enum class GameMode
+		{
+			Single,
+			Coop,
+			Versus
+		};
+
+		QBertGameContext(dae::Scene* pScene, GameMode gameMode = GameMode::Single);
 		virtual ~QBertGameContext() override = default;
 		
 		void OnAddGameObject(dae::GameObject* pGameObject) override;
@@ -31,7 +38,7 @@ namespace QBert
 		
 		dae::GameObject* GetPlatform(int row, int col) const;
 		void GetPlatformForGameObject(dae::GameObject* pToFind, int& row, int& col);
-		dae::GameObject* GetSpawnPlatform() const;
+		dae::GameObject* GetSpawnPlatform(bool isPlayer = false, bool playerTwo = false) const;
 		bool IsPlatformOnBottom(dae::GameObject* pGo) const;
 
 		int GetLevelWidth() const;
@@ -43,9 +50,13 @@ namespace QBert
 		
 		void OnPlayerDestroy();
 	private:
+		void CheckCollisionForPlayer(dae::GameObject* pPlayer);
+
 		void GoToNextLevel();
 		void KillEnemies();
 		void DestroyLevel();
+
+		GameMode m_gameMode;
 
 		const static int m_LevelWidth{ 9 };
 		const static int m_LevelHeight{ m_LevelWidth - 2 };
@@ -55,6 +66,7 @@ namespace QBert
 		
 		std::vector<dae::GameObject*> m_Enemies{};
 		dae::GameObject* m_pPlayer{ nullptr };
+		dae::GameObject* m_pPlayerTwo{ nullptr };
 		ScoreComponent* m_pScoreComponent{ nullptr };
 	};
 

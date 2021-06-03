@@ -90,12 +90,12 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 	m_Subject.Notify(event);
 }
 
-void QBert::MovementComponent::GoToSpawningPlatform()
+void QBert::MovementComponent::GoToSpawningPlatform(bool isPlayer, bool isPlayerTwo)
 {
 	auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
 	if (pGameContext)
 	{
-		m_pStandingOn = pGameContext->GetSpawnPlatform();
+		m_pStandingOn = pGameContext->GetSpawnPlatform(isPlayer, isPlayerTwo);
 		m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 	}
 }

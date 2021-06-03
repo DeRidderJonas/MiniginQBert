@@ -23,7 +23,7 @@ namespace QBert
 		void Update() override;
 
 		void Move(Direction direction, bool activatesTerrain = false, bool revertsTerrain = false, bool canStandOnDisc = false);
-		void GoToSpawningPlatform();
+		void GoToSpawningPlatform(bool isPlayer = false, bool isPlayerTwo = false);
 		dae::GameObject* GetPlatform() const;
 
 		void AddObserver(dae::Observer* pObserver);
