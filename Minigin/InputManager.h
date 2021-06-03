@@ -44,6 +44,8 @@ namespace dae
 
 		void Unbind(int keycode);
 		void Unbind(unsigned controlledId, const ControllerButton& button);
+
+		void ClearInputs();
 	private:
 		class InputManagerImpl;
 		InputManagerImpl* m_pimpl{ nullptr };

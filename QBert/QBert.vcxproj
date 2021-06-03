@@ -176,10 +176,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="BackToMenuComponent.cpp" />
     <ClCompile Include="CoilyAIComponent.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemySpawnerComponent.cpp" />
     <ClCompile Include="GameModeMenuComponent.cpp" />
+    <ClCompile Include="GameOverGameContext.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="KillCommand.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
@@ -202,10 +204,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="BackToMenuComponent.h" />
     <ClInclude Include="CoilyAIComponent.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemySpawnerComponent.h" />
     <ClInclude Include="GameModeMenuComponent.h" />
+    <ClInclude Include="GameOverGameContext.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="KillCommand.h" />
     <ClInclude Include="LivesDisplayComponent.h" />

@@ -80,6 +80,11 @@ const QBert::HealthComponent::HealthOwner& QBert::HealthComponent::GetHealthOwne
 	return m_HealthOwner;
 }
 
+bool QBert::HealthComponent::IsDead() const
+{
+	return m_AmountOfLives <= 0;
+}
+
 void QBert::HealthComponent::AddObserver(dae::Observer* pObserver)
 {
 	m_pSubject.AddObserver(pObserver);

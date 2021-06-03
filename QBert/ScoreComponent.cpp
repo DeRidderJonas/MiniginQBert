@@ -46,3 +46,8 @@ void QBert::ScoreComponent::OnNotify(const dae::Event& event)
 		m_pTextComponent->SetText(buffer);
 	}
 }
+
+int QBert::ScoreComponent::GetScore() const
+{
+	return m_Score;
+}

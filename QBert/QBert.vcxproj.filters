@@ -105,6 +105,12 @@
     <ClCompile Include="PlayableTerrainFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverGameContext.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="BackToMenuComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MuteCommand.h">
@@ -175,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="PlayableTerrainFactory.h">
       <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverGameContext.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BackToMenuComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

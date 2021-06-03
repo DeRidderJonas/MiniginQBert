@@ -15,10 +15,7 @@ Scene::Scene(const std::string& name) : m_Name(name), m_pGameContext(nullptr) {}
 
 Scene::~Scene()
 {
-	for (auto object : m_Objects)
-	{
-		delete object;
-	}
+	DestroyAll();
 	
 	delete m_pGameContext;
 }
@@ -91,6 +88,23 @@ void Scene::Render() const
 	{
 		renderComponent->Render();
 	}
+}
+
+void Scene::DestroyAll()
+{
+	for (auto object : m_Objects)
+	{
+		delete object;
+	}
+	m_Objects.clear();
+
+	for (auto object : m_ObjectsToAdd)
+	{
+		delete object;
+	}
+	m_ObjectsToAdd.clear();
+
+	m_RenderComponents.clear();
 }
 
 const std::string& Scene::GetName() const

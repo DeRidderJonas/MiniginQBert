@@ -17,6 +17,8 @@ namespace dae
 		void Unbind(const SDL_Keycode& keycode);
 		void Unbind(unsigned controlledId, const ControllerButton& button);
 
+		void ClearInputs();
+
 		InputManagerImpl() = default;
 		~InputManagerImpl() = default;
 		InputManagerImpl(const InputManagerImpl&) = delete;
@@ -120,6 +122,12 @@ void dae::InputManager::InputManagerImpl::Unbind(unsigned controlledId, const Co
 	m_Controls.erase(findIt);
 }
 
+void dae::InputManager::InputManagerImpl::ClearInputs()
+{
+	m_KeyboardControls.clear();
+	m_Controls.clear();
+}
+
 bool dae::InputManager::InputManagerImpl::InputInfo::isActive() const
 {
 	switch (stateRequired)
@@ -207,4 +215,9 @@ void dae::InputManager::Unbind(int keycode)
 void dae::InputManager::Unbind(unsigned controlledId, const ControllerButton& button)
 {
 	m_pimpl->Unbind(controlledId, button);
+}
+
+void dae::InputManager::ClearInputs()
+{
+	m_pimpl->ClearInputs();
 }

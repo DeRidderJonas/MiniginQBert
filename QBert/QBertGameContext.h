@@ -24,13 +24,13 @@ namespace QBert
 		};
 
 		QBertGameContext(dae::Scene* pScene, GameMode gameMode = GameMode::Single);
-		virtual ~QBertGameContext() override = default;
+		virtual ~QBertGameContext() override;
 		
 		void OnAddGameObject(dae::GameObject* pGameObject) override;
 		void OnRemoveGameObject(dae::GameObject* pGameObject) override;
 		void Update() override;
 
-		bool CreateLevel(QBert::ScoreComponent* pScoreComponent);
+		bool CreateLevel();
 		void CreatePlayer();
 		void Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent = nullptr);
 
@@ -45,13 +45,16 @@ namespace QBert
 		int GetLevelHeight() const;
 		void GetEnemyPlayableRange(int& rowMin, int& rowMax, int& colMin, int& colMax) const;
 		
-		void CheckCollisions();
-		void CheckPlatforms();
-		
 		void OnPlayerDestroy();
 	private:
 		void CheckCollisionForPlayer(dae::GameObject* pPlayer);
 
+		void CheckPlatforms();
+		void CheckCollisions();
+		void CheckGameOverConditions();
+
+		void GoToGameOver();
+		
 		void GoToNextLevel();
 		void KillEnemies();
 		void DestroyLevel();

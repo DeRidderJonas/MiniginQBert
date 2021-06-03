@@ -27,6 +27,8 @@ namespace QBert
 		void Kill(bool awardPoints = true);
 		const HealthOwner& GetHealthOwnerType() const;
 
+		bool IsDead() const;
+
 		void AddObserver(dae::Observer* pObserver);
 	private:
 		HealthOwner m_HealthOwner;

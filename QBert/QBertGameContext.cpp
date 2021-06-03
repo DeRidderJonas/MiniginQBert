@@ -4,8 +4,12 @@
 #include <iostream>
 #include <sstream>
 
+#include "BackToMenuComponent.h"
 #include "EnemyFactory.h"
+#include "EnemySpawnerComponent.h"
+#include "FPSComponent.h"
 #include "GameObject.h"
+#include "GameOverGameContext.h"
 #include "HealthComponent.h"
 #include "InputManager.h"
 #include "LivesDisplayComponent.h"
@@ -19,6 +23,7 @@
 #include "ScoreComponent.h"
 #include "ScoreEvent.h"
 #include "SoundCommand.h"
+#include "TextComponent.h"
 #include "TextureComponent.h"
 #include "TextureLineComponent.h"
 
@@ -26,6 +31,64 @@ QBert::QBertGameContext::QBertGameContext(dae::Scene* pScene, GameMode gameMode)
 	: GameContext(pScene)
 	, m_gameMode(gameMode)
 {
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+
+	//Background
+	auto go = new dae::GameObject();
+	auto renderComponent = new dae::TextureComponent(go, "background.jpg");
+	go->AddComponent(renderComponent);
+	m_pScene->Add(go);
+
+	//FPS
+	go = new dae::GameObject();
+	renderComponent = new dae::TextureComponent(go);
+	auto textComponent = new dae::TextComponent(go, renderComponent, "FPS", font);
+	auto fpsComponent = new dae::FPSComponent(go, textComponent);
+	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
+	go->AddComponent(fpsComponent);
+	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(5, 5);
+	m_pScene->Add(go);
+
+	go = new dae::GameObject();
+	auto bmc = new BackToMenuComponent(go);
+	go->AddComponent(bmc);
+	m_pScene->Add(go);
+	
+	//Score display
+	go = new dae::GameObject();
+	renderComponent = new dae::TextureComponent(go);
+	textComponent = new dae::TextComponent(go, renderComponent, "", font);
+	m_pScoreComponent = new ScoreComponent(go, textComponent);
+	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
+	go->AddComponent(m_pScoreComponent);
+	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(70.f, 100.f);
+	m_pScene->Add(go);
+
+	//Text
+	go = new dae::GameObject();
+	renderComponent = new dae::TextureComponent(go);
+	textComponent = new dae::TextComponent(go, renderComponent, "Score: ", font);
+	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
+	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(10, 100.f);
+	m_pScene->Add(go);
+
+	//Enemy spawner
+	go = new dae::GameObject();
+	auto esc = new EnemySpawnerComponent(go, m_pScoreComponent, true);
+	go->AddComponent(esc);
+	m_pScene->Add(go);
+
+	//Input
+	auto& input = dae::InputManager::GetInstance();
+	input.ClearInputs();
+}
+
+QBert::QBertGameContext::~QBertGameContext()
+{
+	m_pScene->DestroyAll();
 }
 
 void QBert::QBertGameContext::OnAddGameObject(dae::GameObject* )
@@ -45,7 +108,7 @@ void QBert::QBertGameContext::OnRemoveGameObject(dae::GameObject* pGameObject)
 		}
 	}
 
-	if (pGameObject == m_pPlayerTwo)
+	if(m_gameMode == GameMode::Versus && pGameObject == m_pPlayerTwo)
 	{
 		m_pPlayerTwo = nullptr;
 
@@ -62,16 +125,15 @@ void QBert::QBertGameContext::Update()
 {
 	CheckCollisions();
 	CheckPlatforms();
+	CheckGameOverConditions();
 }
 
-bool QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent)
+bool QBert::QBertGameContext::CreateLevel()
 {
 	std::string levelLayout{ dae::ResourceManager::GetInstance().LoadFile("Level" + std::to_string(m_CurrentLevel) + ".txt") };
 
 	if (levelLayout.empty())
 		return false;
-	
-	m_pScoreComponent = pScoreComponent;
 	
 	float HexWidth{ 17.f };
 	float startX{ 80.f }, startY{ 110.f };
@@ -84,7 +146,7 @@ bool QBert::QBertGameContext::CreateLevel(QBert::ScoreComponent* pScoreComponent
 	{
 		for(auto platformType : rowData)
 		{
-			auto pGo = PlayableTerrainFactory::CreatePlatform(platformType, pScoreComponent, row, col, HexWidth, startX, startY);
+			auto pGo = PlayableTerrainFactory::CreatePlatform(platformType, m_pScoreComponent, row, col, HexWidth, startX, startY);
 			m_PlayableGrid[row][col] = pGo;
 			col++;
 			if(pGo) m_pScene->Add(pGo);
@@ -171,20 +233,31 @@ void QBert::QBertGameContext::GetEnemyPlayableRange(int& rowMin, int& rowMax, in
 void QBert::QBertGameContext::CreatePlayer()
 {
 	const int amountOfPlayerLives{ 3 };
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	
 	//Lives display
 	auto go = new dae::GameObject();
 	auto tlc = new TextureLineComponent(go, "QBert.png");
 	auto lc = new LivesDisplayComponent(go, tlc, amountOfPlayerLives);
 	go->AddComponent(tlc);
 	go->AddComponent(lc);
-	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(200.f, 50.f);
+	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(100.f, 50.f);
 	m_pScene->Add(go);
 
+	//Text
+	go = new dae::GameObject();
+	auto renderComponent = new dae::TextureComponent(go);
+	auto textComponent = new dae::TextComponent(go, renderComponent, "Player 1:", font);
+	go->AddComponent(renderComponent);
+	go->AddComponent(textComponent);
+	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(10.f, 50.f);
+	m_pScene->Add(go);
+	
 	//Player
 	m_pPlayer = new dae::GameObject();
 	auto hc = new HealthComponent(m_pPlayer, HealthComponent::HealthOwner::QBert, amountOfPlayerLives);
 	auto mc = new MovementComponent(m_pPlayer, GetSpawnPlatform(true));
-	auto renderComponent = new dae::TextureComponent(m_pPlayer, "QBert.png", 1);
+	renderComponent = new dae::TextureComponent(m_pPlayer, "QBert.png", 1);
 	hc->AddObserver(lc);
 	m_pPlayer->AddComponent(hc);
 	m_pPlayer->AddComponent(mc);
@@ -213,14 +286,24 @@ void QBert::QBertGameContext::CreatePlayer()
 
 	if(m_gameMode == GameMode::Coop)
 	{
+		//Lives
 		go = new dae::GameObject();
 		tlc = new TextureLineComponent(go, "QBert.png");
 		lc = new LivesDisplayComponent(go, tlc, amountOfPlayerLives);
 		go->AddComponent(tlc);
 		go->AddComponent(lc);
-		go->GetComponentOfType<dae::TransformComponent>()->SetPosition(400.f, 50.f);
+		go->GetComponentOfType<dae::TransformComponent>()->SetPosition(450.f, 50.f);
 		m_pScene->Add(go);
 
+		//Text
+		go = new dae::GameObject();
+		renderComponent = new dae::TextureComponent(go);
+		textComponent = new dae::TextComponent(go, renderComponent, "Player 2:", font);
+		go->AddComponent(renderComponent);
+		go->AddComponent(textComponent);
+		go->GetComponentOfType<dae::TransformComponent>()->SetPosition(360.f, 50.f);
+		m_pScene->Add(go);
+		
 		//Player
 		m_pPlayerTwo = new dae::GameObject();
 		hc = new HealthComponent(m_pPlayerTwo, HealthComponent::HealthOwner::QBert, amountOfPlayerLives);
@@ -298,16 +381,67 @@ void QBert::QBertGameContext::CheckPlatforms()
 	GoToNextLevel();
 }
 
+void QBert::QBertGameContext::CheckGameOverConditions()
+{
+	switch (m_gameMode)
+	{
+	case GameMode::Coop:
+		if (!m_pPlayer && !m_pPlayerTwo)
+			GoToGameOver();
+		break;
+	case GameMode::Single: 
+	case GameMode::Versus: 
+	default:
+		if (!m_pPlayer)
+			GoToGameOver();
+		break;
+	}
+}
+
+void QBert::QBertGameContext::GoToGameOver()
+{
+	auto& gameOverScene = dae::SceneManager::GetInstance().GetScene("GameOver");
+	auto pGameOverContext = new GameOverGameContext(&gameOverScene);
+	pGameOverContext->SetScore(m_pScoreComponent->GetScore());
+
+	gameOverScene.SetGameContext(pGameOverContext);
+
+	dae::SceneManager::GetInstance().SetActiveScene("GameOver");
+}
+
 void QBert::QBertGameContext::OnPlayerDestroy()
 {
-	m_pPlayer = nullptr;
+	if(m_pPlayer)
+	{
+		auto pHealthComponent = m_pPlayer->GetComponentOfType<HealthComponent>();
+		if (pHealthComponent->IsDead())
+		{
+			m_pPlayer = nullptr;
 
-	auto& input = dae::InputManager::GetInstance();
+			auto& input = dae::InputManager::GetInstance();
 
-	input.Unbind('w');
-	input.Unbind('s');
-	input.Unbind('a');
-	input.Unbind('d');
+			input.Unbind('w');
+			input.Unbind('s');
+			input.Unbind('a');
+			input.Unbind('d');
+		}
+	}
+
+	if(m_gameMode == GameMode::Coop && m_pPlayerTwo)
+	{
+		auto pHealthComponent = m_pPlayerTwo->GetComponentOfType<HealthComponent>();
+		if(pHealthComponent->IsDead())
+		{
+			m_pPlayerTwo = nullptr;
+
+			auto& input = dae::InputManager::GetInstance();
+
+			input.Unbind('i');
+			input.Unbind('k');
+			input.Unbind('j');
+			input.Unbind('l');
+		}
+	}
 }
 
 void QBert::QBertGameContext::CheckCollisionForPlayer(dae::GameObject* pPlayer)
@@ -342,7 +476,7 @@ void QBert::QBertGameContext::GoToNextLevel()
 	DestroyLevel();
 
 	m_CurrentLevel++;
-	if (CreateLevel(m_pScoreComponent))
+	if (CreateLevel())
 	{
 		m_pPlayer->GetComponentOfType<MovementComponent>()->GoToSpawningPlatform(true);
 		

@@ -18,6 +18,8 @@ namespace dae
 		void Update();
 		void Render() const;
 
+		void DestroyAll();
+		
 		const std::string& GetName() const;
 		void SetGameContext(GameContext* pGameContext, bool deletePrevious = true);
 		GameContext* GetGameContext() const;

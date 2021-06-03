@@ -19,6 +19,8 @@ namespace QBert
 		void Update() override;
 
 		void OnNotify(const dae::Event& event) override;
+
+		int GetScore() const;
 	private:
 		dae::TextComponent* m_pTextComponent;
 		int m_Score;
