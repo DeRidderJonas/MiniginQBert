@@ -141,10 +141,11 @@ void QBert::QBertGameContext::GetEnemyPlayableRange(int& rowMin, int& rowMax, in
 
 void QBert::QBertGameContext::CreatePlayer()
 {
+	const int amountOfPlayerLives{ 3 };
 	//Lives display
 	auto go = new dae::GameObject();
 	auto tlc = new TextureLineComponent(go, "QBert.png");
-	auto lc = new LivesDisplayComponent(go, tlc, 5);
+	auto lc = new LivesDisplayComponent(go, tlc, amountOfPlayerLives);
 	go->AddComponent(tlc);
 	go->AddComponent(lc);
 	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(200.f, 50.f);
@@ -152,7 +153,7 @@ void QBert::QBertGameContext::CreatePlayer()
 
 	//Player
 	m_pPlayer = new dae::GameObject();
-	auto hc = new HealthComponent(m_pPlayer, HealthComponent::HealthOwner::QBert, 5);
+	auto hc = new HealthComponent(m_pPlayer, HealthComponent::HealthOwner::QBert, amountOfPlayerLives);
 	auto mc = new MovementComponent(m_pPlayer);
 	auto renderComponent = new dae::TextureComponent(m_pPlayer, "QBert.png", 1);
 	hc->AddObserver(lc);
