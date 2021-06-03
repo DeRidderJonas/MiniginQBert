@@ -17,7 +17,7 @@ namespace QBert
 	protected:
 		MovementComponent::Direction GetNextDirectionToGo() const override;
 	private:
-		const float m_UpdateTargetInterval{ 4.1f };
+		const float m_UpdateTargetInterval{ m_movementInterval * 2.f + 0.1f };
 		float m_updateTargetRemaining;
 		int m_TargetRow;
 		float m_TargetX;

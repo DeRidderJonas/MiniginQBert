@@ -65,8 +65,12 @@ void QBert::PlayableTerrainComponent::Activate(dae::GameObject* pActivatedBy)
 					auto& enemies{ pQBertGameContext->GetEnemies() };
 					for(auto pEnemy : enemies)
 					{
+						if (pEnemy->ShouldBeDestroyed())
+							continue;
+						
 						auto pCoilyAI = pEnemy->GetComponentOfType<CoilyAIComponent>();
-						pCoilyAI->SetTarget(m_pOwner);
+						if(pCoilyAI)
+							pCoilyAI->SetTarget(m_pOwner);
 					}
 				}
 			}
