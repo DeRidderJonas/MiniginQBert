@@ -187,7 +187,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
-    <ClCompile Include="MoveEvent.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayableTerrainComponent.cpp" />
@@ -214,7 +213,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="KillCommand.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="MoveCommand.h" />
-    <ClInclude Include="MoveEvent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayableTerrainComponent.h" />

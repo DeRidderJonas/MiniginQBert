@@ -2,7 +2,6 @@
 
 #include "AIComponent.h"
 #include "HealthComponent.h"
-#include "MoveEvent.h"
 #include "PlayableTerrainComponent.h"
 #include "QBertGameContext.h"
 #include "Scene.h"
@@ -85,9 +84,6 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		auto aiComponent = m_pOwner->GetComponentOfType<AIComponent>();
 		if (aiComponent) aiComponent->OnReachBottom();
 	}
-	
-	MoveEvent event{ "MOVE", m_pOwner };
-	m_Subject.Notify(event);
 }
 
 void QBert::MovementComponent::GoToSpawningPlatform(bool isPlayer, bool isPlayerTwo)
