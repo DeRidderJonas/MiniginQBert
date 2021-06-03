@@ -5,9 +5,12 @@
 #include "Scene.h"
 #include "TextureComponent.h"
 #include "GameTime.h"
+#include "InputManager.h"
+#include "MoveCommand.h"
 
-QBert::CoilyAIComponent::CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer)
+QBert::CoilyAIComponent::CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer, bool useAI)
 	: AIComponent(pOwner, EnemyType::Coily, pPlayer)
+	, m_useAI(useAI)
 	, m_HasHatched(false)
 	, m_TargetRow()
 	, m_TargetX()
@@ -17,6 +20,9 @@ QBert::CoilyAIComponent::CoilyAIComponent(dae::GameObject* pOwner, dae::GameObje
 
 void QBert::CoilyAIComponent::Update()
 {
+	if (!m_useAI && m_HasHatched)
+		return;
+
 	AIComponent::Update();
 
 	m_updateTargetRemaining -= dae::GameTime::GetInstance().GetDeltaTime();
@@ -48,6 +54,19 @@ void QBert::CoilyAIComponent::OnReachBottom()
 
 	m_HasHatched = true;
 	m_pOwner->GetComponentOfType<dae::TextureComponent>()->SetTexture("Coily.png");
+
+	if(!m_useAI)
+	{
+		//Input in versus mode
+		auto& input = dae::InputManager::GetInstance();
+
+		auto pMc = m_pOwner->GetComponentOfType<MovementComponent>();
+
+		input.Bind('i', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::UP), dae::InputState::pressed);
+		input.Bind('k', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::DOWN), dae::InputState::pressed);
+		input.Bind('j', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::LEFT), dae::InputState::pressed);
+		input.Bind('l', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::RIGHT), dae::InputState::pressed);
+	}
 }
 
 void QBert::CoilyAIComponent::OnCollisionWithPlayer(dae::GameObject* pPlayer)

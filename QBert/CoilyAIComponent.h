@@ -6,7 +6,7 @@ namespace QBert
 	class CoilyAIComponent : public AIComponent
 	{
 	public:
-		CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer = nullptr);
+		CoilyAIComponent(dae::GameObject* pOwner, dae::GameObject* pPlayer = nullptr, bool useAI = true);
 		virtual ~CoilyAIComponent() override = default;
 		void Update() override;
 		
@@ -17,6 +17,8 @@ namespace QBert
 	protected:
 		MovementComponent::Direction GetNextDirectionToGo() const override;
 	private:
+		bool m_useAI;
+		
 		const float m_UpdateTargetInterval{ m_movementInterval * 2.f + 0.1f };
 		float m_updateTargetRemaining;
 		int m_TargetRow;

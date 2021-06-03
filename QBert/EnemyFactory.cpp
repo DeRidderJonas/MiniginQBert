@@ -10,10 +10,10 @@
 
 QBert::HealthComponent::HealthOwner GetHealthOwner(QBert::AIComponent::EnemyType type);
 std::string GetTexturePath(QBert::AIComponent::EnemyType type, bool startLeft);
-QBert::AIComponent* CreateAIComponent(QBert::AIComponent::EnemyType type, dae::GameObject* pOwner, dae::GameObject* pPlayer, bool startLeft);
+QBert::AIComponent* CreateAIComponent(QBert::AIComponent::EnemyType type, dae::GameObject* pOwner, dae::GameObject* pPlayer, bool startLeft, bool useAI);
 dae::GameObject* GetSpawnPlatform(QBert::AIComponent::EnemyType type, QBert::QBertGameContext* pGamecontext, bool startLeft);
 
-dae::GameObject* QBert::EnemyFactory::CreateEnemy(AIComponent::EnemyType type, ScoreComponent* pScoreComponent, QBertGameContext* pGameContext, dae::GameObject* pPlayer)
+dae::GameObject* QBert::EnemyFactory::CreateEnemy(AIComponent::EnemyType type, ScoreComponent* pScoreComponent, QBertGameContext* pGameContext, dae::GameObject* pPlayer, bool useAI)
 {
 	dae::GameObject* newEnemy = new dae::GameObject();
 
@@ -33,7 +33,7 @@ dae::GameObject* QBert::EnemyFactory::CreateEnemy(AIComponent::EnemyType type, S
 	newEnemy->AddComponent(pRenderComponent);
 
 	//AI component
-	AIComponent* pAIComponent = CreateAIComponent(type, newEnemy, pPlayer, startLeft);
+	AIComponent* pAIComponent = CreateAIComponent(type, newEnemy, pPlayer, startLeft, useAI);
 	newEnemy->AddComponent(pAIComponent);
 
 	return newEnemy;
@@ -67,13 +67,13 @@ std::string GetTexturePath(QBert::AIComponent::EnemyType type, bool startLeft)
 	}
 }
 
-QBert::AIComponent* CreateAIComponent(QBert::AIComponent::EnemyType type, dae::GameObject* pOwner, dae::GameObject* pPlayer, bool startLeft)
+QBert::AIComponent* CreateAIComponent(QBert::AIComponent::EnemyType type, dae::GameObject* pOwner, dae::GameObject* pPlayer, bool startLeft, bool useAI)
 {
 	switch (type)
 	{
 	default:
 	case QBert::AIComponent::EnemyType::Coily: 
-		return new QBert::CoilyAIComponent(pOwner, pPlayer);
+		return new QBert::CoilyAIComponent(pOwner, pPlayer, useAI);
 	case QBert::AIComponent::EnemyType::UggWrongWay: 
 		return new QBert::UggWrongWayAIComponent(pOwner, pPlayer, !startLeft);
 	case QBert::AIComponent::EnemyType::SlickSam: 

@@ -56,6 +56,8 @@ namespace QBert
 		void KillEnemies();
 		void DestroyLevel();
 
+		void SpawnVersusCoily();
+
 		GameMode m_gameMode;
 
 		const static int m_LevelWidth{ 9 };

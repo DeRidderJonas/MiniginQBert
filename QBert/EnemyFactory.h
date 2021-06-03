@@ -14,7 +14,7 @@ namespace QBert
 	class EnemyFactory
 	{
 	public:
-		static dae::GameObject* CreateEnemy(AIComponent::EnemyType type, ScoreComponent* pScoreComponent, QBertGameContext* pGameContext, dae::GameObject* pPlayer = nullptr);
+		static dae::GameObject* CreateEnemy(AIComponent::EnemyType type, ScoreComponent* pScoreComponent, QBertGameContext* pGameContext, dae::GameObject* pPlayer = nullptr, bool useAI = true);
 	};
 
 }

@@ -44,6 +44,18 @@ void QBert::QBertGameContext::OnRemoveGameObject(dae::GameObject* pGameObject)
 				m_PlayableGrid[row][col] = nullptr;
 		}
 	}
+
+	if (pGameObject == m_pPlayerTwo)
+	{
+		m_pPlayerTwo = nullptr;
+
+		auto& input = dae::InputManager::GetInstance();
+
+		input.Unbind('i');
+		input.Unbind('k');
+		input.Unbind('j');
+		input.Unbind('l');
+	}
 }
 
 void QBert::QBertGameContext::Update()
@@ -232,6 +244,16 @@ void QBert::QBertGameContext::CreatePlayer()
 		std::cout << "[Keyboard] K: Move down\n";
 		std::cout << "[Keyboard] L: Move right\n";
 	}
+	if(m_gameMode == GameMode::Versus)
+	{
+		SpawnVersusCoily();
+
+		std::cout << "--- Player 2 (Once the egg reaches the bottom)---\n";
+		std::cout << "[Keyboard] I: Move up\n";
+		std::cout << "[Keyboard] J: Move left\n";
+		std::cout << "[Keyboard] K: Move down\n";
+		std::cout << "[Keyboard] L: Move right\n";
+	}
 }
 
 void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreComponent* pScoreComponent)
@@ -326,6 +348,13 @@ void QBert::QBertGameContext::GoToNextLevel()
 		
 		if (m_gameMode == GameMode::Coop && m_pPlayerTwo)
 			m_pPlayerTwo->GetComponentOfType<MovementComponent>()->GoToSpawningPlatform(true, true);
+		if(m_gameMode == GameMode::Versus)
+		{
+			if (m_pPlayerTwo)
+				m_pPlayerTwo->Destroy();
+
+			SpawnVersusCoily();
+		}
 	}
 	else
 	{
@@ -366,4 +395,20 @@ void QBert::QBertGameContext::DestroyLevel()
 			m_PlayableGrid[row][col] = nullptr;
 		}
 	}
+}
+
+void QBert::QBertGameContext::SpawnVersusCoily()
+{
+	auto& input = dae::InputManager::GetInstance();
+
+	input.Unbind('i');
+	input.Unbind('k');
+	input.Unbind('j');
+	input.Unbind('l');
+	
+	m_pPlayerTwo = EnemyFactory::CreateEnemy(AIComponent::EnemyType::Coily, m_pScoreComponent, this, m_pPlayer, false);
+	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
+
+	m_Enemies.push_back(m_pPlayerTwo);
+	scene.Add(m_pPlayerTwo);
 }
