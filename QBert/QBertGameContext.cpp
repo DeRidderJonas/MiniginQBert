@@ -270,10 +270,20 @@ void QBert::QBertGameContext::CreatePlayer()
 	input.Bind('e', std::make_shared<SoundCommand>(), dae::InputState::pressed);
 	input.Bind('r', std::make_shared<MuteCommand>(), dae::InputState::released);
 
-	input.Bind('w', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true, false, true), dae::InputState::pressed);
-	input.Bind('s', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true, false, true), dae::InputState::pressed);
-	input.Bind('a', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true, false, true), dae::InputState::pressed);
-	input.Bind('d', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true, false, true), dae::InputState::pressed);
+	auto upC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true, false, true);
+	auto downC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true, false, true);
+	auto leftC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true, false, true);
+	auto rightC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true, false, true);
+	
+	input.Bind('w', upC, dae::InputState::pressed);
+	input.Bind('s', downC, dae::InputState::pressed);
+	input.Bind('a', leftC, dae::InputState::pressed);
+	input.Bind('d', rightC, dae::InputState::pressed);
+
+	input.Bind(0, dae::ControllerButton::DpadUp, upC, dae::InputState::pressed);
+	input.Bind(0, dae::ControllerButton::DpadDown, downC, dae::InputState::pressed);
+	input.Bind(0, dae::ControllerButton::DpadLeft, leftC, dae::InputState::pressed);
+	input.Bind(0, dae::ControllerButton::DpadRight, rightC, dae::InputState::pressed);
 
 	std::cout << "[Keyboard] E: Make sound\n";
 	std::cout << "[Keyboard] R: Mute sound\n";
@@ -282,7 +292,12 @@ void QBert::QBertGameContext::CreatePlayer()
 	std::cout << "[Keyboard] W: Move up\n";
 	std::cout << "[Keyboard] A: Move left\n";
 	std::cout << "[Keyboard] S: Move down\n";
-	std::cout << "[Keyboard] D: Move right\n";
+	std::cout << "[Keyboard] D: Move right\n\n";
+
+	std::cout << "[Controller] Dpad Up: Move up\n";
+	std::cout << "[Controller] Dpad Left: Move left\n";
+	std::cout << "[Controller] Dpad Down: Move down\n";
+	std::cout << "[Controller] Dpad Right: Move right\n\n\n";
 
 	if(m_gameMode == GameMode::Coop)
 	{
@@ -316,16 +331,31 @@ void QBert::QBertGameContext::CreatePlayer()
 		m_pScene->Add(m_pPlayerTwo);
 
 		//Input
-		input.Bind('i', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true, false, true), dae::InputState::pressed);
-		input.Bind('k', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true, false, true), dae::InputState::pressed);
-		input.Bind('j', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true, false, true), dae::InputState::pressed);
-		input.Bind('l', std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true, false, true), dae::InputState::pressed);
+		upC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::UP, true, false, true);
+		downC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::DOWN, true, false, true);
+		leftC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::LEFT, true, false, true);
+		rightC = std::make_shared<MoveCommand>(mc, MovementComponent::Direction::RIGHT, true, false, true);
+		
+		input.Bind('i', upC, dae::InputState::pressed);
+		input.Bind('k', downC, dae::InputState::pressed);
+		input.Bind('j', leftC, dae::InputState::pressed);
+		input.Bind('l', rightC, dae::InputState::pressed);
+
+		input.Bind(1, dae::ControllerButton::DpadUp, upC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadDown, downC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadLeft, leftC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadRight, rightC, dae::InputState::pressed);
 
 		std::cout << "--- Player 2 ---\n";
 		std::cout << "[Keyboard] I: Move up\n";
 		std::cout << "[Keyboard] J: Move left\n";
 		std::cout << "[Keyboard] K: Move down\n";
-		std::cout << "[Keyboard] L: Move right\n";
+		std::cout << "[Keyboard] L: Move right\n\n";
+
+		std::cout << "[Controller] Dpad Up: Move up\n";
+		std::cout << "[Controller] Dpad Left: Move left\n";
+		std::cout << "[Controller] Dpad Down: Move down\n";
+		std::cout << "[Controller] Dpad Right: Move right\n\n\n";
 	}
 	if(m_gameMode == GameMode::Versus)
 	{
@@ -335,7 +365,12 @@ void QBert::QBertGameContext::CreatePlayer()
 		std::cout << "[Keyboard] I: Move up\n";
 		std::cout << "[Keyboard] J: Move left\n";
 		std::cout << "[Keyboard] K: Move down\n";
-		std::cout << "[Keyboard] L: Move right\n";
+		std::cout << "[Keyboard] L: Move right\n\n";
+
+		std::cout << "[Controller] Dpad Up: Move up\n";
+		std::cout << "[Controller] Dpad Left: Move left\n";
+		std::cout << "[Controller] Dpad Down: Move down\n";
+		std::cout << "[Controller] Dpad Right: Move right\n\n\n";
 	}
 }
 
@@ -492,6 +527,8 @@ void QBert::QBertGameContext::GoToNextLevel()
 	}
 	else
 	{
+		GoToGameOver();
+		
 		m_pPlayer->Destroy();
 		OnPlayerDestroy();
 	}

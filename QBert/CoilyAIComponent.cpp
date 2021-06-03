@@ -62,10 +62,20 @@ void QBert::CoilyAIComponent::OnReachBottom()
 
 		auto pMc = m_pOwner->GetComponentOfType<MovementComponent>();
 
-		input.Bind('i', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::UP), dae::InputState::pressed);
-		input.Bind('k', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::DOWN), dae::InputState::pressed);
-		input.Bind('j', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::LEFT), dae::InputState::pressed);
-		input.Bind('l', std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::RIGHT), dae::InputState::pressed);
+		auto upC = std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::UP);
+		auto downC = std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::DOWN);
+		auto leftC = std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::LEFT);
+		auto rightC = std::make_shared<MoveCommand>(pMc, MovementComponent::Direction::RIGHT);
+
+		input.Bind('i', upC, dae::InputState::pressed);
+		input.Bind('k', downC, dae::InputState::pressed);
+		input.Bind('j', leftC, dae::InputState::pressed);
+		input.Bind('l', rightC, dae::InputState::pressed);
+
+		input.Bind(1, dae::ControllerButton::DpadUp, upC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadDown, downC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadLeft, leftC, dae::InputState::pressed);
+		input.Bind(1, dae::ControllerButton::DpadRight, rightC, dae::InputState::pressed);
 	}
 }
 
