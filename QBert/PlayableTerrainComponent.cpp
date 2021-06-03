@@ -5,7 +5,10 @@
 #pragma warning (disable:4201)
 #include <glm/gtx/compatibility.hpp>
 
+#include "CoilyAIComponent.h"
 #include "MovementComponent.h"
+#include "QBertGameContext.h"
+#include "Scene.h"
 #include "ScoreEvent.h"
 #pragma warning(pop)
 
@@ -53,7 +56,19 @@ void QBert::PlayableTerrainComponent::Activate(dae::GameObject* pActivatedBy)
 			{
 				auto pMovementComponent = pActivatedBy->GetComponentOfType<MovementComponent>();
 				if (pMovementComponent) pMovementComponent->GoToSpawningPlatform();
+
 				m_pOwner->Destroy();
+
+				auto pQBertGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
+				if(pQBertGameContext)
+				{
+					auto& enemies{ pQBertGameContext->GetEnemies() };
+					for(auto pEnemy : enemies)
+					{
+						auto pCoilyAI = pEnemy->GetComponentOfType<CoilyAIComponent>();
+						pCoilyAI->SetTarget(m_pOwner);
+					}
+				}
 			}
 		}
 		break;

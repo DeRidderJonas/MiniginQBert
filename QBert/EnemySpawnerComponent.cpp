@@ -17,6 +17,7 @@ void QBert::EnemySpawnerComponent::Update()
 {
 	m_timeElapsed += dae::GameTime::GetInstance().GetDeltaTime();
 
+	//TODO: Instead of complete random spawns, make it Scripted random: "After X seconds spawn Coily, then after X spawn Ugg..."
 	if(m_timeElapsed > m_SpawnInterval)
 	{
 		auto pQBertGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());

@@ -126,6 +126,11 @@ int QBert::QBertGameContext::GetLevelWidth() const
 	return m_LevelWidth;
 }
 
+int QBert::QBertGameContext::GetLevelHeight() const
+{
+	return m_LevelHeight;
+}
+
 void QBert::QBertGameContext::GetEnemyPlayableRange(int& rowMin, int& rowMax, int& colMin, int& colMax) const
 {
 	rowMin = 0;
@@ -186,6 +191,11 @@ void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreCompo
 	
 	m_Enemies.push_back(newEnemy);
 	scene.Add(newEnemy);
+}
+
+std::vector<dae::GameObject*>& QBert::QBertGameContext::GetEnemies()
+{
+	return m_Enemies;
 }
 
 void QBert::QBertGameContext::CheckCollisions()
