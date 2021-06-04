@@ -2,6 +2,10 @@
 #include "Component.h"
 #include "Subject.h"
 
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/glm.hpp>
+#pragma warning(pop)
 
 namespace QBert
 {
@@ -29,6 +33,10 @@ namespace QBert
 		void AddObserver(dae::Observer* pObserver);
 	private:
 		void FallOffGrid();
+
+		const float m_moveTime{ 0.3f };
+		float m_movedTime;
+		glm::vec2 m_moveFrom;
 		
 		dae::GameObject* m_pStandingOn;
 		dae::Subject m_Subject;

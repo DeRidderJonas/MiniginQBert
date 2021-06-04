@@ -1,6 +1,7 @@
 #include "MovementComponent.h"
 
 #include "AIComponent.h"
+#include "GameTime.h"
 #include "HealthComponent.h"
 #include "PlayableTerrainComponent.h"
 #include "QBertGameContext.h"
@@ -12,6 +13,8 @@ QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameOb
 	: Component(pOwner)
 	, m_pStandingOn(pStandOn)
 	, m_Subject()
+	, m_movedTime()
+	, m_moveFrom()
 {
 	
 }
@@ -29,10 +32,25 @@ void QBert::MovementComponent::Initialize()
 
 void QBert::MovementComponent::Update()
 {
+	if (m_pOwner->ShouldBeDestroyed() || m_movedTime >= m_moveTime || m_pStandingOn == nullptr)
+		return;
+
+	m_movedTime += dae::GameTime::GetInstance().GetDeltaTime();
+	
+	float percentage{ m_movedTime / m_moveTime };
+	auto destPos = m_pStandingOn->GetComponentOfType<dae::TransformComponent>()->GetPosition();
+	glm::vec2 destination{ destPos.x, destPos.y };
+	glm::vec2 direction{ destination - m_moveFrom };
+
+	glm::vec2 interpolatedPos{ m_moveFrom + percentage * direction };
+	m_pOwner->GetComponentOfType<dae::TransformComponent>()->SetPosition(interpolatedPos.x, interpolatedPos.y);
 }
 
 void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, bool revertsTerrain, bool canStandOnDisc)
 {
+	if (m_movedTime < m_moveTime)
+		return;
+	
 	int row{ -1 }, col{ -1 };
 	auto pGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
 	pGameContext->GetPlatformForGameObject(m_pStandingOn, row, col);
@@ -61,6 +79,11 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		return;
 	}
 
+	auto currPos = m_pOwner->GetComponentOfType<dae::TransformComponent>()->GetPosition();
+	m_moveFrom.x = currPos.x;
+	m_moveFrom.y = currPos.y;
+	m_movedTime = 0.f;
+
 	auto pTerrainComponent = pNext->GetComponentOfType<PlayableTerrainComponent>();
 	if(pTerrainComponent->GetType() == PlayableTerrainComponent::TerrainType::Disc && !canStandOnDisc)
 	{
@@ -68,8 +91,6 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 		return;
 	}
 
-	auto ownerTransform = m_pOwner->GetComponentOfType<dae::TransformComponent>();
-	ownerTransform->SetPosition(pNext->GetComponentOfType<dae::TransformComponent>()->GetPosition());
 	m_pStandingOn = pNext;
 
 	if(activatesTerrain)
