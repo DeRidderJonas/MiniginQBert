@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "BackToMenuComponent.h"
+#include "CoilyAIComponent.h"
 #include "EnemyFactory.h"
 #include "EnemySpawnerComponent.h"
 #include "FPSComponent.h"
@@ -380,6 +381,17 @@ void QBert::QBertGameContext::Spawn(AIComponent::EnemyType enemyType, ScoreCompo
 {
 	if (!m_pPlayer)
 		return;
+
+	if(enemyType == AIComponent::EnemyType::Coily)
+	{
+		bool coilyExists = std::any_of(m_Enemies.begin(), m_Enemies.end(), [](dae::GameObject* pGo)
+			{
+				auto pCoilyAI = pGo->GetComponentOfType<CoilyAIComponent>();
+				return pCoilyAI != nullptr;
+			});
+		if (coilyExists)
+			return;
+	}
 	
 	auto newEnemy = EnemyFactory::CreateEnemy(enemyType, pScoreComponent, this, m_pPlayer);
 	dae::Scene& scene = dae::SceneManager::GetInstance().GetScene("QBert");
