@@ -139,6 +139,6 @@ void QBert::MovementComponent::FallOffGrid()
 {
 	//Fell into the void
 	auto pHealthComponent = m_pOwner->GetComponentOfType<HealthComponent>();
-	if (pHealthComponent) pHealthComponent->Kill();
+	if (pHealthComponent) pHealthComponent->Kill(pHealthComponent->GetHealthOwnerType() != HealthComponent::HealthOwner::SlickSam);
 	GoToSpawningPlatform();
 }
