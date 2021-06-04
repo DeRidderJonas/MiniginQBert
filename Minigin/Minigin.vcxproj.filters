@@ -147,6 +147,9 @@
     <ClInclude Include="GameContext.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryReader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -252,6 +255,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="GameContext.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryReader.cpp">
       <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>

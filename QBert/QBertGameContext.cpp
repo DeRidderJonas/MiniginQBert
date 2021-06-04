@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "BackToMenuComponent.h"
+#include "BinaryReader.h"
 #include "CoilyAIComponent.h"
 #include "EnemyFactory.h"
 #include "EnemySpawnerComponent.h"
@@ -134,15 +135,15 @@ void QBert::QBertGameContext::Update()
 
 bool QBert::QBertGameContext::CreateLevel()
 {
+	float HexWidth{ 17.f };
+	float startX{ 80.f }, startY{ 110.f };
+	int row{}, col{};
+	
+#ifdef _DEBUG
 	std::string levelLayout{ dae::ResourceManager::GetInstance().LoadFile("Level" + std::to_string(m_CurrentLevel) + ".txt") };
 
 	if (levelLayout.empty())
 		return false;
-	
-	float HexWidth{ 17.f };
-	float startX{ 80.f }, startY{ 110.f };
-
-	int row{}, col{};
 	
 	std::stringstream ss{ levelLayout };
 	std::string rowData{};
@@ -158,6 +159,31 @@ bool QBert::QBertGameContext::CreateLevel()
 		row++;
 		col = 0;
 	}
+#else
+	dae::BinaryReader reader{ "../Data/Level" + std::to_string(m_CurrentLevel) };
+
+	if (!reader.IsActive())
+		return false;
+
+	unsigned char type = reader.Read<char>();
+	while (type != 0xFF)
+	{
+		if (type == 0xFE)
+		{
+			row++;
+			col = 0;
+			type = reader.Read<char>();
+			continue;
+		}
+
+		auto pGo = PlayableTerrainFactory::CreatePlatform(type, m_pScoreComponent, row, col, HexWidth, startX, startY);
+		m_PlayableGrid[row][col] = pGo;
+		col++;
+		if (pGo)
+			m_pScene->Add(pGo);
+		type = reader.Read<char>();
+	}
+#endif
 
 	return true;
 }

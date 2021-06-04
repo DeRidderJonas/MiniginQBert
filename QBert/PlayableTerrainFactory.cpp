@@ -21,21 +21,26 @@ dae::GameObject* QBert::PlayableTerrainFactory::CreatePlatform(PlayableTerrainCo
 	return go;
 }
 
-dae::GameObject* QBert::PlayableTerrainFactory::CreatePlatform(char type, ScoreComponent* pScoreComponent, int row,
+dae::GameObject* QBert::PlayableTerrainFactory::CreatePlatform(unsigned char type, ScoreComponent* pScoreComponent, int row,
 	int col, float terrainWidth, float startX, float startY)
 {
 	switch (type)
 	{
 	case '0':
+	case 0:
 	default:
 		return nullptr;
 	case '1':
+	case 1:
 		return CreatePlatform(PlayableTerrainComponent::TerrainType::Normal, pScoreComponent, row, col, terrainWidth, startX, startY);
 	case '2':
+	case 2:
 		return CreatePlatform(PlayableTerrainComponent::TerrainType::Double, pScoreComponent, row, col, terrainWidth, startX, startY);
 	case '3':
+	case 3:
 		return CreatePlatform(PlayableTerrainComponent::TerrainType::Reverting, pScoreComponent, row, col, terrainWidth, startX, startY);
 	case '4':
+	case 4:
 		return CreatePlatform(PlayableTerrainComponent::TerrainType::Disc, pScoreComponent, row, col, terrainWidth, startX, startY);
 	}
 }

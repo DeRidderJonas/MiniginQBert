@@ -11,7 +11,7 @@ namespace QBert
 	{
 	public:
 		static dae::GameObject* CreatePlatform(PlayableTerrainComponent::TerrainType type, ScoreComponent* pScoreComponent, int row, int col, float terrainWidth, float startX, float startY);
-		static dae::GameObject* CreatePlatform(char type, ScoreComponent* pScoreComponent, int row, int col, float terrainWidth, float startX, float startY);
+		static dae::GameObject* CreatePlatform(unsigned char type, ScoreComponent* pScoreComponent, int row, int col, float terrainWidth, float startX, float startY);
 	};
 
 }
