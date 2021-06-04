@@ -77,9 +77,11 @@ QBert::QBertGameContext::QBertGameContext(dae::Scene* pScene, GameMode gameMode)
 
 	//Enemy spawner
 	go = new dae::GameObject();
-	auto esc = new EnemySpawnerComponent(go, m_pScoreComponent, true);
-	go->AddComponent(esc);
+	m_pSpawnerComponent = new EnemySpawnerComponent(go, m_pScoreComponent, true);
+	go->AddComponent(m_pSpawnerComponent);
 	m_pScene->Add(go);
+
+	SetScriptedEnemies();
 
 	//Input
 	auto& input = dae::InputManager::GetInstance();
@@ -433,6 +435,52 @@ void QBert::QBertGameContext::CheckGameOverConditions()
 	}
 }
 
+void QBert::QBertGameContext::SetScriptedEnemies()
+{
+	//https://gamefaqs.gamespot.com/nes/587540-qbert/faqs/64992
+	std::queue<AIComponent::EnemyType> scripted{};
+	switch (m_CurrentLevel)
+	{
+	case 1:
+		scripted.push(AIComponent::EnemyType::Coily);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		m_pSpawnerComponent->SetScriptedSpawns(scripted);
+		break;
+	case 2:
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::Coily);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::Coily);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::Coily);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::Coily);
+		m_pSpawnerComponent->SetScriptedSpawns(scripted);
+		break;
+	case 3:
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::Coily);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::UggWrongWay);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::SlickSam);
+		scripted.push(AIComponent::EnemyType::Coily);
+		m_pSpawnerComponent->SetScriptedSpawns(scripted);
+		break;
+	}
+}
+
 void QBert::QBertGameContext::GoToGameOver()
 {
 	auto& gameOverScene = dae::SceneManager::GetInstance().GetScene("GameOver");
@@ -524,6 +572,8 @@ void QBert::QBertGameContext::GoToNextLevel()
 
 			SpawnVersusCoily();
 		}
+
+		SetScriptedEnemies();
 	}
 	else
 	{

@@ -11,6 +11,7 @@ namespace dae {
 
 namespace QBert
 {
+	class EnemySpawnerComponent;
 	class ScoreComponent;
 	
 	class QBertGameContext final : public dae::GameContext
@@ -53,6 +54,8 @@ namespace QBert
 		void CheckCollisions();
 		void CheckGameOverConditions();
 
+		void SetScriptedEnemies();
+
 		void GoToGameOver();
 		
 		void GoToNextLevel();
@@ -70,8 +73,11 @@ namespace QBert
 		int m_CurrentLevel{ 1 };
 		
 		std::vector<dae::GameObject*> m_Enemies{};
+		EnemySpawnerComponent* m_pSpawnerComponent{ nullptr };
+
 		dae::GameObject* m_pPlayer{ nullptr };
 		dae::GameObject* m_pPlayerTwo{ nullptr };
+
 		ScoreComponent* m_pScoreComponent{ nullptr };
 	};
 
