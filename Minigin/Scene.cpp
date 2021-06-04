@@ -15,9 +15,9 @@ Scene::Scene(const std::string& name) : m_Name(name), m_pGameContext(nullptr) {}
 
 Scene::~Scene()
 {
-	DestroyAll();
-	
 	delete m_pGameContext;
+	
+	DestroyAll();
 }
 
 void Scene::Add(GameObject* pObject)

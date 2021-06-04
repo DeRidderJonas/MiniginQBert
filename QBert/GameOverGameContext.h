@@ -11,7 +11,7 @@ namespace QBert
 	{
 	public:
 		GameOverGameContext(dae::Scene* pScene);
-		~GameOverGameContext() override = default;
+		~GameOverGameContext() override;
 		
 		void OnAddGameObject(dae::GameObject* pGameObject) override;
 		void OnRemoveGameObject(dae::GameObject* pGameObject) override;
@@ -21,5 +21,6 @@ namespace QBert
 	private:
 		int m_score;
 		dae::TextComponent* m_pTextComponent;
+		dae::TextComponent* m_pTextScoreComponent;
 	};
 }

@@ -17,9 +17,9 @@ QBert::GameOverGameContext::GameOverGameContext(dae::Scene* pScene)
 
 	auto go = new dae::GameObject();
 	auto renderComponent = new dae::TextureComponent(go);
-	auto textComponent = new dae::TextComponent(go, renderComponent, "Score: ", font);
+	m_pTextScoreComponent = new dae::TextComponent(go, renderComponent, "Score: ", font);
 	go->AddComponent(renderComponent);
-	go->AddComponent(textComponent);
+	go->AddComponent(m_pTextScoreComponent);
 	go->GetComponentOfType<dae::TransformComponent>()->SetPosition(10, 100.f);
 	scene.Add(go);
 
@@ -32,12 +32,23 @@ QBert::GameOverGameContext::GameOverGameContext(dae::Scene* pScene)
 	scene.Add(go);
 }
 
+QBert::GameOverGameContext::~GameOverGameContext()
+{
+	m_pTextScoreComponent->GetOwner()->Destroy();
+	m_pTextComponent->GetOwner()->Destroy();
+}
+
 void QBert::GameOverGameContext::OnAddGameObject(dae::GameObject*)
 {
 }
 
-void QBert::GameOverGameContext::OnRemoveGameObject(dae::GameObject*)
+void QBert::GameOverGameContext::OnRemoveGameObject(dae::GameObject* pGo)
 {
+	if (pGo == m_pTextScoreComponent->GetOwner())
+		m_pTextScoreComponent = nullptr;
+
+	if (pGo == m_pTextComponent->GetOwner())
+		m_pTextComponent = nullptr;
 }
 
 void QBert::GameOverGameContext::Update()
