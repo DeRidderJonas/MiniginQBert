@@ -10,6 +10,7 @@
 #include "QBertGameContext.h"
 #include "Scene.h"
 #include "ScoreEvent.h"
+#include "ServiceLocator.h"
 #pragma warning(pop)
 
 QBert::PlayableTerrainComponent::PlayableTerrainComponent(dae::GameObject* pOwner, TerrainType type, dae::TextureComponent* pPlatform)
@@ -58,6 +59,8 @@ void QBert::PlayableTerrainComponent::Activate(dae::GameObject* pActivatedBy)
 				if (pMovementComponent) pMovementComponent->GoToSpawningPlatform();
 
 				m_pOwner->Destroy();
+
+				dae::ServiceLocator::GetSoundSystem().Play("../Data/lift.wav", 0.4f);
 
 				auto pQBertGameContext = dynamic_cast<QBertGameContext*>(m_pOwner->GetScene()->GetGameContext());
 				if(pQBertGameContext)

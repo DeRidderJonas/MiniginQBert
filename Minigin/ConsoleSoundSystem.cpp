@@ -6,12 +6,12 @@ dae::ConsoleSoundSystem::ConsoleSoundSystem(SoundSystem* pSoundSystem)
 {
 }
 
-void dae::ConsoleSoundSystem::Play(int soundId, float volume)
+void dae::ConsoleSoundSystem::Play(const std::string& filePath, float volume)
 {
 	if (!m_IsMuted)
 	{
-		std::cout << "Playing sound with id: " << soundId << " at volume: " << volume << '\n';
-		if(m_pSoundSystem) m_pSoundSystem->Play(soundId, volume);
+		std::cout << "Playing sound at: " << filePath << " at volume: " << volume << '\n';
+		if(m_pSoundSystem) m_pSoundSystem->Play(filePath, volume);
 	}
 }
 

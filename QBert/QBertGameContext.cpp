@@ -23,6 +23,7 @@
 #include "Scene.h"
 #include "ScoreComponent.h"
 #include "ScoreEvent.h"
+#include "ServiceLocator.h"
 #include "SoundCommand.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
@@ -586,6 +587,8 @@ void QBert::QBertGameContext::GoToNextLevel()
 		}
 
 		SetScriptedEnemies();
+
+		dae::ServiceLocator::GetSoundSystem().Play("../Data/victory.wav", 0.7f);
 	}
 	else
 	{

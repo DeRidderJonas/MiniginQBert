@@ -5,6 +5,7 @@
 #include "PlayableTerrainComponent.h"
 #include "QBertGameContext.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
 #include "TransformComponent.h"
 
 QBert::MovementComponent::MovementComponent(dae::GameObject* pOwner, dae::GameObject* pStandOn)
@@ -55,6 +56,8 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 	if(pNext == nullptr)
 	{
 		FallOffGrid();
+		if(!activatesTerrain)
+			dae::ServiceLocator::GetSoundSystem().Play("../Data/fall.wav");
 		return;
 	}
 
@@ -72,6 +75,11 @@ void QBert::MovementComponent::Move(Direction direction, bool activatesTerrain, 
 	if(activatesTerrain)
 	{
 		if (pTerrainComponent) pTerrainComponent->Activate(m_pOwner);
+		dae::ServiceLocator::GetSoundSystem().Play("../Data/jump.wav", 0.5f);
+	}
+	else
+	{
+		dae::ServiceLocator::GetSoundSystem().Play("../Data/jump2.wav", 0.5f);
 	}
 	
 	if(revertsTerrain)

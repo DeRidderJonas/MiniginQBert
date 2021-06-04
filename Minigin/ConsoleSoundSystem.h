@@ -8,7 +8,7 @@ namespace dae
 	public:
 		ConsoleSoundSystem(SoundSystem* pSoundSystem);
 		~ConsoleSoundSystem() override = default;
-		void Play(int soundId, float volume) override;
+		void Play(const std::string& filePath, float volume) override;
 		void ToggleMute() override;
 	private:
 		SoundSystem* m_pSoundSystem{nullptr};

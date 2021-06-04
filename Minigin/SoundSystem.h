@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace dae
 {
@@ -6,7 +7,7 @@ namespace dae
 	{
 	public:
 		virtual ~SoundSystem() = default;
-		virtual void Play(int soundId, float volume = 1.f) = 0;
+		virtual void Play(const std::string& filePath, float volume = 1.f) = 0;
 		virtual void ToggleMute() = 0;
 		
 		SoundSystem() = default;
@@ -21,7 +22,7 @@ namespace dae
 	{
 	public:
 		~NullSoundSystem() override = default;
-		void Play(int , float ) override {};
+		void Play(const std::string& , float ) override {};
 		void ToggleMute() override{};
 	};
 }

@@ -10,14 +10,14 @@ namespace dae
 	public:
 		SimpleSDL2AudioSoundSystem();
 		~SimpleSDL2AudioSoundSystem() override;
-		void Play(int soundId, float volume) override;
+		void Play(const std::string& filePath, float volume) override;
 		void ToggleMute() override;
 	private:
 		void Update();
 
 		struct PlaySound
 		{
-			int soundId;
+			std::string filePath;
 			float volume;
 		};
 

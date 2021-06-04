@@ -16,9 +16,9 @@ dae::SimpleSDL2AudioSoundSystem::~SimpleSDL2AudioSoundSystem()
 	m_soundThread.join();
 }
 
-void dae::SimpleSDL2AudioSoundSystem::Play(int soundId, float volume)
+void dae::SimpleSDL2AudioSoundSystem::Play(const std::string& filePath, float volume)
 {
-	PlaySound playSound{ soundId, volume };
+	PlaySound playSound{ filePath, volume };
 	std::lock_guard<std::mutex> mlock{ m_mutex };
 	m_SoundQueue.push(playSound);
 	m_QueueActive.notify_one();
@@ -39,7 +39,7 @@ void dae::SimpleSDL2AudioSoundSystem::Update()
 			PlaySound soundToPlay = m_SoundQueue.front();
 			m_SoundQueue.pop();
 			mlock.unlock();
-			if(!m_Muted) playSound("../Data/door1.wav", int(SDL_MIX_MAXVOLUME * soundToPlay.volume));
+			if(!m_Muted) playSound(soundToPlay.filePath.c_str(), static_cast<int>(SDL_MIX_MAXVOLUME * soundToPlay.volume));
 		}
 
 		std::unique_lock<std::mutex> guard{ m_mutex };

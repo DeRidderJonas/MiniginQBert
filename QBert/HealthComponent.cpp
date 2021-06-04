@@ -7,6 +7,7 @@
 #include "EnemyDeathEvent.h"
 #include "QBertGameContext.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
 #include "Subject.h"
 
 QBert::HealthComponent::HealthComponent(dae::GameObject* pOwner, HealthOwner healthOwner, int amountOfLives)
@@ -36,6 +37,7 @@ void QBert::HealthComponent::Kill(bool awardPoints)
 			//Notify player death
 			PlayerDeathEvent event{"PLAYERDEATH", m_AmountOfLives};
 			m_pSubject.Notify(event);
+			dae::ServiceLocator::GetSoundSystem().Play("../Data/swear.wav");
 		}
 		break;
 	case HealthOwner::Coily:
